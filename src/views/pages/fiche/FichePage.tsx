@@ -337,6 +337,6 @@ export const FichePage: React.FC<IFichePageProps> = ({
  * Retourne l'index local à la "plage" courante (ie "datasFiches").
  * En effet, "indexCourant" est l'index sur la totalité des données mais dépasse peut être la taille de datasFiches
  */
-function getIndexLocal(index: number, nbLignesParAppel: number) {
+const getIndexLocal = (index: number, nbLignesParAppel: number) => {
   return index % nbLignesParAppel;
-}
+};

@@ -27,15 +27,18 @@ const URL_COMPOSITION_EXTRAIT_PLURILINGUE_DECES = "/composition/ACTE_DECES/4";
 
 const URL_COMPOSITION_PROJET_ACTE = "/composition/PROJET_ACTE/1";
 
-function getCompositionReponseSansDelivranceCS(document: string, reponseSansDelivranceCS: IContenuReponseSansDelivranceCS): Promise<any> {
+const getCompositionReponseSansDelivranceCS = (
+  document: string,
+  reponseSansDelivranceCS: IContenuReponseSansDelivranceCS
+): Promise<any> => {
   return getComposition(`/composition/${document}/1`, reponseSansDelivranceCS);
-}
+};
 
-function getCompositionCertificatSituation(obj: any): Promise<any> {
+const getCompositionCertificatSituation = (obj: any): Promise<any> => {
   return getComposition(URL_COMPOSITION_CERTIFICAT_SITUATION, obj);
-}
+};
 
-function getCompositionCertificatPacsRcRca(obj: any, typeCertificat: ETypeRcRcaPacs): Promise<any> {
+const getCompositionCertificatPacsRcRca = (obj: any, typeCertificat: ETypeRcRcaPacs): Promise<any> => {
   let fonctionAAppeler: any;
   switch (typeCertificat) {
     case ETypeRcRcaPacs.PACS:
@@ -55,9 +58,9 @@ function getCompositionCertificatPacsRcRca(obj: any, typeCertificat: ETypeRcRcaP
   }
 
   return fonctionAAppeler(obj);
-}
+};
 
-function getCompositionExtraitPlurilingue(obj: IExtraitCopieComposition): Promise<any> {
+const getCompositionExtraitPlurilingue = (obj: IExtraitCopieComposition): Promise<any> => {
   let fonctionAAppeler: any;
 
   switch (NatureActe.getEnumFor(obj.nature_acte)) {
@@ -78,63 +81,63 @@ function getCompositionExtraitPlurilingue(obj: IExtraitCopieComposition): Promis
   }
 
   return fonctionAAppeler(obj);
-}
+};
 
-function getCompositionCertificatRCA(obj: any): Promise<any> {
+const getCompositionCertificatRCA = (obj: any): Promise<any> => {
   return getComposition(URL_COMPOSITION_CERTIFICAT_RCA, obj);
-}
+};
 
-function getCompositionCertificatRC(obj: any): Promise<any> {
+const getCompositionCertificatRC = (obj: any): Promise<any> => {
   return getComposition(URL_COMPOSITION_CERTIFICAT_RC, obj);
-}
+};
 
-function getCompositionCertificatPACS(obj: any): Promise<any> {
+const getCompositionCertificatPACS = (obj: any): Promise<any> => {
   return getComposition(URL_COMPOSITION_ATTESTATION_PACS, obj);
-}
+};
 
-function getCompositionCourrier(codeCourrier: string, obj: any): Promise<any> {
+const getCompositionCourrier = (codeCourrier: string, obj: any): Promise<any> => {
   return getComposition(`/composition/${codeCourrier}/1`, obj);
-}
+};
 
-function getCompositionExtraitOuCopieActeTexte(obj: any): Promise<any> {
+const getCompositionExtraitOuCopieActeTexte = (obj: any): Promise<any> => {
   return getComposition(URL_COMPOSITION_EXTRAIT_COPIE_ACTE_TEXTE, obj);
-}
+};
 
-function getCompositionCopieActeImage(obj: any): Promise<any> {
+const getCompositionCopieActeImage = (obj: any): Promise<any> => {
   return getComposition(URL_COMPOSITION_COPIE_ACTE_IMAGE, obj);
-}
+};
 
-function getCompositionActeTexte(obj: any): Promise<any> {
+const getCompositionActeTexte = (obj: any): Promise<any> => {
   return getComposition(URL_COMPOSITION_ACTE_TEXTE, obj);
-}
+};
 
-function getCompositionExtraitPlurilingueNaissance(obj: any): Promise<any> {
+const getCompositionExtraitPlurilingueNaissance = (obj: any): Promise<any> => {
   return getComposition(URL_COMPOSITION_EXTRAIT_PLURILINGUE_NAISSANCE, obj);
-}
+};
 
-function getCompositionExtraitPlurilingueMariage(obj: any): Promise<any> {
+const getCompositionExtraitPlurilingueMariage = (obj: any): Promise<any> => {
   return getComposition(URL_COMPOSITION_EXTRAIT_PLURILINGUE_MARIAGE, obj);
-}
+};
 
-function getCompositionExtraitPlurilingueDeces(obj: any): Promise<any> {
+const getCompositionExtraitPlurilingueDeces = (obj: any): Promise<any> => {
   return getComposition(URL_COMPOSITION_EXTRAIT_PLURILINGUE_DECES, obj);
-}
+};
 
-function getCompositionProjetActe(obj: any): Promise<any> {
+const getCompositionProjetActe = (obj: any): Promise<any> => {
   return getComposition(URL_COMPOSITION_PROJET_ACTE, obj);
-}
+};
 
-function getComposition(
+const getComposition = (
   uri: string,
   data: any
 ): // Renvoie le document en base64
-Promise<any> {
+Promise<any> => {
   return api.fetch({
     method: HttpMethod.POST,
     uri,
     data
   });
-}
+};
 
 export const compositionApi = {
   getCompositionCertificatSituation,

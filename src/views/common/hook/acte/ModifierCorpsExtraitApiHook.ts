@@ -13,7 +13,7 @@ interface IModifierCorpsExtraitResultat {
   resultat: boolean;
 }
 
-export function useModifierCorpsExtrait(params?: IModifierCorpsExtraitParams) {
+export const useModifierCorpsExtrait = (params?: IModifierCorpsExtraitParams) => {
   const [resultat, setResultat] = useState<IModifierCorpsExtraitResultat>();
 
   useEffect(() => {
@@ -33,4 +33,4 @@ export function useModifierCorpsExtrait(params?: IModifierCorpsExtraitParams) {
   }, [params]);
 
   return resultat;
-}
+};

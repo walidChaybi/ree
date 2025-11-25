@@ -12,10 +12,10 @@ interface ICreationObservationResultat {
   id: string;
 }
 
-export function useCreationObservationApi(params?: ICreationObservationParams) {
+export const useCreationObservationApi = (params?: ICreationObservationParams) => {
   const [resultat, setResultat] = useState<ICreationObservationResultat | undefined>();
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       if (params && params.texteObservation && params.idRequete) {
         try {
           const result = await postObservation(params.idRequete, params.texteObservation, params.idObservation);
@@ -27,9 +27,9 @@ export function useCreationObservationApi(params?: ICreationObservationParams) {
           });
         }
       }
-    }
+    };
     fetchData();
   }, [params]);
 
   return resultat;
-}
+};

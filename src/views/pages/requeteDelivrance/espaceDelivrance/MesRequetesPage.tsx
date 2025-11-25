@@ -80,7 +80,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     }
   }, [linkParameters, props]);
 
-  function onClickOnLine(_: string, data: IRequeteTableauDelivrance[], idx: number) {
+  const onClickOnLine = (_: string, data: IRequeteTableauDelivrance[], idx: number) => {
     setOperationEnCours(true);
     const requeteSelect = data[idx];
     miseAjourOuRedirection(
@@ -92,7 +92,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
       LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url),
       utilisateurConnecte
     );
-  }
+  };
 
   const finOperationEnCours = () => {
     setOperationEnCours(false);
@@ -118,7 +118,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     }
   }, [idAction]);
 
-  function getBoutonFinConsultation(id: string, sousType: string, idUtilisateur: string, statut?: string): JSX.Element {
+  const getBoutonFinConsultation = (id: string, sousType: string, idUtilisateur: string, statut?: string): JSX.Element => {
     return (
       <>
         {statut === "Traitée - Répondue" && (
@@ -131,7 +131,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         )}
       </>
     );
-  }
+  };
 
   return (
     <>

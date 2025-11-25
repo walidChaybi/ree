@@ -22,7 +22,7 @@ export const concatValeursRMCAutoPersonneRequest = (criteresTitulaire?: IRMCAuto
     "-"
   );
 
-export function mappingRMCPersonneResultat(resultatRMCPersonne: any[]): IRMCPersonneResultat[] {
+export const mappingRMCPersonneResultat = (resultatRMCPersonne: any[]): IRMCPersonneResultat[] => {
   const resultat: IRMCPersonneResultat[] = [];
   resultatRMCPersonne.forEach((resultatCourant: any) => {
     const personne: IPersonneRMCPersonne = mapPersonne(resultatCourant);
@@ -35,9 +35,9 @@ export function mappingRMCPersonneResultat(resultatRMCPersonne: any[]): IRMCPers
     });
   });
   return resultat;
-}
+};
 
-function mapPersonne(personne: any): IPersonneRMCPersonne {
+const mapPersonne = (personne: any): IPersonneRMCPersonne => {
   return {
     idPersonne: personne.idPersonne ?? "",
     nom: personne.nom ?? "",
@@ -51,9 +51,9 @@ function mapPersonne(personne: any): IPersonneRMCPersonne {
     } as IDateCompose),
     lieuNaissance: LieuxUtils.getLieu(personne.villeNaissance, undefined, personne.paysNaissance)
   };
-}
+};
 
-function mapActeInscription(acteInscriptionLie: any): IActeInscriptionRMCPersonne {
+const mapActeInscription = (acteInscriptionLie: any): IActeInscriptionRMCPersonne => {
   const typeFiche = acteInscriptionLie.categorieRepertoire
     ? ETypeFiche[(acteInscriptionLie.categorieRepertoire as string).toLocaleUpperCase() as keyof typeof ETypeFiche]
     : ETypeFiche.ACTE;
@@ -85,4 +85,4 @@ function mapActeInscription(acteInscriptionLie: any): IActeInscriptionRMCPersonn
     typeFiche,
     statutOuType
   };
-}
+};

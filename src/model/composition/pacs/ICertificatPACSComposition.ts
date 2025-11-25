@@ -1,4 +1,3 @@
-import { getValeurOuVide } from "@util/Utils";
 import { Decret, IDecret } from "../../etatcivil/commun/IDecret";
 import { FichePacs } from "../../etatcivil/pacs/FichePacs";
 import { IRequerant } from "../../requete/IRequerant";
@@ -63,6 +62,6 @@ export const CertificatPACSComposition = {
   }
 };
 
-function formatNumeroPacs(annee?: string, numero?: string) {
-  return `${getValeurOuVide(annee)} - ${getValeurOuVide(numero)}`;
-}
+const formatNumeroPacs = (annee?: string, numero?: string) => {
+  return `${annee} - ${numero}`;
+};

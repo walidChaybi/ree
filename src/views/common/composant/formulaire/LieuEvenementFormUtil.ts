@@ -1,11 +1,7 @@
-import { estNonRenseigne, getLibelle } from "@util/Utils";
+import { estNonRenseigne } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
-export function estModeSaisieFrance(
-  ville?: string,
-  pays?: string,
-  etrangerParDefaut = true
-): boolean {
+export const estModeSaisieFrance = (ville?: string, pays?: string, etrangerParDefaut = true): boolean => {
   if (LieuxUtils.estVilleJerusalem(ville)) {
     return false;
   }
@@ -15,12 +11,12 @@ export function estModeSaisieFrance(
   } else {
     return estNonRenseigne(pays) || LieuxUtils.estPaysFrance(pays);
   }
-}
+};
 
-export function getLabelOuDepartement(modeSaisieFrance: boolean) {
-  let label = getLibelle("Région");
+export const getLabelOuDepartement = (modeSaisieFrance: boolean) => {
+  let label = "Région";
   if (modeSaisieFrance) {
-    label = getLibelle("Département");
+    label = "Département";
   }
   return label;
-}
+};

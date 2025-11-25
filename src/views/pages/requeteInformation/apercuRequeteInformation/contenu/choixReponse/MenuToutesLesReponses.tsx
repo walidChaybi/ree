@@ -95,7 +95,7 @@ export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = props
   );
 };
 
-function libelleSurDeuxLignes(libelle: string) {
+const libelleSurDeuxLignes = (libelle: string) => {
   let libelleHMTL: any;
   let i = 90;
   if (libelle.length > i) {
@@ -112,4 +112,4 @@ function libelleSurDeuxLignes(libelle: string) {
     libelleHMTL = <span>{libelle}</span>;
   }
   return libelleHMTL;
-}
+};

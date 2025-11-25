@@ -3,7 +3,7 @@ import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
-export function useEnregistrerProjetActeApiHook(acte?: IProjetActe): IProjetActe | undefined {
+export const useEnregistrerProjetActeApiHook = (acte?: IProjetActe): IProjetActe | undefined => {
   const [resultat, setResultat] = useState<IProjetActe>();
   useEffect(() => {
     if (acte) {
@@ -21,4 +21,4 @@ export function useEnregistrerProjetActeApiHook(acte?: IProjetActe): IProjetActe
   }, [acte]);
 
   return resultat;
-}
+};

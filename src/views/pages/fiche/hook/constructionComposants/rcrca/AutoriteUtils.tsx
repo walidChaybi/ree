@@ -7,7 +7,7 @@ import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
 
-export function getAutorite(rcrca: FicheRcRca): SectionPartProps[] {
+export const getAutorite = (rcrca: FicheRcRca): SectionPartProps[] => {
   let autorite: SectionPartProps[] = [];
   if (rcrca.decision) {
     autorite = [
@@ -30,9 +30,9 @@ export function getAutorite(rcrca: FicheRcRca): SectionPartProps[] {
     }
   }
   return autorite;
-}
+};
 
-function getContentAutorite(autorite: IAutorite, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] {
+const getContentAutorite = (autorite: IAutorite, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] => {
   if (LieuxUtils.estPaysFrance(autorite.pays)) {
     return getContentAutoriteFrance(autorite, typeFiche);
   } else if (TypeAutoriteUtil.isJuridiction(autorite.typeAutorite)) {
@@ -42,9 +42,9 @@ function getContentAutorite(autorite: IAutorite, typeFiche: keyof typeof ETypeFi
   } else {
     return [];
   }
-}
+};
 
-function getContentAutoriteFrance(autorite: IAutorite, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] {
+const getContentAutoriteFrance = (autorite: IAutorite, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] => {
   if (TypeAutoriteUtil.isJuridiction(autorite.typeAutorite)) {
     return getContentJuridictionEtFrance(autorite);
   } else if (TypeAutoriteUtil.isNotaire(autorite.typeAutorite)) {
@@ -54,9 +54,9 @@ function getContentAutoriteFrance(autorite: IAutorite, typeFiche: keyof typeof E
   } else {
     return [];
   }
-}
+};
 
-function getContentOnacEtFrance(autorite: IAutorite): SectionContentProps[] {
+const getContentOnacEtFrance = (autorite: IAutorite): SectionContentProps[] => {
   const content = [getTypeAutoriteContent(autorite.typeAutorite), getTitreOnac(autorite), getVilleAutoriteContent(autorite.ville)];
 
   if (LieuxUtils.estVilleAvecArrondissement(autorite.ville)) {
@@ -66,9 +66,9 @@ function getContentOnacEtFrance(autorite: IAutorite): SectionContentProps[] {
   content.push(getDepartementAutoriteContent(autorite));
 
   return content;
-}
+};
 
-function getContentNotaireOnacEtEtranger(autorite: IAutorite): SectionContentProps[] {
+const getContentNotaireOnacEtEtranger = (autorite: IAutorite): SectionContentProps[] => {
   return [
     getTypeAutoriteContent(autorite.typeAutorite),
     TypeAutoriteUtil.isNotaire(autorite.typeAutorite) ? getPrenomNomNotaire(autorite) : getTitreOnac(autorite),
@@ -76,18 +76,18 @@ function getContentNotaireOnacEtEtranger(autorite: IAutorite): SectionContentPro
     getRegionAutoriteContent(autorite.region),
     getPaysAutoriteContent(autorite.pays)
   ];
-}
+};
 
-function getContentJuridictionEtEtranger(autorite: IAutorite): SectionContentProps[] {
+const getContentJuridictionEtEtranger = (autorite: IAutorite): SectionContentProps[] => {
   return [
     getTypeJuridictionContent(autorite.typeJuridiction),
     getVilleAutoriteContent(autorite.ville),
     getRegionAutoriteContent(autorite.region),
     getPaysAutoriteContent(autorite.pays)
   ];
-}
+};
 
-function getContentJuridictionEtFrance(autorite: IAutorite): SectionContentProps[] {
+const getContentJuridictionEtFrance = (autorite: IAutorite): SectionContentProps[] => {
   const contents: SectionContentProps[] = [getTypeJuridictionContent(autorite.typeJuridiction), getVilleAutoriteContent(autorite.ville)];
 
   addArrondissementAutoriteContentIfPossible(autorite, contents);
@@ -95,9 +95,9 @@ function getContentJuridictionEtFrance(autorite: IAutorite): SectionContentProps
   addDepartementAutoriteContentIfPossible(autorite, contents);
 
   return contents;
-}
+};
 
-function getContentNotaireEtFrance(autorite: IAutorite): SectionContentProps[] {
+const getContentNotaireEtFrance = (autorite: IAutorite): SectionContentProps[] => {
   const contents: SectionContentProps[] = [
     getTypeAutoriteContent(autorite.typeAutorite),
     getPrenomNomNotaire(autorite),
@@ -111,89 +111,89 @@ function getContentNotaireEtFrance(autorite: IAutorite): SectionContentProps[] {
   contents.push(getNumeroCrpcen(autorite));
 
   return contents;
-}
+};
 
-function getPrenomNomNotaire(autorite: IAutorite): SectionContentProps {
+const getPrenomNomNotaire = (autorite: IAutorite): SectionContentProps => {
   return {
     libelle: "Prénom NOM",
     value: <span>{`Maître ${formatPrenom(autorite.prenomNotaire)} ${formatNom(autorite.nomNotaire)}`}</span>
   };
-}
+};
 
-function getTitreOnac(autorite: IAutorite): SectionContentProps {
+const getTitreOnac = (autorite: IAutorite): SectionContentProps => {
   return {
     libelle: "Titre",
     value: <span>{autorite.titreOnac ? `${autorite.titreOnac.charAt(0)}${autorite.titreOnac.slice(1)}` : ""}</span>
   };
-}
+};
 
-function getNumeroCrpcen(autorite: IAutorite): SectionContentProps {
+const getNumeroCrpcen = (autorite: IAutorite): SectionContentProps => {
   return {
     libelle: "N° CRPCEN",
     value: Autorite.getNumeroCrpcen(autorite)
   };
-}
+};
 
-function getTypeAutoriteContent(type?: ETypeAutorite): SectionContentProps {
+const getTypeAutoriteContent = (type?: ETypeAutorite): SectionContentProps => {
   return { libelle: "Type", value: TypeAutoriteUtil.getLibelle(type) };
-}
+};
 
-function getTypeJuridictionContent(libelleTypeJuridiction?: string): SectionContentProps {
+const getTypeJuridictionContent = (libelleTypeJuridiction?: string): SectionContentProps => {
   return {
     libelle: "Type",
     value: getValeurOuVide(libelleTypeJuridiction)
   };
-}
+};
 
-function getVilleAutoriteContent(ville?: string): SectionContentProps {
+const getVilleAutoriteContent = (ville?: string): SectionContentProps => {
   return {
     libelle: "Ville",
     value: <span className="ville">{ville || ""}</span>
   };
-}
+};
 
-function getRegionAutoriteContent(region?: string): SectionContentProps {
+const getRegionAutoriteContent = (region?: string): SectionContentProps => {
   return {
     libelle: "Région",
     value: <span className="region">{region || ""}</span>
   };
-}
+};
 
-function getArrondissementAutoriteContent(arrondissement?: string): SectionContentProps {
+const getArrondissementAutoriteContent = (arrondissement?: string): SectionContentProps => {
   return {
     libelle: "Arrondissement",
     value: <span>{arrondissement || ""}</span>
   };
-}
+};
 
-function getDepartementAutoriteContent(autorite: IAutorite): SectionContentProps {
+const getDepartementAutoriteContent = (autorite: IAutorite): SectionContentProps => {
   return {
     libelle: "Département",
     value: <span>{`${autorite.libelleDepartement} (${autorite.numeroDepartement})`}</span>
   };
-}
+};
 
-function getPaysAutoriteContent(pays?: string): SectionContentProps {
+const getPaysAutoriteContent = (pays?: string): SectionContentProps => {
   return {
     libelle: "Pays",
     value: <span className="pays">{pays || ""}</span>
   };
-}
+};
 
-function addArrondissementAutoriteContentIfPossible(autorite: IAutorite, contents: SectionContentProps[]): void {
+const addArrondissementAutoriteContentIfPossible = (autorite: IAutorite, contents: SectionContentProps[]): void => {
   if (autorite.ville && LieuxUtils.estVilleAvecArrondissement(autorite.ville)) {
     contents.push({
       libelle: "Arrondissement",
       value: `${autorite.arrondissement || ""}`
     });
   }
-}
+};
 
-function addDepartementAutoriteContentIfPossible(autorite: IAutorite, contents: SectionContentProps[]): void {
+const addDepartementAutoriteContentIfPossible = (autorite: IAutorite, contents: SectionContentProps[]): void => {
   if (!LieuxUtils.estVilleParis(autorite.ville) && LieuxUtils.estPaysFrance(autorite.pays)) {
     contents.push({
       libelle: "Département",
       value: `${autorite.libelleDepartement || ""} (${autorite.numeroDepartement || ""})`
     });
   }
-}
+};

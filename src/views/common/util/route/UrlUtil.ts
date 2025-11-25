@@ -13,58 +13,58 @@ const urlWithParamPatern = /^(.+)\/:[^/]+$/;
  * @param path
  * @param param
  */
-export function getUrlWithParam(path: string, param?: string) {
+export const getUrlWithParam = (path: string, param?: string) => {
   return path.replace(urlWithParamPatern, `$1/${param}`);
-}
+};
 
-function isPathElemId(elem: string): boolean {
+const isPathElemId = (elem: string): boolean => {
   return !isNaN(Number(elem)) || UUID.test(elem);
-}
+};
 
-function isLastPathElemIsId(url: string): boolean {
+const isLastPathElemIsId = (url: string): boolean => {
   return Boolean(getUrlParamId(url));
-}
+};
 
 /**
  * Renvoie une url sans les derniers éléments si ils sont des ID (UUID ou un nombre)
  */
-function getUrlWithoutIdParam(url: string): string {
+const getUrlWithoutIdParam = (url: string): string => {
   let validUrl = cleanUrl(url);
   while (isLastPathElemIsId(validUrl)) {
     validUrl = validUrl.substring(0, validUrl.lastIndexOf(URL_SEPARATEUR));
   }
   return validUrl;
-}
+};
 
-function getUrlParamId(url: string): string | undefined {
+const getUrlParamId = (url: string): string | undefined => {
   const lastPathElem = getLastPathElem(url);
   return isPathElemId(lastPathElem) ? lastPathElem : undefined;
-}
+};
 
-function getLastPathElem(url: string) {
+const getLastPathElem = (url: string) => {
   const validUrl = cleanUrl(url);
   return validUrl.substring(validUrl.lastIndexOf(URL_SEPARATEUR) + 1);
-}
+};
 
 const regex = /\/+/g;
-function cleanUrl(url: string) {
+const cleanUrl = (url: string) => {
   let validUrl = url.replace(regex, "/");
   if (validUrl.endsWith(URL_SEPARATEUR)) {
     validUrl = validUrl.substring(0, validUrl.length - 1);
   }
   return validUrl;
-}
+};
 
-export function getUrlPrecedente(url: string) {
+export const getUrlPrecedente = (url: string) => {
   const urlWithoutIdParam = getUrlWithoutIdParam(url);
   const idxLastUrlSep = urlWithoutIdParam.lastIndexOf(URL_SEPARATEUR);
   return urlWithoutIdParam.substring(0, idxLastUrlSep);
-}
+};
 
-export function replaceUrl(navigate: NavigateFunction, url: string, data?: any) {
+export const replaceUrl = (navigate: NavigateFunction, url: string, data?: any) => {
   navigate(url, { state: data, replace: true });
-}
+};
 
-export function goBack(navigate: NavigateFunction) {
+export const goBack = (navigate: NavigateFunction) => {
   navigate(-UN);
-}
+};

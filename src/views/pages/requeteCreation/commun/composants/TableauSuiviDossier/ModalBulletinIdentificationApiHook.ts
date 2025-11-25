@@ -16,7 +16,7 @@ interface IModalBulletinIdentificationResultat {
   dataBulletinIdentification: IDataBulletinIdentificationResultat;
 }
 
-export function useModalBulletinIdentification(id: string): IModalBulletinIdentificationResultat {
+export const useModalBulletinIdentification = (id: string): IModalBulletinIdentificationResultat => {
   const [resultat, setResultat] = useState<IDataBulletinIdentificationResultat>();
 
   useEffect(() => {
@@ -45,9 +45,9 @@ export function useModalBulletinIdentification(id: string): IModalBulletinIdenti
   return {
     dataBulletinIdentification: resultat || ({} as IDataBulletinIdentificationResultat)
   };
-}
+};
 
-function mappingBulletinIdentificationDTOToAffichageBulletinIdentification(data: any): IDataBulletinIdentificationResultat {
+const mappingBulletinIdentificationDTOToAffichageBulletinIdentification = (data: any): IDataBulletinIdentificationResultat => {
   return {
     nom: getValeurOuUndefined(data.nom),
     prenoms: getValeurOuUndefined(data.prenoms),
@@ -55,4 +55,4 @@ function mappingBulletinIdentificationDTOToAffichageBulletinIdentification(data:
     dateNaissance: getValeurOuUndefined(data.dateNaissance),
     lieuNaissance: getValeurOuUndefined(data.lieuNaissance)
   };
-}
+};

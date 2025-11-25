@@ -25,12 +25,12 @@ import {
   useConstructionCertificatPacsRcRca
 } from "./GenerationCertificatGestionTypeCertificat";
 
-export function useGenerationCertificatPACSOuRCOuRCAHook(
+export const useGenerationCertificatPACSOuRCOuRCAHook = (
   typeCertificat: ETypeRcRcaPacs,
   requete?: IRequeteTableauDelivrance,
   listePacsRcRca?: TResultatRMCInscription[],
   inscriptionsRcRadiation?: IInscriptionRc
-): IResultGenerationInscriptions | undefined {
+): IResultGenerationInscriptions | undefined => {
   const [certificatComposition, setCertificatComposition] = useState<TypeCertificatComposition>();
   const [listePacsRcRcaATraiter, setListePacsRcRcaATraiter] = useState<TResultatRMCInscription[]>();
   const [documentsReponsePourStockage, setDocumentsReponsePourStockage] = useState<IDocumentReponse[]>(); // Ne contiendra qu'un seul IDocumentReponse (on stock les doc un par un)
@@ -146,7 +146,7 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
   }, [uuidDocumentsReponseStockes]);
 
   return resultGenerationCertificat;
-}
+};
 
 const recupererIdByTypeRcRcaPacs = (type: ETypeRcRcaPacs, pacsRcRcaCourant?: TResultatRMCInscription): string | null => {
   return pacsRcRcaCourant?.categorie === type ? pacsRcRcaCourant.id : null;

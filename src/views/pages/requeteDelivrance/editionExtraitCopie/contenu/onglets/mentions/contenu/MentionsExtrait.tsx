@@ -183,14 +183,14 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   );
 };
 
-function getNumeroOrdreMention(mentions: IMentionAffichage[] | undefined): number {
+const getNumeroOrdreMention = (mentions: IMentionAffichage[] | undefined): number => {
   return mentions ? mentions.length + 1 : 0;
-}
+};
 
-function texteParDefautPlurilingue(natureMention?: NatureMention) {
+const texteParDefautPlurilingue = (natureMention?: NatureMention) => {
   if (natureMention === NatureMention.depuisCode(MARIAGE)) {
     return "JJ-MM-AAAA <Lieu événement> <NOM du conjoint> <Prénoms du conjoint>";
   } else {
     return "JJ-MM-AAAA <Lieu événement>";
   }
-}
+};

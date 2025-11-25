@@ -1,9 +1,7 @@
 import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { ListeItem } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 
-export function mappingMentionAffichageVersListeItem(
-  mentionsAffichage: IMentionAffichage[]
-): ListeItem[] {
+export const mappingMentionAffichageVersListeItem = (mentionsAffichage: IMentionAffichage[]): ListeItem[] => {
   return mentionsAffichage
     .sort((a, b) => a.numeroOrdre - b.numeroOrdre)
     .map(mentionAffichage => {
@@ -16,4 +14,4 @@ export function mappingMentionAffichageVersListeItem(
         nouveau: mentionAffichage.nouveau
       };
     });
-}
+};

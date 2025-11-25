@@ -1,37 +1,24 @@
 import React from "react";
 import { OptionVide, SelectRece } from "../champsSaisie/SelectField";
 
-function range(n1: number, n2: number) {
+const range = (n1: number, n2: number) => {
   const resRange: string[] = [];
   for (let i = n1; i < n2; i++) {
     resRange.push(String(i));
   }
   return resRange;
-}
+};
 
-function getYear(date: Date) {
+const getYear = (date: Date) => {
   return date.getFullYear();
-}
+};
 
-function getMonth(date: Date) {
+const getMonth = (date: Date) => {
   return date.getMonth();
-}
+};
 const ANNEE_MIN = 1900;
 const years = range(ANNEE_MIN, getYear(new Date()) + 1);
-const months = [
-  "janvier",
-  "février",
-  "mars",
-  "avril",
-  "mai",
-  "juin",
-  "juillet",
-  "août",
-  "septembre",
-  "octobre",
-  "novembre",
-  "décembre"
-];
+const months = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 
 export const customHeaderRenderer = ({
   date,

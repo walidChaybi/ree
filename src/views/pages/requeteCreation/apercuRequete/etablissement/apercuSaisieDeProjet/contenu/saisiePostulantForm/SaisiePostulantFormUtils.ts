@@ -10,7 +10,7 @@ interface INomSecablePostulant {
   nomPartie2: string;
 }
 
-export function getNomSecable(retenueSdanf?: IRetenueSdanf): INomSecablePostulant {
+export const getNomSecable = (retenueSdanf?: IRetenueSdanf): INomSecablePostulant => {
   const nom = retenueSdanf?.nomNaissance ?? "";
   const estPaysSecable = PaysSecabilite.estSecable(retenueSdanf?.paysNaissance ?? "");
   const vocables = EtatCivilUtil.getVocables(nom);
@@ -21,14 +21,14 @@ export function getNomSecable(retenueSdanf?: IRetenueSdanf): INomSecablePostulan
     nomPartie1: estSecable ? vocables[0].toUpperCase() : "",
     nomPartie2: estSecable ? vocables.slice(1).join(" ").toUpperCase() : ""
   };
-}
+};
 
 export const estJourMoisVide = (jour?: number, mois?: number, annee?: number): boolean => !jour && !mois && Boolean(annee);
 
-export function filtrePrenomsNonFrancises(prenoms: IPrenomOrdonnes[] = []): IPrenomOrdonnes[] {
+export const filtrePrenomsNonFrancises = (prenoms: IPrenomOrdonnes[] = []): IPrenomOrdonnes[] => {
   return prenoms.filter(prenom => !prenom.estPrenomFrRetenuSdanf);
-}
+};
 
-export function filtrePrenomsFrancises(prenoms: IPrenomOrdonnes[] = []): IPrenomOrdonnes[] {
+export const filtrePrenomsFrancises = (prenoms: IPrenomOrdonnes[] = []): IPrenomOrdonnes[] => {
   return prenoms.filter(prenom => prenom.estPrenomFrRetenuSdanf);
-}
+};

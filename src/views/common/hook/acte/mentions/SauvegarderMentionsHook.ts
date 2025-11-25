@@ -23,7 +23,7 @@ interface IResultatSauvegarderMentions {
   idDoc: string;
 }
 
-export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
+export const useSauvegarderMentions = (params?: SauvegarderMentionsParam) => {
   const [mentionsAEnvoyerParams, setMentionsAEnvoyerParams] = useState<IMiseAJourMentionsParams>();
   const [documentMajParams, setDocumentMajParams] = useState<IMiseAJourDocumentMentionParams>();
   const [resultat, setResultat] = useState<IResultatSauvegarderMentions>();
@@ -72,15 +72,15 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
   }, [resultatMajDocReponseAvecMentionRetirees, resultatGenerationEC]);
 
   return resultat;
-}
+};
 
-function sauvegarderEnFonctionTypeDocument(
+const sauvegarderEnFonctionTypeDocument = (
   params: SauvegarderMentionsParam,
   setMentionsAEnvoyerParams: any,
   setDocumentMajParams: any,
   setMentionsRetireesSaved: any,
   setGenerationEC: any
-) {
+) => {
   if (params.mentionsApi?.mentions && params.acte.id) {
     const { mentionsAEnvoyer, mentionsRetirees } = mappingVersMentionsApi(
       params.mentionsApi.mentions,
@@ -111,4 +111,4 @@ function sauvegarderEnFonctionTypeDocument(
       });
     }
   }
-}
+};

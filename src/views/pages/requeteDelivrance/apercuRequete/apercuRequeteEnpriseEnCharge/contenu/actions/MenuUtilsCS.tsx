@@ -20,13 +20,13 @@ enum INDEX_CHOIX_ACTION_MENU_DELIVRER {
   ATTESTATION_PACS
 }
 
-function getListeDocumentsAutorise(listeDocumentDemandeUn: string[], listeDocumentDemandeDeux?: string[]) {
+const getListeDocumentsAutorise = (listeDocumentDemandeUn: string[], listeDocumentDemandeDeux?: string[]) => {
   if (listeDocumentDemandeDeux) {
     return listeDocumentDemandeUn.concat(listeDocumentDemandeDeux);
   } else {
     return listeDocumentDemandeUn;
   }
-}
+};
 
 const listeDocumentsDemandeAutreQueAttestationPACS = [
   ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS,
@@ -73,7 +73,7 @@ export const menuSansDelivranceActions: IActionOption[] = [
   }
 ];
 
-export function filtrerListeActionsParDocumentDemande(listeActions: IActionOption[], requete: IRequeteDelivrance): IActionOption[] {
+export const filtrerListeActionsParDocumentDemande = (listeActions: IActionOption[], requete: IRequeteDelivrance): IActionOption[] => {
   const listeActionAutorise: IActionOption[] = [];
   const documentDemandeRequeteCode = requete.documentDemande?.code;
 
@@ -88,7 +88,7 @@ export function filtrerListeActionsParDocumentDemande(listeActions: IActionOptio
   });
 
   return listeActionAutorise;
-}
+};
 
 export const menuDelivrerActions: IActionOption[] = [
   {
@@ -112,7 +112,7 @@ export const estMemeNombreDeRCModificationEtRadiation = (
   return inscriptionTypeRadiation?.length === inscriptionTypeModification?.length;
 };
 
-function getInscriptionsRCDeTypeRadiation(inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] {
+const getInscriptionsRCDeTypeRadiation = (inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] => {
   let inscriptionRC: IInscriptionRc[] = [];
   if (inscriptionsRC) {
     inscriptionRC = inscriptionsRC.filter(inscription => {
@@ -121,9 +121,9 @@ function getInscriptionsRCDeTypeRadiation(inscriptionsRC?: IInscriptionRc[]): II
   }
 
   return inscriptionRC;
-}
+};
 
-function getInscriptionsRCDeTypeModification(inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] {
+const getInscriptionsRCDeTypeModification = (inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] => {
   let inscriptionRC: IInscriptionRc[] = [];
   if (inscriptionsRC) {
     inscriptionRC = inscriptionsRC.filter(inscription => {
@@ -132,19 +132,19 @@ function getInscriptionsRCDeTypeModification(inscriptionsRC?: IInscriptionRc[]):
   }
 
   return inscriptionRC;
-}
+};
 
 export const estPresentRcTypeModification = (inscriptions?: TResultatRMCInscription[]): TResultatRMCInscription | undefined =>
   inscriptions?.find(inscription => inscription.type === "MODIFICATION");
 
-export function getInscriptionsDeTypeModificationEtRadiation(inscriptionsRC?: IInscriptionRc[]) {
+export const getInscriptionsDeTypeModificationEtRadiation = (inscriptionsRC?: IInscriptionRc[]) => {
   const inscrptionsRCModification = getInscriptionsRCDeTypeModification(inscriptionsRC);
   const inscriptionsRCRadiation = getInscriptionsRCDeTypeRadiation(inscriptionsRC);
 
   return { inscrptionsRCModification, inscriptionsRCRadiation };
-}
+};
 
-export function triTableauRCRadiationParDate(inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] {
+export const triTableauRCRadiationParDate = (inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] => {
   let inscriptionsRcTriees: IInscriptionRc[] = [];
 
   if (inscriptionsRC) {
@@ -155,4 +155,4 @@ export function triTableauRCRadiationParDate(inscriptionsRC?: IInscriptionRc[]):
   }
 
   return inscriptionsRcTriees;
-}
+};

@@ -67,7 +67,7 @@ const ExtraitValidationMariageUnTitulaireSchema = Yup.object({
   [TITULAIRE_EVT_1]: TitulaireEvtActeMariageValidationSchema
 });
 
-export function getValidationSchema(natureActe: keyof typeof ENatureActe, titulairesAMs: TitulaireActe[]) {
+export const getValidationSchema = (natureActe: keyof typeof ENatureActe, titulairesAMs: TitulaireActe[]) => {
   let validationSchema;
   switch (natureActe) {
     case "NAISSANCE":
@@ -92,12 +92,12 @@ export function getValidationSchema(natureActe: keyof typeof ENatureActe, titula
   }
 
   return validationSchema;
-}
+};
 
-export function parentMemeSexeOuIndeterminCasPlurilingue(
+export const parentMemeSexeOuIndeterminCasPlurilingue = (
   titulaires: (ITitulaireActeDto | undefined)[],
   documentsReponses: IDocumentReponse[]
-) {
+) => {
   return (
     titulaires.some(
       titulaire =>
@@ -106,7 +106,7 @@ export function parentMemeSexeOuIndeterminCasPlurilingue(
         titulaire?.filiations.some(filiation => filiation.lienParente === "PARENT" && filiation.sexe === "INDETERMINE")
     ) && unDocumentPlurilingueEstPresent(documentsReponses)
   );
-}
+};
 
 const parentsSontDeMemeSexe = (titulaire?: ITitulaireActeDto): boolean => {
   const parents = titulaire?.filiations.filter(filiation => filiation.lienParente === "PARENT");
@@ -118,23 +118,23 @@ const parentsSontDeMemeSexe = (titulaire?: ITitulaireActeDto): boolean => {
   return false;
 };
 
-export function titulairesMemeSexeOuIndeterminCasPlurilingue(
+export const titulairesMemeSexeOuIndeterminCasPlurilingue = (
   titulaires: (ITitulaireActeDto | undefined)[],
   documentsReponses: IDocumentReponse[]
-) {
+) => {
   return (
     (titulaires.length && titulaires[0]?.sexe === titulaires[1]?.sexe) ||
     (titulaires.some(titulaire => titulaire?.sexe === "INDETERMINE") && unDocumentPlurilingueEstPresent(documentsReponses))
   );
-}
+};
 
-function unDocumentPlurilingueEstPresent(documentsReponses: IDocumentReponse[]) {
+const unDocumentPlurilingueEstPresent = (documentsReponses: IDocumentReponse[]) => {
   return documentsReponses.some(
     documentsReponse => documentsReponse.typeDocument === DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE)
   );
-}
+};
 
-export function getTitulairesEvenementsEtParentsForm(params: {
+export const getTitulairesEvenementsEtParentsForm = (params: {
   titulairesAMs: (TitulaireActe | undefined)[];
   natureActe: keyof typeof ENatureActe;
   titulaire1Parents: Filiation[];
@@ -146,7 +146,7 @@ export function getTitulairesEvenementsEtParentsForm(params: {
   naissanceTitulaire1?: IEvenement;
   naissanceTitulaire2?: IEvenement;
   saisieVerrouillee: boolean;
-}) {
+}) => {
   const {
     titulairesAMs,
     natureActe,
@@ -184,16 +184,16 @@ export function getTitulairesEvenementsEtParentsForm(params: {
       {donneesComplementairesPlurilingue && natureActe === "MARIAGE" && getDonneesComplementairesPlurilingue()}
     </>
   );
-}
+};
 
-function getTitulaire1EvenementsEtParentsForm(
+const getTitulaire1EvenementsEtParentsForm = (
   titulairesAM1: TitulaireActe | undefined,
   natureActe: keyof typeof ENatureActe,
   titulaire1Parents: Filiation[],
   titulaire1ParentsAdoptants: Filiation[],
   evenement?: IEvenement,
   naissanceTitulaire1?: IEvenement
-) {
+) => {
   return (
     <>
       {titulairesAM1 &&
@@ -209,15 +209,15 @@ function getTitulaire1EvenementsEtParentsForm(
         getTitulaireParentsForm(UN, TITULAIRE_EVT_1, natureActe, titulaire1Parents, titulaire1ParentsAdoptants)}
     </>
   );
-}
+};
 
-function getTitulaire2EvenementsEtParentsForm(
+const getTitulaire2EvenementsEtParentsForm = (
   titulaireAM2: TitulaireActe | undefined,
   natureActe: keyof typeof ENatureActe,
   titulaire2Parents: Filiation[],
   titulaire2ParentsAdoptants: Filiation[],
   naissanceTitulaire2?: IEvenement
-) {
+) => {
   return (
     <>
       {titulaireAM2 &&
@@ -228,9 +228,9 @@ function getTitulaire2EvenementsEtParentsForm(
         ]}
     </>
   );
-}
+};
 
-function getDonneesComplementairesPlurilingue() {
+const getDonneesComplementairesPlurilingue = () => {
   return (
     <AccordionRece
       className={{ content: "AccordeonForm" }}
@@ -240,9 +240,9 @@ function getDonneesComplementairesPlurilingue() {
       <DonneesComplementairesPlurilingue nom={DONNEES_COMPLEMENTAIRES_PLURILINGUE} />
     </AccordionRece>
   );
-}
+};
 
-function getDernierConjointForm() {
+const getDernierConjointForm = () => {
   return (
     <AccordionRece
       expanded={true}
@@ -251,9 +251,9 @@ function getDernierConjointForm() {
       <DernierConjointForm nom={DERNIER_CONJOINT} />
     </AccordionRece>
   );
-}
+};
 
-function getEvenementForm(natureActe: keyof typeof ENatureActe, evenement: IEvenement | undefined, saisieVerrouillee: boolean) {
+const getEvenementForm = (natureActe: keyof typeof ENatureActe, evenement: IEvenement | undefined, saisieVerrouillee: boolean) => {
   return (
     <AccordionRece
       className={{ content: "AccordeonForm" }}
@@ -273,15 +273,15 @@ function getEvenementForm(natureActe: keyof typeof ENatureActe, evenement: IEven
       {natureActe === "MARIAGE" && <ContratMariageForm nom={`${EVENEMENT}.${CONTRAT_MARIAGE}`} />}
     </AccordionRece>
   );
-}
+};
 
-function getTitulaireParentsForm(
+const getTitulaireParentsForm = (
   numeroTitulaire: number,
   nomFormTitulaire: string,
   natureActe: keyof typeof ENatureActe,
   parents: Filiation[],
   parentsAdoptants: Filiation[]
-) {
+) => {
   let form;
   if (natureActe === "MARIAGE") {
     if (parentsAdoptants.length) {
@@ -297,24 +297,24 @@ function getTitulaireParentsForm(
   }
 
   return form;
-}
+};
 
-function getTitulaireParentsAdoptantsDansUnSeulForm(
+const getTitulaireParentsAdoptantsDansUnSeulForm = (
   numeroTitulaire: number,
   nomFormTitulaire: string,
   natureActe: keyof typeof ENatureActe,
   parentsAdoptants: Filiation[]
-) {
+) => {
   return getTitulaireParentsDansUnSeulForm(numeroTitulaire, nomFormTitulaire, natureActe, parentsAdoptants, true);
-}
+};
 
-function getTitulaireParentsDansUnSeulForm(
+const getTitulaireParentsDansUnSeulForm = (
   numeroTitulaire: number,
   nomFormTitulaire: string,
   natureActe: keyof typeof ENatureActe,
   parents: Filiation[],
   parentsAdoptants = false
-) {
+) => {
   const titreAccordeonParent = `Parents ${parentsAdoptants ? "adoptants " : ""}titulaire ${numeroTitulaire}`;
   return (
     <AccordionRece
@@ -341,9 +341,9 @@ function getTitulaireParentsDansUnSeulForm(
       })}
     </AccordionRece>
   );
-}
+};
 
-function getTitulaireParentsDansPlusieursForm(nomFormTitulaire: string, natureActe: keyof typeof ENatureActe, parents: Filiation[]) {
+const getTitulaireParentsDansPlusieursForm = (nomFormTitulaire: string, natureActe: keyof typeof ENatureActe, parents: Filiation[]) => {
   return parents.map((parent: Filiation, index: number) => {
     const titreAccordeonParent = `Parent ${index + 1}`;
     return (
@@ -360,15 +360,15 @@ function getTitulaireParentsDansPlusieursForm(nomFormTitulaire: string, natureAc
       </AccordionRece>
     );
   });
-}
+};
 
-function getTitulaireEvenementForm(
+const getTitulaireEvenementForm = (
   nomFormTitulaire: string,
   titulaire: TitulaireActe,
   evenement: IEvenement | undefined,
   natureActe: keyof typeof ENatureActe,
   numeroTitulaire: number
-) {
+) => {
   return (
     <AccordionRece
       expanded={true}
@@ -385,7 +385,7 @@ function getTitulaireEvenementForm(
       ></TitulaireEvenementForm>
     </AccordionRece>
   );
-}
+};
 
 export interface IProprietesFormulaire {
   initialise: boolean;
@@ -399,6 +399,6 @@ export interface IProprietesFormulaire {
   formDefaultValues: ISaisieExtraitForm;
 }
 
-export function initProprietesFormulaire(): IProprietesFormulaire {
+export const initProprietesFormulaire = (): IProprietesFormulaire => {
   return { initialise: false } as any as IProprietesFormulaire;
-}
+};

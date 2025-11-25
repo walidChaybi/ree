@@ -10,7 +10,7 @@ export interface ITransmettreAValideurParams {
   requeteId: string;
 }
 
-export function useTransmettreAValideurApiHook(params?: ITransmettreAValideurParams) {
+export const useTransmettreAValideurApiHook = (params?: ITransmettreAValideurParams) => {
   const [idAction, setIdAction] = useState<string | undefined>();
   const { appelApi: appelPostActionTransfertValideur } = useFetchApi(CONFIG_POST_MAJ_ACTION_TRANSFERT_VALIDEUR);
 
@@ -38,4 +38,4 @@ export function useTransmettreAValideurApiHook(params?: ITransmettreAValideurPar
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   return idAction;
-}
+};

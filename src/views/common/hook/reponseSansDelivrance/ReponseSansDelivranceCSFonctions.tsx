@@ -101,11 +101,11 @@ export const CreateReponseSansDelivranceCSPourCompositionApiMariage = ({
   return reponse;
 };
 
-export function estSeulementActeMariage(
+export const estSeulementActeMariage = (
   requete: IRequeteDelivrance,
   actes: ResultatRMCActe[] | undefined,
   inscriptions: TResultatRMCInscription[] | undefined
-): boolean {
+): boolean => {
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const sousType: string = requete?.sousType?.nom;
     return (
@@ -115,7 +115,7 @@ export function estSeulementActeMariage(
     );
   }
   return true;
-}
+};
 
 const estSeulementActeMariageSelectionne = (actes: ResultatRMCActe[] | undefined): boolean =>
   actes?.length === 1 && actes[0].nature === "MARIAGE";

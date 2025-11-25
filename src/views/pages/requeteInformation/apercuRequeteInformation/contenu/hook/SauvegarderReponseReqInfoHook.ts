@@ -8,7 +8,7 @@ export interface ISauvegarderReponseReqInfoParams {
   idReponse?: string;
 }
 
-export function useSauvegarderReponsesReqInfoHook(params: ISauvegarderReponseReqInfoParams | undefined) {
+export const useSauvegarderReponsesReqInfoHook = (params: ISauvegarderReponseReqInfoParams | undefined) => {
   const [idReponseChoisie, setIdReponseChoisie] = useState<string | undefined>();
 
   useEffect(() => {
@@ -25,4 +25,4 @@ export function useSauvegarderReponsesReqInfoHook(params: ISauvegarderReponseReq
     }
   }, [params]);
   return idReponseChoisie;
-}
+};

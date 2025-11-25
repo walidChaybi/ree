@@ -22,7 +22,7 @@ enum ERequeteMail {
   REQUETE_INFO_ORIGINE = "REQUETE_INFO_ORIGINE"
 }
 
-export function useEnvoyerReponsesReqInfoHook(params: IEnvoyerReponseReqInfoParams | undefined) {
+export const useEnvoyerReponsesReqInfoHook = (params: IEnvoyerReponseReqInfoParams | undefined) => {
   const [mailEnvoyer, setMailEnvoyer] = useState<boolean | undefined>();
 
   useEffect(() => {
@@ -40,13 +40,13 @@ export function useEnvoyerReponsesReqInfoHook(params: IEnvoyerReponseReqInfoPara
     }
   }, [params]);
   return mailEnvoyer;
-}
+};
 
-function getReponseAEnvoyer(
+const getReponseAEnvoyer = (
   reponseSaisie: ISauvegarderReponseReqInfoParams,
   requete: IRequeteInformation,
   piecesJointes?: PieceJointe[]
-): IMail {
+): IMail => {
   const mail = {} as IMail;
 
   if (requete.requerant.courriel) {
@@ -83,4 +83,4 @@ function getReponseAEnvoyer(
     }
   }
   return mail;
-}
+};

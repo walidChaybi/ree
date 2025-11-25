@@ -49,7 +49,7 @@ const estActeImage = (acte: FicheActe | null, acteDejaPresent?: FicheActe): bool
   return acteAUtiliser.type === "IMAGE";
 };
 
-export function useGenerationEC(params?: IGenerationECParams): IGenerationECResultat | undefined {
+export const useGenerationEC = (params?: IGenerationECParams): IGenerationECResultat | undefined => {
   const [resultat, setResultat] = useState<IGenerationECResultat>();
 
   const [extraitCopieApiHookParams, setExtraitCopieApiHookParams] = useState<IExtraitCopieApiHookParams>();
@@ -232,4 +232,4 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
   }, [stockeCtvApiHookResultat, uuidDocumentReponse, uuidDocumentReponseSansAction]);
 
   return resultat;
-}
+};

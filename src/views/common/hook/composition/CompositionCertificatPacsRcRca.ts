@@ -5,7 +5,7 @@ import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
-export function useCertificatPacsRcRcaApiHook(typeCertificat: ETypeRcRcaPacs, certificatComposition?: TypeCertificatComposition) {
+export const useCertificatPacsRcRcaApiHook = (typeCertificat: ETypeRcRcaPacs, certificatComposition?: TypeCertificatComposition) => {
   const [donneesComposition, setDonneesComposition] = useState<IDonneesComposition>();
 
   useEffect(() => {
@@ -25,4 +25,4 @@ export function useCertificatPacsRcRcaApiHook(typeCertificat: ETypeRcRcaPacs, ce
   }, [certificatComposition, typeCertificat]);
 
   return donneesComposition;
-}
+};

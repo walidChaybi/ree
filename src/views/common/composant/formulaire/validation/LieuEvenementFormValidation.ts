@@ -1,28 +1,19 @@
-import { estNonRenseigne, getLibelle } from "@util/Utils";
+import { estNonRenseigne } from "@util/Utils";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
-import {
-  LIEU_COMPLET,
-  PAYS,
-  REGION_DEPARTEMENT,
-  VILLE
-} from "../ConstantesNomsForm";
+import { LIEU_COMPLET, PAYS, REGION_DEPARTEMENT, VILLE } from "../ConstantesNomsForm";
 
-export function valideCompletudeLieu(
+export const valideCompletudeLieu = (
   formik: any,
   nomChamp: string,
   value: string,
   nomForm: string,
   modeSaisiLieuInconnu: boolean = false
-) {
+) => {
   let messageErreur;
 
-  const lieuComplet = formik.getFieldProps(
-    withNamespace(nomForm, LIEU_COMPLET)
-  ).value;
+  const lieuComplet = formik.getFieldProps(withNamespace(nomForm, LIEU_COMPLET)).value;
   let ville = formik.getFieldProps(withNamespace(nomForm, VILLE)).value;
-  let region = formik.getFieldProps(
-    withNamespace(nomForm, REGION_DEPARTEMENT)
-  ).value;
+  let region = formik.getFieldProps(withNamespace(nomForm, REGION_DEPARTEMENT)).value;
   let pays = formik.getFieldProps(withNamespace(nomForm, PAYS)).value;
 
   switch (nomChamp) {
@@ -42,17 +33,12 @@ export function valideCompletudeLieu(
 
   const erreur: boolean = !lieuComplet && !ville && !region && !pays;
   if (erreur && !modeSaisiLieuInconnu) {
-    messageErreur = getLibelle("Au moins un des champs est obligatoire");
+    messageErreur = "Au moins un des champs est obligatoire";
   }
 
   return messageErreur;
-}
+};
 
-export function valideLieuReprise(
-  lieuReprise: string,
-  lieuRepriseAfficheSeul: boolean
-) {
-  return lieuRepriseAfficheSeul && estNonRenseigne(lieuReprise)
-    ? "Lieu obligatoire"
-    : undefined;
-}
+export const valideLieuReprise = (lieuReprise: string, lieuRepriseAfficheSeul: boolean) => {
+  return lieuRepriseAfficheSeul && estNonRenseigne(lieuReprise) ? "Lieu obligatoire" : undefined;
+};

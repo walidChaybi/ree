@@ -12,11 +12,11 @@ interface IPostPiecesJointesApiResultat {
   erreur?: any;
 }
 
-export function usePostPiecesJointesApi(
+export const usePostPiecesJointesApi = (
   typePiece: TypePieceJointe,
   idRequete?: string,
   piecesJointes?: PieceJointe[]
-): IPostPiecesJointesApiResultat | undefined {
+): IPostPiecesJointesApiResultat | undefined => {
   const [resultat, setResultat] = useState<IPostPiecesJointesApiResultat>();
   const [uuidDocuments, setUuidDocuments] = useState<string[]>([]);
 
@@ -29,7 +29,7 @@ export function usePostPiecesJointesApi(
   }, [idRequete, piecesJointes]);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       if (idRequete && piecesJointesAEnvoyer && piecesJointesAEnvoyer.length > 0) {
         try {
           let result;
@@ -58,10 +58,10 @@ export function usePostPiecesJointesApi(
           uuidDocuments
         });
       }
-    }
+    };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [piecesJointesAEnvoyer]);
 
   return resultat;
-}
+};

@@ -70,15 +70,15 @@ export interface IQueryParametersPourRequetes {
   sousTypes?: string[];
 }
 
-async function getApiManager() {
+const getApiManager = async () => {
   const { ApiManager } = await import("../ApiManager");
   return ApiManager.getInstance("rece-requete-api", "v2");
-}
+};
 
 ////////////////////////
 /*** API REQUETE V2 ***/
 ////////////////////////
-export function getTableauRequetesDelivrance(listeStatuts: string, queryParameters: IQueryParametersPourRequetes): Promise<any> {
+export const getTableauRequetesDelivrance = (listeStatuts: string, queryParameters: IQueryParametersPourRequetes): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -91,12 +91,12 @@ export function getTableauRequetesDelivrance(listeStatuts: string, queryParamete
       }
     })
   );
-}
+};
 
-export function postTableauRequetesDelivranceService(
+export const postTableauRequetesDelivranceService = (
   queryParameters: IQueryParametersPourRequetes,
   filtresReq: IFiltreServiceRequeteDelivranceDto
-): Promise<any> {
+): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -109,9 +109,9 @@ export function postTableauRequetesDelivranceService(
       data: filtresReq
     })
   );
-}
+};
 
-export function getRequetesCreation(listeStatuts: string, queryParameters: IQueryParametersPourRequetes): Promise<any> {
+export const getRequetesCreation = (listeStatuts: string, queryParameters: IQueryParametersPourRequetes): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -125,9 +125,9 @@ export function getRequetesCreation(listeStatuts: string, queryParameters: IQuer
       }
     })
   );
-}
+};
 
-export function getRequetesInformation(queryParameters: IQueryParametersPourRequetes): Promise<any> {
+export const getRequetesInformation = (queryParameters: IQueryParametersPourRequetes): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -140,12 +140,12 @@ export function getRequetesInformation(queryParameters: IQueryParametersPourRequ
       }
     })
   );
-}
+};
 /* v8 ignore start */
-export function postRequetesInformation(
+export const postRequetesInformation = (
   queryParameters: IQueryParametersPourRequetes,
   filtresRequetes: IFiltresServiceRequeteInformationFormValues
-) {
+) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -165,13 +165,13 @@ export function postRequetesInformation(
       })
     })
   );
-}
+};
 /* v8 ignore stop */
 
-export function postRequetesServiceCreation(
+export const postRequetesServiceCreation = (
   queryParameters: IQueryParametersPourRequetes,
   filtresReq: IFiltreServiceRequeteCreationDto
-): Promise<any> {
+): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -184,9 +184,9 @@ export function postRequetesServiceCreation(
       data: filtresReq
     })
   );
-}
+};
 
-export function getDetailRequete(idRequete: string, estConsultationHistoriqueAction = false): Promise<any> {
+export const getDetailRequete = (idRequete: string, estConsultationHistoriqueAction = false): Promise<any> => {
   let config: any = {
     method: HttpMethod.GET,
     uri: `${URL_REQUETES}/${idRequete}`
@@ -200,9 +200,9 @@ export function getDetailRequete(idRequete: string, estConsultationHistoriqueAct
     };
   }
   return getApiManager().then(api => api.fetch(config));
-}
+};
 
-export async function creationRequeteDelivrance({
+export const creationRequeteDelivrance = async ({
   requete,
   futurStatut,
   refus = false
@@ -210,7 +210,7 @@ export async function creationRequeteDelivrance({
   requete: IRequeteDelivrance;
   futurStatut: StatutRequete;
   refus?: boolean;
-}): Promise<any> {
+}): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -222,9 +222,9 @@ export async function creationRequeteDelivrance({
       }
     })
   );
-}
+};
 
-export async function updateRequeteDelivrance({
+export const updateRequeteDelivrance = ({
   idRequete,
   requete,
   futurStatut,
@@ -234,7 +234,7 @@ export async function updateRequeteDelivrance({
   requete: IRequeteDelivrance;
   futurStatut: StatutRequete;
   refus?: boolean;
-}): Promise<any> {
+}): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -246,9 +246,9 @@ export async function updateRequeteDelivrance({
       }
     })
   );
-}
+};
 
-export async function updateChoixDelivrance(idRequete: string, choixDelivrance: string | null) {
+export const updateChoixDelivrance = async (idRequete: string, choixDelivrance: string | null) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -256,23 +256,23 @@ export async function updateChoixDelivrance(idRequete: string, choixDelivrance: 
       parameters: { choixDelivrance }
     })
   );
-}
+};
 
-export async function mettreAJourStatutApresSignature(idRequete: string, idSuiviDossier: string): Promise<any> {
+export const mettreAJourStatutApresSignature = async (idRequete: string, idSuiviDossier: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
       uri: `${URL_REQUETES_CREATION}/${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}${URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE}`
     })
   );
-}
+};
 
-export async function postSauvCourrierCreerActionMajStatutRequete(
+export const postSauvCourrierCreerActionMajStatutRequete = async (
   idRequete: string,
   statutRequete: StatutRequete,
   requete: Object,
   libelleAction?: string
-) {
+) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -285,9 +285,9 @@ export async function postSauvCourrierCreerActionMajStatutRequete(
       data: requete
     })
   );
-}
+};
 
-export async function postSauvegarderDocument(idRequete: string, documents: IDocumentReponse[]) {
+export const postSauvegarderDocument = async (idRequete: string, documents: IDocumentReponse[]) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -295,18 +295,18 @@ export async function postSauvegarderDocument(idRequete: string, documents: IDoc
       data: documents
     })
   );
-}
+};
 
-export function deleteDocumentsReponseApi(idRequete: string) {
+export const deleteDocumentsReponseApi = (idRequete: string) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.DELETE,
       uri: `${URL_DOCUMENT_REPONSE}/${idRequete}`
     })
   );
-}
+};
 
-export function postDocumentReponseApi(idRequete: string, documentsReponse: IDocumentReponse[]) {
+export const postDocumentReponseApi = (idRequete: string, documentsReponse: IDocumentReponse[]) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -317,17 +317,17 @@ export function postDocumentReponseApi(idRequete: string, documentsReponse: IDoc
       }
     })
   );
-}
-export function getPieceComplementInformationById(idPiece: string): Promise<any> {
+};
+export const getPieceComplementInformationById = (idPiece: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
       uri: `${URL_REQUETES}${URL_PIECES_COMPLEMENT_INFORMATION}/${idPiece}`
     })
   );
-}
+};
 
-export function postPieceComplementInformationApi(idRequete: string, pieceComplementInformation: any) {
+export const postPieceComplementInformationApi = (idRequete: string, pieceComplementInformation: any) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -335,18 +335,18 @@ export function postPieceComplementInformationApi(idRequete: string, pieceComple
       data: pieceComplementInformation
     })
   );
-}
+};
 
-export function getPieceJustificativeById(idPiece: string): Promise<any> {
+export const getPieceJustificativeById = (idPiece: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
       uri: `${URL_REQUETES}${URL_PIECES_JUSTIFICATIVES}/${idPiece}`
     })
   );
-}
+};
 
-export function postPieceJustificative(idRequete: string, pieceJustificative: IPieceJustificative) {
+export const postPieceJustificative = (idRequete: string, pieceJustificative: IPieceJustificative) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -354,9 +354,9 @@ export function postPieceJustificative(idRequete: string, pieceJustificative: IP
       data: pieceJustificative
     })
   );
-}
+};
 
-export function postCreationAction(idRequete: string, libelleAction: string) {
+export const postCreationAction = (idRequete: string, libelleAction: string) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -367,9 +367,13 @@ export function postCreationAction(idRequete: string, libelleAction: string) {
       }
     })
   );
-}
+};
 
-export function postCreationActionEtMiseAjourStatut(idRequete: string, libelleAction: string, statutRequete: keyof typeof EStatutRequete) {
+export const postCreationActionEtMiseAjourStatut = (
+  idRequete: string,
+  libelleAction: string,
+  statutRequete: keyof typeof EStatutRequete
+) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -381,9 +385,9 @@ export function postCreationActionEtMiseAjourStatut(idRequete: string, libelleAc
       }
     })
   );
-}
+};
 
-export function postRetourValideur(idRequete: string, statutDemande: string, libelleAction: string, texteObservation: string) {
+export const postRetourValideur = (idRequete: string, statutDemande: string, libelleAction: string, texteObservation: string) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -396,9 +400,9 @@ export function postRetourValideur(idRequete: string, statutDemande: string, lib
       }
     })
   );
-}
+};
 
-export function postIgnorerRequete(idRequete: string, texteObservation: string) {
+export const postIgnorerRequete = (idRequete: string, texteObservation: string) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -409,36 +413,36 @@ export function postIgnorerRequete(idRequete: string, texteObservation: string) 
       }
     })
   );
-}
+};
 
-export function getPrendreEnChargeRequeteSuivante(): Promise<any> {
+export const getPrendreEnChargeRequeteSuivante = (): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
       uri: URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE
     })
   );
-}
+};
 
-export async function getOptionsCourriers(): Promise<any> {
+export const getOptionsCourriers = async (): Promise<any> => {
   return getApiManager().then(api =>
     api.fetchCache({
       method: HttpMethod.GET,
       uri: `${URL_NOMENCLATURE}${URL_OPTION_COURRIER}`
     })
   );
-}
+};
 
-export async function getReponsesReqInfo(): Promise<any> {
+export const getReponsesReqInfo = async (): Promise<any> => {
   return getApiManager().then(api =>
     api.fetchCache({
       method: HttpMethod.GET,
       uri: `${URL_NOMENCLATURE}${URL_REPONSE_REQ_INFO}`
     })
   );
-}
+};
 
-export async function sauvegarderReponseReqInfo(idRequete: string, corpsMailReponse: string, idReponse?: string): Promise<any> {
+export const sauvegarderReponseReqInfo = async (idRequete: string, corpsMailReponse: string, idReponse?: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -446,9 +450,9 @@ export async function sauvegarderReponseReqInfo(idRequete: string, corpsMailRepo
       data: { corpsMail: corpsMailReponse, idReponse }
     })
   );
-}
+};
 
-export function postObservation(idRequete: string, texteObservation: string, idObservation?: string): Promise<any> {
+export const postObservation = (idRequete: string, texteObservation: string, idObservation?: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -460,9 +464,9 @@ export function postObservation(idRequete: string, texteObservation: string, idO
       }
     })
   );
-}
+};
 
-export function deleteObservation(idObservation: string): Promise<any> {
+export const deleteObservation = (idObservation: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.DELETE,
@@ -472,9 +476,9 @@ export function deleteObservation(idObservation: string): Promise<any> {
       }
     })
   );
-}
+};
 
-export function updateDocumentMention(id: string, mentionsRetirees?: string[]): Promise<any> {
+export const updateDocumentMention = (id: string, mentionsRetirees?: string[]): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -482,9 +486,9 @@ export function updateDocumentMention(id: string, mentionsRetirees?: string[]): 
       data: mentionsRetirees ?? []
     })
   );
-}
+};
 
-export function deleteDocumentComplementaire(idDocumentReponse: string, idRequete: string): Promise<any> {
+export const deleteDocumentComplementaire = (idDocumentReponse: string, idRequete: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.DELETE,
@@ -494,9 +498,9 @@ export function deleteDocumentComplementaire(idDocumentReponse: string, idRequet
       }
     })
   );
-}
+};
 
-export function postMessageRetourSDANFEtUpdateStatutRequete(idRequete: string, message: IEchange) {
+export const postMessageRetourSDANFEtUpdateStatutRequete = (idRequete: string, message: IEchange) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -507,7 +511,7 @@ export function postMessageRetourSDANFEtUpdateStatutRequete(idRequete: string, m
       data: message
     })
   );
-}
+};
 
 export const patchMiseAJourLibellePJ = (idPJ: string, nouveauLibelle: string): Promise<any> =>
   getApiManager().then(api =>

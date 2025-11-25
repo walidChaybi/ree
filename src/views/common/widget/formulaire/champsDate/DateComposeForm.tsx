@@ -56,7 +56,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
 
   const { dateMini, dateMaxi } = getBornesDates(props);
 
-  function buildDateSaisie(type: ChampDateModifie, value: string) {
+  const buildDateSaisie = (type: ChampDateModifie, value: string) => {
     const newDate = { ...dateSaisie };
     switch (type) {
       case ChampDateModifie.JOUR:
@@ -76,37 +76,37 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
     if (props.onChange) {
       props.onChange(newDate, type);
     }
-  }
+  };
 
-  function jourChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const jourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     traiteCarAutorises(e.target, digitSeulement);
     traiteDepassementJour(e.target);
     focusApresProchainChamps(e);
     buildDateSaisie(ChampDateModifie.JOUR, e.target.value);
-  }
+  };
 
-  function moisChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const moisChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     traiteCarAutorises(e.target, digitSeulement);
     traiteDepassementMois(e.target);
     focusApresProchainChamps(e);
     buildDateSaisie(ChampDateModifie.MOIS, e.target.value);
-  }
+  };
 
-  function anneeChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const anneeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     traiteCarAutorises(e.target, digitSeulement);
     buildDateSaisie(ChampDateModifie.ANNEE, e.target.value);
-  }
+  };
 
-  function heureChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const heureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     traiteCarAutorises(e.target, digitSeulement);
     focusApresProchainChamps(e);
-  }
+  };
 
-  function minuteChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const minuteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     traiteCarAutorises(e.target, digitSeulement);
-  }
+  };
 
-  function videChamps(e: any): void {
+  const videChamps = (e: any): void => {
     e.preventDefault();
     executeEnDiffere(() => {
       setDateSaisie({});
@@ -118,7 +118,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
       props.formik.setFieldValue(withNamespace(props.nomDate, ANNEE), "");
       props.formik.setFieldTouched(props.nomDate, false, false);
     });
-  }
+  };
 
   // Par défaut la crois de suppression est affichée
   const showCroixSuppression = estCroixSuppressionAffichee(props);
@@ -239,19 +239,19 @@ const onDatePickerValueChange = (props: any, date: Date, setDateSaisie: any) => 
   });
 };
 
-function estCroixSuppressionAffichee(props: React.PropsWithChildren<DateComposeFormProps>) {
+const estCroixSuppressionAffichee = (props: React.PropsWithChildren<DateComposeFormProps>) => {
   return props.showCroixSuppression ?? true;
-}
+};
 
-function getBornesDates(props: React.PropsWithChildren<DateComposeFormProps>) {
+const getBornesDates = (props: React.PropsWithChildren<DateComposeFormProps>) => {
   const dateMini = props.anneeMin ? new Date(`${props.anneeMin}-01-01`) : undefined;
 
   const dateMaxi = props.anneeMax ? new Date(`${props.anneeMax}-12-31`) : undefined;
   return { dateMini, dateMaxi };
-}
+};
 
-function estDesactive(estDesactivationGlobale = false, estChampDesactive = false) {
+const estDesactive = (estDesactivationGlobale = false, estChampDesactive = false) => {
   return estDesactivationGlobale || estChampDesactive;
-}
+};
 
 export default connect<ComponentProps>(DateComposeForm);

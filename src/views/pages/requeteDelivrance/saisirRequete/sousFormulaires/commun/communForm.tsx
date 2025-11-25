@@ -2,8 +2,7 @@ import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
 import { NB_CARACT_MAX_SAISIE } from "@widget/formulaire/utils/FormUtil";
-import React from "react";
-export function getBlockRaisonSocialeNomPrenom(
+export const getBlockRaisonSocialeNomPrenom = (
   raisonSocialeWithNamespace: string,
   libelleChampRaisonSociale: string,
   nomWithNamespace: string,
@@ -11,7 +10,7 @@ export function getBlockRaisonSocialeNomPrenom(
   prenomWithNamespace: string,
   libelleChampPrenom: string,
   formik: any
-) {
+) => {
   return (
     <>
       <InputField
@@ -28,10 +27,8 @@ export function getBlockRaisonSocialeNomPrenom(
         name={prenomWithNamespace}
         label={libelleChampPrenom}
         maxLength={NB_CARACT_MAX_SAISIE}
-        onBlur={e =>
-          sortieChampPremiereLettreEnMajuscule(e, formik, prenomWithNamespace)
-        }
+        onBlur={e => sortieChampPremiereLettreEnMajuscule(e, formik, prenomWithNamespace)}
       />
     </>
   );
-}
+};

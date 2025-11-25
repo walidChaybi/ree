@@ -50,7 +50,7 @@ interface ISauvegardeRMCApiHookResultat {
   estValide: boolean;
 }
 
-export function useSauvegardeRMCApiHook(params?: ISauvegardeRMCApiHookParams): ISauvegardeRMCApiHookResultat | undefined {
+export const useSauvegardeRMCApiHook = (params?: ISauvegardeRMCApiHookParams): ISauvegardeRMCApiHookResultat | undefined => {
   const [resultat, setResultat] = useState<ISauvegardeRMCApiHookResultat>();
   useEffect(() => {
     if (params) {
@@ -70,9 +70,9 @@ export function useSauvegardeRMCApiHook(params?: ISauvegardeRMCApiHookParams): I
   }, [params]);
 
   return resultat;
-}
+};
 
-function mapPersonneEtActeSelectionne(params: ISauvegardeRMCApiHookParams): ISauvegardePersonneEtActeSelectionneDto {
+const mapPersonneEtActeSelectionne = (params: ISauvegardeRMCApiHookParams): ISauvegardePersonneEtActeSelectionneDto => {
   const personnes = params.dataPersonnesSelectionnees.reduce<IDetailsPersonnesSauvegardeesDto[]>((res, personne) => {
     const role = RolePersonneSauvegardee.getEnumFromLibelle(personne.role);
     if (role) {
@@ -104,7 +104,7 @@ function mapPersonneEtActeSelectionne(params: ISauvegardeRMCApiHookParams): ISau
     personneSauvegardeeDtos: personnes,
     piecesJustificatifsSauvegardeeDtos: acteEtInscription
   };
-}
+};
 
 const mapNatureActeOuInscription = (nature?: string, reference?: string): string | NatureActeEtinscription | undefined => {
   if (nature && estActe(nature)) {

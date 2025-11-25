@@ -24,7 +24,7 @@ import { DEUX, UN, estNonRenseigne, estRenseigne, getNombreOuUndefined } from "@
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { IExtraitSaisiAEnvoyer } from "../../../../../../../common/hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 
-function retirePrenomVide(prenomsSaisie?: Prenoms) {
+const retirePrenomVide = (prenomsSaisie?: Prenoms) => {
   const prenoms = [];
   for (const prenom in prenomsSaisie) {
     if (prenomsSaisie[prenom] !== "") {
@@ -33,12 +33,12 @@ function retirePrenomVide(prenomsSaisie?: Prenoms) {
   }
 
   return prenoms;
-}
+};
 
-export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
+export const mappingFormulaireSaisirExtraitVersExtraitAEnvoyer = (
   saisiExtrait: ISaisieExtraitForm,
   acte: FicheActe
-): IExtraitSaisiAEnvoyer {
+): IExtraitSaisiAEnvoyer => {
   const extraitSaisiAEnvoyer = {} as IExtraitSaisiAEnvoyer;
 
   extraitSaisiAEnvoyer.natureActe = acte.nature;
@@ -89,12 +89,12 @@ export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
   }
 
   return nettoyerAttributsDto(extraitSaisiAEnvoyer);
-}
+};
 
-function paysSaisieEtrangerActiveEtPasRenseigneEtAuMoinsVilleOuRegionSaisie(
+const paysSaisieEtrangerActiveEtPasRenseigneEtAuMoinsVilleOuRegionSaisie = (
   titulaireEvtSaisi?: IEvenementForm,
   parentEvtSaisi?: IParentNaissanceForm
-): boolean {
+): boolean => {
   const lieuOuEvenementNaissance = titulaireEvtSaisi?.lieuEvenement || parentEvtSaisi?.lieuNaissance;
 
   return (
@@ -102,29 +102,29 @@ function paysSaisieEtrangerActiveEtPasRenseigneEtAuMoinsVilleOuRegionSaisie(
     villeOuRegionEstSaisie(lieuOuEvenementNaissance) &&
     paysEtrangerActive(lieuOuEvenementNaissance)
   );
-}
+};
 
-function paysEtrangerActive(lieuEvenementOuNaissance?: ILieuEvenementForm): boolean {
+const paysEtrangerActive = (lieuEvenementOuNaissance?: ILieuEvenementForm): boolean => {
   return lieuEvenementOuNaissance?.EtrangerFrance === EtrangerFrance.getKey(EtrangerFrance.ETRANGER);
-}
+};
 
-function villeOuRegionEstSaisie(lieuEvenementOuNaissance?: ILieuEvenementForm): boolean {
+const villeOuRegionEstSaisie = (lieuEvenementOuNaissance?: ILieuEvenementForm): boolean => {
   return estRenseigne(lieuEvenementOuNaissance?.ville) || estRenseigne(lieuEvenementOuNaissance?.regionDepartement);
-}
+};
 
-function mapDonneesComplementairesPlurilingueNomApresMariage(
+const mapDonneesComplementairesPlurilingueNomApresMariage = (
   sexe: keyof typeof ESexe | undefined,
   donneesComplementairesPlurilingueSaisies?: IDonneesComplementairesPlurilingueForm
-): string {
+): string => {
   if (sexe === "MASCULIN") {
     return donneesComplementairesPlurilingueSaisies?.nomApresMariageEpoux ?? "";
   } else if (sexe === "FEMININ") {
     return donneesComplementairesPlurilingueSaisies?.nomApresMariageEpouse ?? "";
   }
   return "";
-}
+};
 
-function mapTitulaireNaissanceEtParents(acte: FicheActe, titulaireEvtSaisi?: ITitulaireEvtForm): ITitulaireActeDto | undefined {
+const mapTitulaireNaissanceEtParents = (acte: FicheActe, titulaireEvtSaisi?: ITitulaireEvtForm): ITitulaireActeDto | undefined => {
   let titulaireAEnvoyer: ITitulaireActeDto | undefined;
 
   if (titulaireEvtSaisi) {
@@ -154,9 +154,9 @@ function mapTitulaireNaissanceEtParents(acte: FicheActe, titulaireEvtSaisi?: ITi
     }
   }
   return titulaireAEnvoyer;
-}
+};
 
-function saisirPaysNaissanceInconnu(titulaireAEnvoyer: ITitulaireActeDto, titulaireEvtSaisi?: ITitulaireEvtForm): ITitulaireActeDto {
+const saisirPaysNaissanceInconnu = (titulaireAEnvoyer: ITitulaireActeDto, titulaireEvtSaisi?: ITitulaireEvtForm): ITitulaireActeDto => {
   const copieTitulaireAEnvoyer = { ...titulaireAEnvoyer };
   const saisirPaysInconnu = paysSaisieEtrangerActiveEtPasRenseigneEtAuMoinsVilleOuRegionSaisie(titulaireEvtSaisi?.evenement);
 
@@ -165,13 +165,13 @@ function saisirPaysNaissanceInconnu(titulaireAEnvoyer: ITitulaireActeDto, titula
   }
 
   return copieTitulaireAEnvoyer;
-}
+};
 
-function parentRenseigne(parentAdoptant?: IParentNaissanceForm): boolean {
+const parentRenseigne = (parentAdoptant?: IParentNaissanceForm): boolean => {
   return estRenseigne(parentAdoptant?.nomNaissance) || estRenseigne(parentAdoptant?.prenoms.prenom1);
-}
+};
 
-function mapEvenementNaissanceTitulaire(acte: FicheActe, evenementNaissanceSaisi?: IEvenementForm): IEvenement | undefined {
+const mapEvenementNaissanceTitulaire = (acte: FicheActe, evenementNaissanceSaisi?: IEvenementForm): IEvenement | undefined => {
   if (evenementNaissanceSaisi) {
     const evenementNaissanceTitulaire =
       acte.nature === "MARIAGE"
@@ -183,25 +183,25 @@ function mapEvenementNaissanceTitulaire(acte: FicheActe, evenementNaissanceSaisi
 
     return mapEvenement(evenementNaissanceTitulaire, acte.nature === "NAISSANCE");
   }
-}
+};
 
-function mapDetailMariage(contratMariageSaisi?: IContratMariageForm): IDetailMariageDto {
+const mapDetailMariage = (contratMariageSaisi?: IContratMariageForm): IDetailMariageDto => {
   return {
     contrat: contratMariageSaisi?.texte ?? "",
     existenceContrat: (contratMariageSaisi?.existence as keyof typeof EExistenceContratMariage) || "NON"
   };
-}
+};
 
-function mapParentAdoptant(parentSaisi: IParentNaissanceForm, ordre: number): IFiliationDto {
+const mapParentAdoptant = (parentSaisi: IParentNaissanceForm, ordre: number): IFiliationDto => {
   return mapParent(ordre, parentSaisi, ELienParente.PARENT_ADOPTANT);
-}
+};
 
-function mapParent(
+const mapParent = (
   ordre: number,
   parentSaisi?: IParentNaissanceForm,
   lienParente = ELienParente.PARENT,
   estActeNaissance = false
-): IFiliationDto {
+): IFiliationDto => {
   const estPaysInconnu = paysSaisieEtrangerActiveEtPasRenseigneEtAuMoinsVilleOuRegionSaisie(undefined, parentSaisi);
 
   const parent = {
@@ -225,9 +225,9 @@ function mapParent(
   }
 
   return parent as IFiliationDto;
-}
+};
 
-function mapTitulaire(titulaireSaisi: ITitulaireEvtForm): ITitulaireActeDto {
+const mapTitulaire = (titulaireSaisi: ITitulaireEvtForm): ITitulaireActeDto => {
   return {
     nom: titulaireSaisi.nomNaissance,
     nomPartie1: titulaireSaisi.nomSecable?.nomPartie1,
@@ -238,9 +238,9 @@ function mapTitulaire(titulaireSaisi: ITitulaireEvtForm): ITitulaireActeDto {
     sexe: titulaireSaisi.sexe ?? undefined,
     age: titulaireSaisi.evenement?.dateNaissanceOuAgeDe?.age ?? undefined
   } as ITitulaireActeDto;
-}
+};
 
-function mapEvenement(evenementSaisi: IEvenementForm | undefined, lieuEvenementEstObligatoire: boolean): IEvenement {
+const mapEvenement = (evenementSaisi: IEvenementForm | undefined, lieuEvenementEstObligatoire: boolean): IEvenement => {
   let lieuReprise = evenementSaisi?.lieuEvenement?.lieuComplet ?? "";
   let ville = evenementSaisi?.lieuEvenement?.ville ?? "";
   let arrondissement = evenementSaisi?.lieuEvenement?.arrondissement ?? "";
@@ -298,9 +298,9 @@ function mapEvenement(evenementSaisi: IEvenementForm | undefined, lieuEvenementE
     heure: getNombreOuUndefined(evenementSaisi?.dateEvenement?.nbHeure),
     minute: getNombreOuUndefined(evenementSaisi?.dateEvenement?.nbMinute)
   };
-}
+};
 
-function mapNomSexeDuTitulaireActeEtParents(titulaireActe: TitulaireActe | null): ITitulaireActeDto {
+const mapNomSexeDuTitulaireActeEtParents = (titulaireActe: TitulaireActe | null): ITitulaireActeDto => {
   return {
     nom: titulaireActe?.nom,
     sexe: titulaireActe?.sexe ?? "INCONNU",
@@ -311,4 +311,4 @@ function mapNomSexeDuTitulaireActeEtParents(titulaireActe: TitulaireActe | null)
       ordre: filiation.ordre
     }))
   } as ITitulaireActeDto;
-}
+};

@@ -16,7 +16,7 @@ import { RECEContextData } from "../../../../../../contexts/RECEContextProvider"
 import SpecificationRC from "../specificationInscriptions/specificationRC";
 import { specificationRCA } from "../specificationInscriptions/specificationRCA";
 
-export function getNomDocument(typeCertificat: ETypeRcRcaPacs): string | undefined {
+export const getNomDocument = (typeCertificat: ETypeRcRcaPacs): string | undefined => {
   let nomDocument: string | undefined;
   switch (typeCertificat) {
     case ETypeRcRcaPacs.PACS:
@@ -32,9 +32,9 @@ export function getNomDocument(typeCertificat: ETypeRcRcaPacs): string | undefin
       break;
   }
   return nomDocument;
-}
+};
 
-export function getTypeDocument(typeCertificat: ETypeRcRcaPacs): string | undefined {
+export const getTypeDocument = (typeCertificat: ETypeRcRcaPacs): string | undefined => {
   let uuidTypeDocument: string | undefined;
   switch (typeCertificat) {
     case ETypeRcRcaPacs.PACS:
@@ -50,9 +50,9 @@ export function getTypeDocument(typeCertificat: ETypeRcRcaPacs): string | undefi
       break;
   }
   return uuidTypeDocument;
-}
+};
 
-export function getTypeFiche(typeCertificat: ETypeRcRcaPacs): ETypeFiche | undefined {
+export const getTypeFiche = (typeCertificat: ETypeRcRcaPacs): ETypeFiche | undefined => {
   let typeFiche: ETypeFiche | undefined;
   switch (typeCertificat) {
     case ETypeRcRcaPacs.PACS:
@@ -68,7 +68,7 @@ export function getTypeFiche(typeCertificat: ETypeRcRcaPacs): ETypeFiche | undef
       break;
   }
   return typeFiche;
-}
+};
 
 export const useConstructionCertificatPacsRcRca = (
   typeCertificat: ETypeRcRcaPacs,

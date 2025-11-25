@@ -10,10 +10,10 @@ interface ISuppressionObservationResultat {
   resultat: boolean;
 }
 
-export function useSuppressionObservationApi(params?: ISuppressionObservationParams) {
+export const useSuppressionObservationApi = (params?: ISuppressionObservationParams) => {
   const [resultat, setResultat] = useState<ISuppressionObservationResultat | undefined>();
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       if (params && params.idObservation) {
         try {
           const result = await deleteObservation(params.idObservation);
@@ -26,9 +26,9 @@ export function useSuppressionObservationApi(params?: ISuppressionObservationPar
           });
         }
       }
-    }
+    };
     fetchData();
   }, [params]);
 
   return resultat;
-}
+};

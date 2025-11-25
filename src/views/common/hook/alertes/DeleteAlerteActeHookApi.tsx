@@ -11,7 +11,7 @@ interface DeleteAlerteActeApiHookResultat {
   status: boolean;
 }
 
-export function useDeleteAlerteActeApiHook(parameters?: DeleteAlerteActeApiHookParameters) {
+export const useDeleteAlerteActeApiHook = (parameters?: DeleteAlerteActeApiHookParameters) => {
   const [resultat, setResultat] = useState<DeleteAlerteActeApiHookResultat>();
   useEffect(() => {
     if (parameters) {
@@ -30,4 +30,4 @@ export function useDeleteAlerteActeApiHook(parameters?: DeleteAlerteActeApiHookP
     }
   }, [parameters]);
   return resultat;
-}
+};

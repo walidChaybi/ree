@@ -34,9 +34,9 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({ requete, 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setIsFenetreOuverte]);
 
-  function onClick(infoDoc: InfoDocumentAffiche) {
+  const onClick = (infoDoc: InfoDocumentAffiche) => {
     setDocumentAffiche(infoDoc);
-  }
+  };
 
   // Gestion de l'affiche du document
   useEffect(() => {

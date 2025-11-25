@@ -80,12 +80,12 @@ import {
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "../../../../../../../requeteDelivrance/saisirRequete/hook/mappingCommun";
 import { estJourMoisVide, filtrePrenomsFrancises, filtrePrenomsNonFrancises, getNomSecable } from "../SaisiePostulantFormUtils";
 
-export function mappingTitulairesVersFormulairePostulant(
+export const mappingTitulairesVersFormulairePostulant = (
   titulaire: ITitulaireRequeteCreation,
   parentUn?: ITitulaireRequeteCreation,
   parentDeux?: ITitulaireRequeteCreation,
   nature?: string
-): ISaisieProjetPostulantForm {
+): ISaisieProjetPostulantForm => {
   const estOrdreInverseParentsFormulaire =
     (!parentUn || !Sexe.estMasculin(Sexe.getEnumFor(parentUn.sexe))) && (!parentDeux || !Sexe.estFeminin(Sexe.getEnumFor(parentDeux.sexe)));
   return {
@@ -99,16 +99,16 @@ export function mappingTitulairesVersFormulairePostulant(
     [AUTRES]: mapSaisieAutres(titulaire),
     [ACQUISITION]: mapSaisieAcquisition(titulaire, nature)
   };
-}
+};
 
-function mapSaisieProjet(titulaire: ITitulaireRequeteCreation): ISaisieProjetSousForm {
+const mapSaisieProjet = (titulaire: ITitulaireRequeteCreation): ISaisieProjetSousForm => {
   return {
     [TYPE]: getValeurOuVide(QualiteFamille.getEnumFromTitulaire(titulaire)?.libelle),
     [NATURE_ACTE]: NatureProjetEtablissement.NAISSANCE.libelle
   };
-}
+};
 
-function mapSaisiePostulant(titulaire: ITitulaireRequeteCreation): ISaisiePostulantSousForm {
+const mapSaisiePostulant = (titulaire: ITitulaireRequeteCreation): ISaisiePostulantSousForm => {
   const retenueSdanf = titulaire.retenueSdanf || {};
   const nom = getValeurOuVide(retenueSdanf.nomNaissance);
   return {
@@ -122,9 +122,9 @@ function mapSaisiePostulant(titulaire: ITitulaireRequeteCreation): ISaisiePostul
     [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissance(retenueSdanf),
     [ADOPTE_PAR]: false
   };
-}
+};
 
-export function mapFrancisationPostulant(titulaire: ITitulaireRequeteCreation): ISaisieFrancisationPostulantSousForm {
+export const mapFrancisationPostulant = (titulaire: ITitulaireRequeteCreation): ISaisieFrancisationPostulantSousForm => {
   const nomFrancise = titulaire.retenueSdanf?.nomDemandeFrancisation;
 
   // TODO: A modifier lorsque le refacto sur les deux listes de prénoms francisés / non-francisés renvoyé par le back aura été fait.
@@ -142,9 +142,9 @@ export function mapFrancisationPostulant(titulaire: ITitulaireRequeteCreation): 
     [NOM]: nomFrancise,
     [PRENOMS]: prenoms
   };
-}
+};
 
-function mapSaisieParent(parent?: ITitulaireRequeteCreation): ISaisieParentSousForm | undefined {
+const mapSaisieParent = (parent?: ITitulaireRequeteCreation): ISaisieParentSousForm | undefined => {
   const retenueSdanf = parent?.retenueSdanf || {};
   return parent
     ? {
@@ -161,9 +161,9 @@ function mapSaisieParent(parent?: ITitulaireRequeteCreation): ISaisieParentSousF
         [DATE_NAISSANCE]: mapSaisieDateNaissanceEtAgeDe(),
         [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissanceParent()
       };
-}
+};
 
-function mapSaisieAutres(titulaire: ITitulaireRequeteCreation): ISaisieAutresSousForm {
+const mapSaisieAutres = (titulaire: ITitulaireRequeteCreation): ISaisieAutresSousForm => {
   const domiciliation = titulaire.domiciliation;
   return {
     [ADRESSE]: EtrangerFrance.getKey(EtrangerFrance.getEnumFromPays(domiciliation?.pays)),
@@ -175,9 +175,9 @@ function mapSaisieAutres(titulaire: ITitulaireRequeteCreation): ISaisieAutresSou
     [DECLARANT]: "",
     [AUTRE_DECLARANT]: ""
   };
-}
+};
 
-function mapSaisieAcquisition(titulaire: ITitulaireRequeteCreation, nature?: string): ISaisieAcquisitionSousForm {
+const mapSaisieAcquisition = (titulaire: ITitulaireRequeteCreation, nature?: string): ISaisieAcquisitionSousForm => {
   const decret = titulaire.decret;
   return {
     [NATURE]: nature ? TypeNature.getKey(TypeNature.getEnumFor(nature)) : "",
@@ -187,26 +187,26 @@ function mapSaisieAcquisition(titulaire: ITitulaireRequeteCreation, nature?: str
       [ANNEE]: decret?.dateSignature?.annee || ""
     }
   };
-}
+};
 
-function mapSaisieNomSecable(retenueSdanf: IRetenueSdanf): ISaisieNomSecable {
+const mapSaisieNomSecable = (retenueSdanf: IRetenueSdanf): ISaisieNomSecable => {
   const nomSecable = getNomSecable(retenueSdanf);
   return {
     [SECABLE]: nomSecable.nomPartie1 ? ["true"] : [],
     [NOM_PARTIE1]: nomSecable.nomPartie1,
     [NOM_PARTIE2]: nomSecable.nomPartie2
   };
-}
+};
 
-function mapSaisiePrenoms(prenoms: IPrenomOrdonnes[]): ISaisiePrenoms {
+const mapSaisiePrenoms = (prenoms: IPrenomOrdonnes[]): ISaisiePrenoms => {
   prenoms = formatPrenoms(filtrePrenomsNonFrancises(prenoms));
   return {
     [PAS_DE_PRENOM_CONNU]: prenoms.length === 0 ? [PAS_DE_PRENOM_CONNU] : "false",
     [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(prenoms)
   };
-}
+};
 
-function mapAnalyseMarginale(retenueSdanf: IRetenueSdanf): ISaisieAnalyseMarginale {
+const mapAnalyseMarginale = (retenueSdanf: IRetenueSdanf): ISaisieAnalyseMarginale => {
   const nom = retenueSdanf.nomDemandeFrancisation || getValeurOuVide(retenueSdanf.nomNaissance);
   let prenoms = filtrePrenomsFrancises(retenueSdanf.prenomsRetenu);
   if (prenoms.length === 0) {
@@ -217,9 +217,9 @@ function mapAnalyseMarginale(retenueSdanf: IRetenueSdanf): ISaisieAnalyseMargina
     [NOM]: nom.toUpperCase(),
     [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(prenoms)
   };
-}
+};
 
-function mapSaisieDateNaissance(retenueSdanf?: IRetenueSdanf): ISaisieDate {
+const mapSaisieDateNaissance = (retenueSdanf?: IRetenueSdanf): ISaisieDate => {
   let mois;
   let jour;
   if (estJourMoisVide(retenueSdanf?.jourNaissance, retenueSdanf?.moisNaissance, retenueSdanf?.anneeNaissance)) {
@@ -234,9 +234,9 @@ function mapSaisieDateNaissance(retenueSdanf?: IRetenueSdanf): ISaisieDate {
     [MOIS]: rempliAGaucheAvecZero(mois),
     [ANNEE]: numberToString(retenueSdanf?.anneeNaissance)
   };
-}
+};
 
-function mapSaisieDateNaissanceEtAgeDe(retenueSdanf?: IRetenueSdanf): ISaisieDateNaissanceOuAgeDe {
+const mapSaisieDateNaissanceEtAgeDe = (retenueSdanf?: IRetenueSdanf): ISaisieDateNaissanceOuAgeDe => {
   const mapSaisieNaissance = mapSaisieDateNaissance(retenueSdanf);
   return {
     [DATE]: {
@@ -245,18 +245,18 @@ function mapSaisieDateNaissanceEtAgeDe(retenueSdanf?: IRetenueSdanf): ISaisieDat
     // TODO: remplir avec les données nécéssaires pour le calcul de l'age
     [AGE]: ""
   };
-}
+};
 
-function mapSaisieLieuNaissance(retenueSdanf?: IRetenueSdanf): ISaisieLieuNaissance {
+const mapSaisieLieuNaissance = (retenueSdanf?: IRetenueSdanf): ISaisieLieuNaissance => {
   return {
     [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(retenueSdanf?.villeNaissance),
     [ETAT_CANTON_PROVINCE]: "",
     [PAYS_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(retenueSdanf?.paysNaissance),
     [NE_DANS_MARIAGE]: "NON"
   };
-}
+};
 
-function mapSaisieLieuNaissanceParent(retenueSdanf?: IRetenueSdanf): ISaisieLieuNaissanceParent {
+const mapSaisieLieuNaissanceParent = (retenueSdanf?: IRetenueSdanf): ISaisieLieuNaissanceParent => {
   return {
     [LIEU_DE_NAISSANCE]: EtrangerFrance.getEnumFromPays(retenueSdanf?.paysNaissance).libelle.toUpperCase(),
     [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(retenueSdanf?.villeNaissance),
@@ -265,11 +265,11 @@ function mapSaisieLieuNaissanceParent(retenueSdanf?: IRetenueSdanf): ISaisieLieu
     [REGION_NAISSANCE]: "",
     [PAYS_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(retenueSdanf?.paysNaissance)
   };
-}
+};
 
-function formatPrenoms(prenoms: IPrenomOrdonnes[]): IPrenomOrdonnes[] {
+const formatPrenoms = (prenoms: IPrenomOrdonnes[]): IPrenomOrdonnes[] => {
   return prenoms.map(prenom => ({
     prenom: formatMajusculesMinusculesMotCompose(prenom.prenom),
     numeroOrdre: prenom.numeroOrdre
   }));
-}
+};

@@ -76,7 +76,7 @@ const AdresseForm: React.FC<SubFormProps & AdresseFormProps> = ({ affichageSousF
   const communeWithNamespace = withNamespace(props.nom, COMMUNE);
   const paysWithNamespace = withNamespace(props.nom, PAYS);
 
-  function getAddresseForm(): JSX.Element {
+  const getAddresseForm = (): JSX.Element => {
     return (
       <div className="AdresseForm">
         <InputField
@@ -144,7 +144,7 @@ const AdresseForm: React.FC<SubFormProps & AdresseFormProps> = ({ affichageSousF
         )}
       </div>
     );
-  }
+  };
 
   return <>{affichageSousFormulaire ? <SousFormulaire titre={props.titre}>{getAddresseForm()}</SousFormulaire> : getAddresseForm()}</>;
 };

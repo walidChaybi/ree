@@ -54,9 +54,9 @@ export const ReinitialiserValiderBoutons: React.FC<IReinitialiserValiderBoutonsP
 type TReinitialiserValiderFormBoutonsProps = IReinitialiserValiderBoutonsProps & FormikComponentProps;
 
 const _ReinitialiserValiderFormBoutons: React.FC<TReinitialiserValiderFormBoutonsProps> = props => {
-  function getReinitialiserDisabled() {
+  const getReinitialiserDisabled = () => {
     return props.reInitialiserDisabled ?? !props.formik.dirty;
-  }
+  };
 
   return (
     <ReinitialiserValiderBoutons

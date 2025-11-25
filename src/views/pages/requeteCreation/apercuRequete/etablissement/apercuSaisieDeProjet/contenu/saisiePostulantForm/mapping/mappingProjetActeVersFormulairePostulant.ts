@@ -119,11 +119,11 @@ export const mappingProjetActeVersFormulairePostulant = (
   };
 };
 
-function mapSaisiePostulant(
+const mapSaisiePostulant = (
   titulaire?: ITitulaireProjetActe,
   analysesMarginales?: IProjetAnalyseMarginale[],
   evenement?: IEvenement
-): ISaisiePostulantSousForm {
+): ISaisiePostulantSousForm => {
   return {
     [NOM]: titulaire?.nom?.toUpperCase() ?? "",
     [NOM_SECABLE]: {
@@ -139,9 +139,9 @@ function mapSaisiePostulant(
     [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissance(evenement, titulaire?.naissance?.neDansLeMariage),
     [ADOPTE_PAR]: titulaire?.filiations.find(filiation => filiation.naissance?.neDansLeMariage)?.naissance?.neDansLeMariage || false
   };
-}
+};
 
-function mapSaisieParent(parent?: IFiliationProjetActeTranscrit): ISaisieParentSousForm | undefined {
+const mapSaisieParent = (parent?: IFiliationProjetActeTranscrit): ISaisieParentSousForm | undefined => {
   return parent
     ? {
         [NOM]: getValeurOuVide(parent.nom).toUpperCase(),
@@ -157,9 +157,9 @@ function mapSaisieParent(parent?: IFiliationProjetActeTranscrit): ISaisieParentS
         [DATE_NAISSANCE]: mapSaisieDateNaissanceEtAgeDe(),
         [LIEU_DE_NAISSANCE]: mapSaisieLieuNaissanceParent()
       };
-}
+};
 
-function mapSaisieAutres(domicile?: IAdresse, declarant?: IDeclarant | null, reconnuPar?: string): ISaisieAutresSousForm {
+const mapSaisieAutres = (domicile?: IAdresse, declarant?: IDeclarant | null, reconnuPar?: string): ISaisieAutresSousForm => {
   return {
     [ADRESSE]: EtrangerFrance.getKey(EtrangerFrance.getEnumFromPays(domicile?.pays)),
     [VILLE]: formatPremieresLettresMajusculesNomCompose(domicile?.ville),
@@ -170,9 +170,9 @@ function mapSaisieAutres(domicile?: IAdresse, declarant?: IDeclarant | null, rec
     [DECLARANT]: TypeDeclarant.getKey(TypeDeclarant.getEnumFor(declarant?.identiteDeclarant ?? "")),
     [AUTRE_DECLARANT]: declarant?.complementDeclarant ?? ""
   };
-}
+};
 
-function mapSaisieAcquisition(decretNaturalisation?: IDecretNaturalisation | null): ISaisieAcquisitionSousForm {
+const mapSaisieAcquisition = (decretNaturalisation?: IDecretNaturalisation | null): ISaisieAcquisitionSousForm => {
   const dateCompose = DateUtils.getDateComposeFromDate(decretNaturalisation?.dateSignature);
 
   return {
@@ -183,16 +183,16 @@ function mapSaisieAcquisition(decretNaturalisation?: IDecretNaturalisation | nul
       [ANNEE]: dateCompose.annee ?? ""
     }
   };
-}
+};
 
-function mapSaisiePrenoms(prenoms: string[]): ISaisiePrenoms {
+const mapSaisiePrenoms = (prenoms: string[]): ISaisiePrenoms => {
   return {
     [PAS_DE_PRENOM_CONNU]: prenoms.length === ZERO || prenoms[ZERO] === SPC ? [PAS_DE_PRENOM_CONNU] : "false",
     [PRENOMS]: mapPrenoms(prenoms) || {}
   };
-}
+};
 
-function mapPrenoms(prenoms?: string[]): Prenoms | undefined {
+const mapPrenoms = (prenoms?: string[]): Prenoms | undefined => {
   return prenoms?.reduce(
     (valeursForm: Prenoms, prenomCourant: string, index: number) => ({
       ...valeursForm,
@@ -200,9 +200,9 @@ function mapPrenoms(prenoms?: string[]): Prenoms | undefined {
     }),
     {}
   );
-}
+};
 
-function mapAnalyseMarginale(analysesMarginales?: IProjetAnalyseMarginale[]): ISaisieAnalyseMarginale {
+const mapAnalyseMarginale = (analysesMarginales?: IProjetAnalyseMarginale[]): ISaisieAnalyseMarginale => {
   let titulaire: ITitulaireProjetActe | undefined = undefined;
   if (analysesMarginales?.[0]?.titulaires) {
     titulaire = analysesMarginales[ZERO].titulaires[ZERO];
@@ -211,17 +211,17 @@ function mapAnalyseMarginale(analysesMarginales?: IProjetAnalyseMarginale[]): IS
     [NOM]: titulaire?.nom?.toUpperCase() ?? "",
     [PRENOMS]: mapPrenoms(titulaire?.prenoms) || {}
   };
-}
+};
 
-function mapSaisieDateNaissance(naissance?: IEvenement): ISaisieDate {
+const mapSaisieDateNaissance = (naissance?: IEvenement): ISaisieDate => {
   return {
     [JOUR]: rempliAGaucheAvecZero(numberToString(naissance?.jour)),
     [MOIS]: rempliAGaucheAvecZero(numberToString(naissance?.mois)),
     [ANNEE]: numberToString(naissance?.annee)
   };
-}
+};
 
-function mapSaisieDateNaissanceEtAgeDe(evenement?: IEvenement, age?: number): ISaisieDateNaissanceOuAgeDe {
+const mapSaisieDateNaissanceEtAgeDe = (evenement?: IEvenement, age?: number): ISaisieDateNaissanceOuAgeDe => {
   const mapSaisieNaissance = mapSaisieDateNaissance(evenement);
   return {
     [DATE]: mapSaisieNaissance
@@ -231,18 +231,18 @@ function mapSaisieDateNaissanceEtAgeDe(evenement?: IEvenement, age?: number): IS
       : null,
     [AGE]: age ? `${age}` : ""
   };
-}
+};
 
-function mapSaisieLieuNaissance(naissance?: IEvenement, neDansLeMariage = false): ISaisieLieuNaissance {
+const mapSaisieLieuNaissance = (naissance?: IEvenement, neDansLeMariage = false): ISaisieLieuNaissance => {
   return {
     [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(naissance?.ville),
     [ETAT_CANTON_PROVINCE]: formatPremieresLettresMajusculesNomCompose(naissance?.region),
     [PAYS_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(naissance?.pays),
     [NE_DANS_MARIAGE]: neDansLeMariage ? "OUI" : "NON"
   };
-}
+};
 
-function mapSaisieLieuNaissanceParent(naissance?: IEvenement): ISaisieLieuNaissanceParent {
+const mapSaisieLieuNaissanceParent = (naissance?: IEvenement): ISaisieLieuNaissanceParent => {
   const saisieLieuNaissanceParent = {
     [LIEU_DE_NAISSANCE]: "",
     [VILLE_NAISSANCE]: formatPremieresLettresMajusculesNomCompose(naissance?.ville),
@@ -264,4 +264,4 @@ function mapSaisieLieuNaissanceParent(naissance?: IEvenement): ISaisieLieuNaissa
   }
 
   return saisieLieuNaissanceParent;
-}
+};

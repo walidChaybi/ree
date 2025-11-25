@@ -36,9 +36,9 @@ export const FILTRES_SERVICE_STATUTS_REQUETE_DELIVRANCE = StatutRequete.getOptio
   statutCourant => !STATUTS_REQUETE_A_EXCLURE.includes(StatutRequete.getEnumFromLibelle(statutCourant.libelle))
 );
 
-export function mappingFiltreServiceRequeteDelivranceVersFiltreDto(
+export const mappingFiltreServiceRequeteDelivranceVersFiltreDto = (
   filtre: IFiltreServiceRequeteDelivranceFormValues
-): IFiltreServiceRequeteDelivranceDto {
+): IFiltreServiceRequeteDelivranceDto => {
   return nettoyerAttributsDto<IFiltreServiceRequeteDelivranceDto>({
     sousType: filtre.sousType,
     provenance: filtre.provenance,
@@ -46,5 +46,5 @@ export function mappingFiltreServiceRequeteDelivranceVersFiltreDto(
     idService: filtre.attribueAuService?.cle || null,
     statuts: filtre.statut ? [filtre.statut] : FILTRES_SERVICE_STATUTS_REQUETE_DELIVRANCE.map(statut => statut.cle)
   });
-}
+};
 /* v8 ignore stop */

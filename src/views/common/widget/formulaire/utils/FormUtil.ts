@@ -46,17 +46,17 @@ export interface INomForm {
 export type SubFormProps = ISubForm & FormikComponentProps;
 
 /**@deprecated Nom pas très explicite, fonction trop simple, et permet sûrement de cacher des types any */
-export function withNamespace(nomParent: string, nomChamp: string) {
+export const withNamespace = (nomParent: string, nomChamp: string) => {
   return nomParent ? `${nomParent}.${nomChamp}` : nomChamp;
-}
+};
 
-export function reinitialiserChamps(prefixChamp: string, suffixChamps: string[], formik: FormikProps<FormikValues>): void {
+export const reinitialiserChamps = (prefixChamp: string, suffixChamps: string[], formik: FormikProps<FormikValues>): void => {
   for (const suffixChamp of suffixChamps) {
     formik.setFieldValue(withNamespace(prefixChamp, suffixChamp), "");
   }
-}
+};
 
-export function getLibelleParentFromSexe(numeroOrdre: number, saisie?: ISaisieParentSousForm) {
+export const getLibelleParentFromSexe = (numeroOrdre: number, saisie?: ISaisieParentSousForm) => {
   const sexeEnum = Sexe.getEnumFor(saisie?.sexe ?? "");
   switch (sexeEnum) {
     case Sexe.FEMININ:
@@ -66,13 +66,13 @@ export function getLibelleParentFromSexe(numeroOrdre: number, saisie?: ISaisiePa
     default:
       return `Parent ${numeroOrdre}`;
   }
-}
+};
 
 export const onBlurChampNumero = (e: React.ChangeEvent<HTMLInputElement>, formik: FormikProps<FormikValues>): void => {
   traiteEspace(e, formik.handleChange);
   formik.handleBlur(e);
 };
 
-export function compteNombreDePrenoms(prenoms?: Prenoms): number {
+export const compteNombreDePrenoms = (prenoms?: Prenoms): number => {
   return Object.values(prenoms || {}).reduce((resultat: number, prenom: string) => (prenom === "" ? resultat : resultat + 1), 0);
-}
+};

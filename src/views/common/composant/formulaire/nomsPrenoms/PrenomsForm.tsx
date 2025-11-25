@@ -23,15 +23,15 @@ enum TypeDeValeursParDefaut {
   VIDE = "VIDE"
 }
 
-export function genererDefaultValuesPrenoms(typeDeValeurParDefaut?: string) {
+export const genererDefaultValuesPrenoms = (typeDeValeurParDefaut?: string) => {
   const prenomsObj: any = {};
   for (let i = 1; i <= MAX_PRENOMS; i++) {
     prenomsObj[`prenom${i}`] = typeDeValeurParDefaut === TypeDeValeursParDefaut.UNDEFINED ? undefined : "";
   }
   return prenomsObj;
-}
+};
 
-export function creerValidationSchemaPrenom() {
+export const creerValidationSchemaPrenom = () => {
   const schemaValidation: { [key: string]: any } = {};
   for (let i = UN; i <= MAX_PRENOMS; i++) {
     schemaValidation[`prenom${i}`] = Yup.string().nullable().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE);
@@ -43,9 +43,9 @@ export function creerValidationSchemaPrenom() {
   }
 
   return Yup.object(schemaValidation);
-}
+};
 
-export function creerValidationSchemaPrenomParent() {
+export const creerValidationSchemaPrenomParent = () => {
   const schemaValidation: { [key: string]: any } = {};
   for (let i = UN; i <= MAX_PRENOMS; i++) {
     const prenomClef = `prenom${i}`;
@@ -58,7 +58,7 @@ export function creerValidationSchemaPrenomParent() {
   }
 
   return Yup.object(schemaValidation);
-}
+};
 
 type PrenomFormProps = IPrenomsFormProps & SubFormProps;
 
@@ -97,10 +97,10 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
     }
   };
 
-  function construireNomChamp(index: number) {
+  const construireNomChamp = (index: number) => {
     const prenom = `prenom${index + 1}`;
     return withNamespace(props.nom, prenom);
-  }
+  };
 
   const plageDeNombres = creerPlageDeNombres(nbPrenoms);
 

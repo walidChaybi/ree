@@ -15,7 +15,7 @@ import ChoixCourrierForm, { ChoixCourrierSubFormProps } from "./sousFormulaires/
 import OptionsCourrierForm, { OptionsCourrierSubFormProps } from "./sousFormulaires/OptionsCourrierForm";
 import TexteLibreForm from "./sousFormulaires/TexteLibreForm";
 
-export function getChoixCourrier(typesCourrier: Options, onChangeTypeCourrier: (typeCourrierChoisi: string) => void): JSX.Element {
+export const getChoixCourrier = (typesCourrier: Options, onChangeTypeCourrier: (typeCourrierChoisi: string) => void): JSX.Element => {
   const choixCourrierFormProps = {
     nom: CHOIX_COURRIER,
     typesCourrier,
@@ -28,15 +28,15 @@ export function getChoixCourrier(typesCourrier: Options, onChangeTypeCourrier: (
       {...choixCourrierFormProps}
     />
   );
-}
+};
 
-export function getOptionsCourrier(
+export const getOptionsCourrier = (
   requete: IRequeteDelivrance,
   optionsChoisies: OptionsCourrier,
   setOptionsChoisies: (value: OptionsCourrier) => void,
   setCheckOptions: () => void,
   documentDelivranceChoisi?: IDocumentDelivrance | null
-): JSX.Element {
+): JSX.Element => {
   const optionsCourrierFormProps = {
     nom: OPTION,
     documentDelivranceChoisi,
@@ -52,36 +52,36 @@ export function getOptionsCourrier(
       {...optionsCourrierFormProps}
     />
   );
-}
+};
 
-export function getTexteLibre(requete: IRequeteDelivrance, documentDelivranceChoisi?: IDocumentDelivrance | null): JSX.Element {
+export const getTexteLibre = (requete: IRequeteDelivrance, documentDelivranceChoisi?: IDocumentDelivrance | null): JSX.Element => {
   const texteLibreFormProps = {
     nom: TEXTE_LIBRE,
     titre: "Texte libre",
     requete
   } as SubFormProps;
   return <div key={TEXTE_LIBRE}>{documentDelivranceChoisi?.texteLibre && <TexteLibreForm {...texteLibreFormProps} />}</div>;
-}
+};
 
-export function getRequerantCourrierForm(visible: boolean, requerant: IRequerant) {
+export const getRequerantCourrierForm = (visible: boolean, requerant: IRequerant) => {
   const requerantFormProps = {
     requerant,
     titre: "Identité du requérant",
     formulaireReduit: true
   } as SubFormProps & IRequerantCourrierFormProps;
   return <div key={REQUERANT}>{visible && <RequerantCourrierForm {...requerantFormProps} />}</div>;
-}
+};
 
-export function getAdresseCourrierForm(visible: boolean): JSX.Element {
+export const getAdresseCourrierForm = (visible: boolean): JSX.Element => {
   const adresseFormProps = {
     nom: ADRESSE,
     titre: "Adresse postale du requérant",
     formulaireReduit: true
   } as SubFormProps;
   return <div key={ADRESSE}>{visible && <AdresseForm {...adresseFormProps} />}</div>;
-}
+};
 
-export function getRequeteCourrierForm(visible: boolean): JSX.Element {
+export const getRequeteCourrierForm = (visible: boolean): JSX.Element => {
   const requeteFormProps = {
     nom: REQUETE,
     titre: "Requête",
@@ -97,4 +97,4 @@ export function getRequeteCourrierForm(visible: boolean): JSX.Element {
       )}
     </div>
   );
-}
+};

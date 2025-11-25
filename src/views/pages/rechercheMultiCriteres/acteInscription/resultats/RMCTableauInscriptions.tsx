@@ -54,13 +54,13 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   // Plage de fiche courante dans le tableau de résultat (suite à une RMC Inscription)
   const [datasFichesCourantes, setDatasFichesCourantes] = useState<IDataFicheProps[]>();
 
-  function closeFenetre(idInscription: string, idx: number): void {
+  const closeFenetre = (idInscription: string, idx: number): void => {
     const nouvelEtatFenetres = supprimeElement(
       etatFenetres,
       (etatFenetre: IFenetreFicheInscription) => etatFenetre.idInscription === idInscription
     );
     setEtatFenetres(nouvelEtatFenetres);
-  }
+  };
 
   const onClickOnLine = (idInscription: string, data: any, index: number) => {
     if (utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER, surLePerimetre: Perimetre.TOUS_REGISTRES })) {

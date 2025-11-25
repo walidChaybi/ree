@@ -45,12 +45,12 @@ interface IBoiteAOngletsProps {
   classOnglet: string;
 }
 
-function a11yProps(index: any) {
+const a11yProps = (index: any) => {
   return {
     id: `nav-tab-${index}`,
     "aria-controls": `nav-tabpanel-${index}`
   };
-}
+};
 
 export const BoiteAOnglets: React.FC<IBoiteAOngletsProps> = props => {
   const [selectedTabState, setSelectedTabState] = React.useState<number>(props.selectedTab);

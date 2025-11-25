@@ -38,7 +38,7 @@ export function getColonnesTableauRMCAutoPersonne<TData, TIdentifiant>(
   ];
 }
 
-export function getColonnesTableauPersonnes(): TableauTypeColumn[] {
+export const getColonnesTableauPersonnes = (): TableauTypeColumn[] => {
   return [
     ...commonHeadersTableauRMC.slice(0, TROIS),
     new TableauTypeColumn({
@@ -56,9 +56,9 @@ export function getColonnesTableauPersonnes(): TableauTypeColumn[] {
       title: HeaderTableauRMCPersonne.ROLE.libelle
     })
   ];
-}
+};
 
-function getColonnesTableauDocuments(): TableauTypeColumn[] {
+const getColonnesTableauDocuments = (): TableauTypeColumn[] => {
   return [
     new TableauTypeColumn({
       keys: [HeaderTableauRMCPersonne.NATURE.nom],
@@ -82,9 +82,9 @@ function getColonnesTableauDocuments(): TableauTypeColumn[] {
       className: "ColOverflow"
     })
   ];
-}
+};
 
-export function getLigneTableauVide(message: string): JSX.Element {
+export const getLigneTableauVide = (message: string): JSX.Element => {
   return (
     <>
       <MdReport
@@ -94,9 +94,9 @@ export function getLigneTableauVide(message: string): JSX.Element {
       <div>{message}</div>
     </>
   );
-}
+};
 
-export function getLibelleMenuItemPersonne(titulaire: ITitulaireRequeteCreation, sousTypeRequete?: SousTypeCreation) {
+export const getLibelleMenuItemPersonne = (titulaire: ITitulaireRequeteCreation, sousTypeRequete?: SousTypeCreation) => {
   let libelle = "";
 
   // Qualite
@@ -125,9 +125,9 @@ export function getLibelleMenuItemPersonne(titulaire: ITitulaireRequeteCreation,
   }
 
   return libelle;
-}
+};
 
-function getLibelleQualiteTitulaire(titulaire: ITitulaireRequeteCreation, sousTypeRequete?: SousTypeCreation): string {
+const getLibelleQualiteTitulaire = (titulaire: ITitulaireRequeteCreation, sousTypeRequete?: SousTypeCreation): string => {
   let libelleQualiteTitulaire: string;
 
   switch (titulaire.typeObjetTitulaire) {
@@ -149,24 +149,24 @@ function getLibelleQualiteTitulaire(titulaire: ITitulaireRequeteCreation, sousTy
       break;
   }
   return libelleQualiteTitulaire;
-}
+};
 
-function getNom(titulaire: ITitulaireRequeteCreation): string {
+const getNom = (titulaire: ITitulaireRequeteCreation): string => {
   const nom: string = titulaire.nomNaissance?.toLocaleUpperCase() ?? "";
   const prenom: string | undefined = TitulaireRequete.getPrenom1(titulaire);
   return `${nom} ${prenom}`;
-}
+};
 
-export function mapDataTableauRMCPersonne(resultatRMCPersonne: IRMCPersonneResultat[]): IDataTableauRMCPersonne[] {
+export const mapDataTableauRMCPersonne = (resultatRMCPersonne: IRMCPersonneResultat[]): IDataTableauRMCPersonne[] => {
   const data: IDataTableauRMCPersonne[] = [];
   resultatRMCPersonne.forEach(resultatPersonne => {
     data.push(mapPersonneDataTableauRMCPersonne(resultatPersonne.personne));
     data.push(...mapActesInscriptionsDataTableauRMCPersonne(resultatPersonne.actesInscriptions));
   });
   return data;
-}
+};
 
-function mapPersonneDataTableauRMCPersonne(personne: IPersonneRMCPersonne): IDataTableauRMCPersonne {
+const mapPersonneDataTableauRMCPersonne = (personne: IPersonneRMCPersonne): IDataTableauRMCPersonne => {
   return {
     idPersonneOuActeInscription: personne.idPersonne,
     estDataPersonne: true,
@@ -179,17 +179,17 @@ function mapPersonneDataTableauRMCPersonne(personne: IPersonneRMCPersonne): IDat
     reference: "",
     statutOuType: ""
   };
-}
+};
 
-export function formatDataTableauPersonne(personne: IPersonneRMCPersonne) {
+export const formatDataTableauPersonne = (personne: IPersonneRMCPersonne) => {
   return {
     autresNoms: formatNoms(personne.autresNoms),
     prenoms: formatPrenoms(personne.prenoms.slice(0, TROIS)),
     sexe: personne.sexe.libelle.charAt(0)
   };
-}
+};
 
-function mapActesInscriptionsDataTableauRMCPersonne(actesInscriptions: IActeInscriptionRMCPersonne[]): IDataTableauRMCPersonne[] {
+const mapActesInscriptionsDataTableauRMCPersonne = (actesInscriptions: IActeInscriptionRMCPersonne[]): IDataTableauRMCPersonne[] => {
   return actesInscriptions.map(acteInscription => ({
     idPersonneOuActeInscription: acteInscription.idActeInscription,
     estDataPersonne: false,
@@ -206,14 +206,14 @@ function mapActesInscriptionsDataTableauRMCPersonne(actesInscriptions: IActeInsc
     sexe: "",
     role: ""
   }));
-}
+};
 
-export function getIdentifiantPersonneOuActeInscription(data: IDataTableauRMCPersonne): string {
+export const getIdentifiantPersonneOuActeInscription = (data: IDataTableauRMCPersonne): string => {
   return data.idPersonneOuActeInscription;
-}
+};
 
-export function getRolesPersonneAsOptionsEnFonctionNatureActeRequete(natureActeRequete: NatureActeRequete): Options {
+export const getRolesPersonneAsOptionsEnFonctionNatureActeRequete = (natureActeRequete: NatureActeRequete): Options => {
   return RolePersonneSauvegardee.filtreRolesPersonnesSauvegardeesEnFonctionNatureActeRequete(natureActeRequete).map(role =>
     RolePersonneSauvegardee.getLibelleAsOption(role.libelle)
   );
-}
+};

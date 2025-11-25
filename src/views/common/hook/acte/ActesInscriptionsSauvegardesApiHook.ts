@@ -3,9 +3,9 @@ import { ActeInscriptionSauvegardeDto, IActeInscriptionSauvegardeDto } from "@mo
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
-export function useActesInscriptionsSauvegardesApiHook(
+export const useActesInscriptionsSauvegardesApiHook = (
   params?: IActeInscriptionSauvegardeDto[]
-): IActeInscriptionSauvegardeDto[] | undefined {
+): IActeInscriptionSauvegardeDto[] | undefined => {
   const [resultat, setResultat] = useState<IActeInscriptionSauvegardeDto[]>();
 
   useEffect(() => {
@@ -28,4 +28,4 @@ export function useActesInscriptionsSauvegardesApiHook(
   }, [params]);
 
   return resultat;
-}
+};

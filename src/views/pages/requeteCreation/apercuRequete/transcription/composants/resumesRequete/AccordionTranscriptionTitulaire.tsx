@@ -10,26 +10,26 @@ interface AccordionTranscriptionTitulaireProps {
   titulaires?: ITitulaireRequeteCreation[];
 }
 
-function formatNomSouhaite(nomSouhaite?: string): string | undefined {
+const formatNomSouhaite = (nomSouhaite?: string): string | undefined => {
   return nomSouhaite ? `(${"souhaité"} : ${nomSouhaite})` : "";
-}
+};
 
-function formatNomsEtNomSouhaite(titulaire?: ITitulaireRequeteCreation): string {
+const formatNomsEtNomSouhaite = (titulaire?: ITitulaireRequeteCreation): string => {
   return `${TitulaireRequeteCreation.getNomNaissanceOuSNP(titulaire)} ${formatNomSouhaite(titulaire?.nomSouhaite)}`;
-}
+};
 
 export const AccordionTranscriptionTitulaire: React.FC<AccordionTranscriptionTitulaireProps> = props => {
   const classeNameUnSeulTitulaire = props.titulaires && props.titulaires?.length < DEUX ? "contenuAccordionUnSeulElement" : "";
 
-  function getTitreAccordionTitulaire(): string {
+  const getTitreAccordionTitulaire = (): string => {
     return `${resume.titulaire}${props.titulaires && props.titulaires?.length > UN ? "s" : ""}`;
-  }
+  };
 
-  function getDateLieuReconnaissance(titulaire: ITitulaireRequeteCreation): string | undefined {
+  const getDateLieuReconnaissance = (titulaire: ITitulaireRequeteCreation): string | undefined => {
     const evenementReconnaissance = TitulaireRequeteCreation.getEvenementUnionTypeReconnaissance(titulaire);
 
     return EvenementUnion.getDateEtLieuFormate(evenementReconnaissance);
-  }
+  };
 
   return (
     <div className="AccordionTranscriptionTitulaire">

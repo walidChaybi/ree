@@ -89,7 +89,7 @@ export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({ closePopIn, setV
   );
 };
 
-function getFormRequete(): JSX.Element {
+const getFormRequete = (): JSX.Element => {
   const requeteFiltreProps = {
     nomFiltre: REQUETE
   } as RequeteFiltreProps;
@@ -99,9 +99,9 @@ function getFormRequete(): JSX.Element {
       {...requeteFiltreProps}
     />
   );
-}
+};
 
-function getFormDatesDebutFin(): JSX.Element {
+const getFormDatesDebutFin = (): JSX.Element => {
   const datesDebutFinAnneeFiltreProps = {
     nomFiltre: DATES_DEBUT_FIN_ANNEE,
     anneeMin: MEP_YEAR
@@ -112,9 +112,9 @@ function getFormDatesDebutFin(): JSX.Element {
       {...datesDebutFinAnneeFiltreProps}
     />
   );
-}
+};
 
-function getFormTitulaire(): JSX.Element {
+const getFormTitulaire = (): JSX.Element => {
   const titulaireFiltreProps = {
     nomFiltre: TITULAIRE
   } as TitulaireFiltreProps;
@@ -124,9 +124,9 @@ function getFormTitulaire(): JSX.Element {
       {...titulaireFiltreProps}
     />
   );
-}
+};
 
-function getFormRequerant(): JSX.Element {
+const getFormRequerant = (): JSX.Element => {
   const requerantFiltreProps = {
     nomFiltre: REQUERANT
   } as RequerantFiltreProps;
@@ -136,4 +136,4 @@ function getFormRequerant(): JSX.Element {
       {...requerantFiltreProps}
     />
   );
-}
+};

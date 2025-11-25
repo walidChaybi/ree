@@ -11,7 +11,7 @@ interface IMajLibellePjResultat {
   resultat: boolean;
 }
 
-export function useMiseAJourLibellePjApiHook(params?: IMajLibellePjParams) {
+export const useMiseAJourLibellePjApiHook = (params?: IMajLibellePjParams) => {
   const [resultat, setResultat] = useState<IMajLibellePjResultat>();
 
   useEffect(() => {
@@ -31,4 +31,4 @@ export function useMiseAJourLibellePjApiHook(params?: IMajLibellePjParams) {
   }, [params]);
 
   return resultat;
-}
+};

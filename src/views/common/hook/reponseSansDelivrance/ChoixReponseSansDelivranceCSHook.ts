@@ -11,12 +11,12 @@ import {
 import { useEffect, useState } from "react";
 import { EMimeType } from "../../../../ressources/EMimeType";
 
-export function useReponseSansDelivranceCS(
+export const useReponseSansDelivranceCS = (
   libelleAction: string,
   statutRequete: StatutRequete,
   reponseSansDelivranceCS?: IReponseSansDelivranceCS,
   requeteId?: string
-) {
+) => {
   const [resultat, setResultat] = useState<{
     requeteId: string;
     uuidDocumentReponse: string;
@@ -64,4 +64,4 @@ export function useReponseSansDelivranceCS(
   }, [uuidDocumentReponse]);
 
   return resultat;
-}
+};

@@ -20,7 +20,7 @@ interface IAjoutPieceJustificativeToRequeteParams {
   file?: PieceJointe;
 }
 
-export function useAjoutPieceJustificativeToRequete(params?: IAjoutPieceJustificativeToRequeteParams): void {
+export const useAjoutPieceJustificativeToRequete = (params?: IAjoutPieceJustificativeToRequeteParams): void => {
   const { idRequeteParam } = useParams<TUuidSuiviDossierParams>();
 
   useEffect(() => {
@@ -37,9 +37,9 @@ export function useAjoutPieceJustificativeToRequete(params?: IAjoutPieceJustific
         });
     }
   }, [params, idRequeteParam]);
-}
+};
 
-function mapParamsVersAjoutPieceJustificativeDto(params: IAjoutPieceJustificativeToRequeteParams): IAjoutPieceJustificativeDto {
+const mapParamsVersAjoutPieceJustificativeDto = (params: IAjoutPieceJustificativeToRequeteParams): IAjoutPieceJustificativeDto => {
   const file = params.file?.base64File;
   return {
     nom: file?.fileName || "",
@@ -49,4 +49,4 @@ function mapParamsVersAjoutPieceJustificativeDto(params: IAjoutPieceJustificativ
     contenu: file?.base64String || "",
     idDocument: params.categoriePJ
   };
-}
+};

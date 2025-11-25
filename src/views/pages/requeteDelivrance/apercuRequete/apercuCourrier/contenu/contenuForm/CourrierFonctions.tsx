@@ -42,7 +42,7 @@ import { OptionCourrierFormDefaultValues } from "./sousFormulaires/OptionsCourri
 
 const LIMIT_ORDRE_EDITION_STANTARD = 900;
 
-function getTypesCourrierRequeteIncomplete(sousType: SousTypeDelivrance) {
+const getTypesCourrierRequeteIncomplete = (sousType: SousTypeDelivrance) => {
   let typesCourrier;
   typesCourrier = [
     DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.INFORMATION_DIVERSES_MANQUANTE) // Courrier 117
@@ -57,9 +57,9 @@ function getTypesCourrierRequeteIncomplete(sousType: SousTypeDelivrance) {
   }
 
   return typesCourrier;
-}
+};
 
-function getTypesCourrierActeNonDetenuAuScec(sousType: SousTypeDelivrance) {
+const getTypesCourrierActeNonDetenuAuScec = (sousType: SousTypeDelivrance) => {
   let typesCourrier;
   typesCourrier = [
     DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.ACTE_NON_TROUVE), // Courrier 115
@@ -76,7 +76,7 @@ function getTypesCourrierActeNonDetenuAuScec(sousType: SousTypeDelivrance) {
   }
 
   return typesCourrier;
-}
+};
 
 export const getTypesCourrier = (requete: IRequeteDelivrance): Options => {
   let typesCourrier: Options = [];
@@ -151,13 +151,13 @@ export const getDefaultValuesCourrier = (requete: IRequeteDelivrance): SaisieCou
   };
 };
 
-export function courrierExiste(requete: IRequeteDelivrance): boolean {
+export const courrierExiste = (requete: IRequeteDelivrance): boolean => {
   return requete.documentsReponses.some(element => {
     return DocumentDelivrance.estCourrierDelivranceEC(element.typeDocument);
   });
-}
+};
 
-export function getDocumentReponseAModifier(requete: IRequeteDelivrance): IDocumentReponse | undefined {
+export const getDocumentReponseAModifier = (requete: IRequeteDelivrance): IDocumentReponse | undefined => {
   let doc: IDocumentReponse | undefined = undefined;
   requete.documentsReponses.forEach(element => {
     if (DocumentDelivrance.estCourrierDelivranceEC(element.typeDocument)) {
@@ -165,21 +165,21 @@ export function getDocumentReponseAModifier(requete: IRequeteDelivrance): IDocum
     }
   });
   return doc;
-}
+};
 
-function majOptionsPourActeNaissaneOuDecesDemande(typesCourrier: Options, natureActeRequete?: NatureActeRequete) {
+const majOptionsPourActeNaissaneOuDecesDemande = (typesCourrier: Options, natureActeRequete?: NatureActeRequete) => {
   if (natureActeRequete && natureActeRequete !== NatureActeRequete.NAISSANCE && natureActeRequete !== NatureActeRequete.DECES) {
     typesCourrier.push(
       DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.REFUS_DELIVRANCE_MARIAGE) // ???
     );
   }
-}
+};
 
-export function controleFormulaire(
+export const controleFormulaire = (
   saisieCourrier: SaisieCourrier | undefined,
   optionsChoisies: OptionsCourrier,
   setMessageBloquant: (message: string) => void
-) {
+) => {
   switch (saisieCourrier?.[CHOIX_COURRIER]?.[COURRIER]) {
     case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.DELIVRANCE_ACTE_INCOMPLET):
     case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.INFORMATION_DIVERSES_MANQUANTE):
@@ -194,13 +194,13 @@ export function controleFormulaire(
     default:
       return true;
   }
-}
+};
 
-function controleActeNonTrouve(
+const controleActeNonTrouve = (
   saisieCourrier: SaisieCourrier,
   optionsChoisies: OptionsCourrier,
   setMessageBloquant: (message: string) => void
-) {
+) => {
   if (
     optionsChoisies.filter(option => {
       return option.ordreEdition < LIMIT_ORDRE_EDITION_STANTARD;
@@ -210,9 +210,13 @@ function controleActeNonTrouve(
     return false;
   }
   return true;
-}
+};
 
-function controleDivers(saisieCourrier: SaisieCourrier, optionsChoisies: OptionsCourrier, setMessageBloquant: (message: string) => void) {
+const controleDivers = (
+  saisieCourrier: SaisieCourrier,
+  optionsChoisies: OptionsCourrier,
+  setMessageBloquant: (message: string) => void
+) => {
   if (
     optionsChoisies.filter(option => {
       return option.ordreEdition < LIMIT_ORDRE_EDITION_STANTARD;
@@ -223,4 +227,4 @@ function controleDivers(saisieCourrier: SaisieCourrier, optionsChoisies: Options
     return false;
   }
   return true;
-}
+};

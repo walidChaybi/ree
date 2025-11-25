@@ -11,7 +11,7 @@ import { TITULAIRES } from "../../../../common/composant/formulaire/ConstantesNo
 import { limitesTitulaires } from "../SaisirRDCSCPage";
 import { IdentiteSubFormProps } from "../sousFormulaires/identite/IdentiteForm";
 
-export function createReponseSansDelivranceCS(requete?: IRequeteDelivrance) {
+export const createReponseSansDelivranceCS = (requete?: IRequeteDelivrance) => {
   let reponseSansDelivranceCS = {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
   if (requete?.requerant) {
     reponseSansDelivranceCS = ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(requete);
@@ -20,7 +20,7 @@ export function createReponseSansDelivranceCS(requete?: IRequeteDelivrance) {
   }
 
   return reponseSansDelivranceCS;
-}
+};
 
 export const creerTitulaire = (numTitulaire = 1) => {
   return {
@@ -29,11 +29,11 @@ export const creerTitulaire = (numTitulaire = 1) => {
   } as IdentiteSubFormProps;
 };
 
-export function getPiecesJointesAMettreAJour(formulairePiecesJointes?: PieceJointe[]) {
+export const getPiecesJointesAMettreAJour = (formulairePiecesJointes?: PieceJointe[]) => {
   // On ne prend que les pjs dont le contenu est renseigné,
   //   en effet si le contenu est vide c'est qu'il a été écrasé par la requête lors de la sauvegarde (la requête ramène ses pièces jointes mais sans le contenu)
   return formulairePiecesJointes?.filter(formulairePj => formulairePj.base64File.base64String);
-}
+};
 
 export const initialiserTitulaires = (nbTitulaires = 1) => {
   const titulaires = [];

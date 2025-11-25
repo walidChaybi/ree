@@ -8,12 +8,12 @@ import { useEffect, useState } from "react";
 import { IResultGenerationPlusieursInscriptions } from "../generationUtils";
 import { useGenerationCertificatPACSOuRCOuRCAHook } from "./generationCertificatPacsRcRca/GenerationCertificatPACSOuRCOuRCAHook";
 
-export function useGenerationInscriptionsHook(
+export const useGenerationInscriptionsHook = (
   requete?: IRequeteTableauDelivrance,
   dataRMCAutoInscription?: TResultatRMCInscription[],
   isOldDocumentsDeleted?: boolean,
   inscriptionsRcRadiation?: IInscriptionRc
-) {
+) => {
   const [listeRC, setListeRC] = useState<ResultatRMCInscription<"RC">[]>();
 
   const [listeRCA, setListeRCA] = useState<ResultatRMCInscription<"RCA">[]>();
@@ -95,4 +95,4 @@ export function useGenerationInscriptionsHook(
   }, [resultGenerationCertificatPACS]);
 
   return resultGenerationPlusieursInscriptions;
-}
+};

@@ -36,21 +36,21 @@ import { OngletPiecesJustificatives } from "../../../commun/composants/OngletPie
 import ResumeRequeteCreationEtablissement from "./resumeRequeteCreationEtablissement/ResumeRequeteCreationEtablissement";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "./resumeRequeteCreationEtablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 
-export function onRenommePieceJustificativeEtablissement(
+export const onRenommePieceJustificativeEtablissement = (
   requete: IRequeteCreationEtablissement | undefined,
   setRequete: React.Dispatch<React.SetStateAction<IRequeteCreationEtablissement | undefined>>,
   idPieceJustificative: string,
   nouveauLibelle: string,
   idDocumentPJ?: string
-) {
+) => {
   const pjARenommer = RequeteCreationEtablissement.getPieceJustificative(requete, idDocumentPJ, idPieceJustificative);
   if (pjARenommer) {
     pjARenommer.libelle = nouveauLibelle;
     setRequete({ ...requete } as IRequeteCreationEtablissement);
   }
-}
+};
 
-export function getConteneurResumeRequete(requete: IRequeteCreation, conteneurFerme = false): JSX.Element {
+export const getConteneurResumeRequete = (requete: IRequeteCreation, conteneurFerme = false): JSX.Element => {
   return (
     <ConteneurRetractable
       titre={Labels.resume.requete.description}
@@ -61,13 +61,13 @@ export function getConteneurResumeRequete(requete: IRequeteCreation, conteneurFe
       <ResumeRequeteCreationEtablissement {...mappingIRequeteCreationVersResumeRequeteCreationProps(requete)} />
     </ConteneurRetractable>
   );
-}
+};
 
-export function getConteneurPieceJustificative(
+export const getConteneurPieceJustificative = (
   requete: IRequeteCreation,
   onRenommePieceJustificative: (idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) => void,
   rechargerRequete: () => void
-): JSX.Element {
+): JSX.Element => {
   return (
     <ConteneurRetractable
       titre={"Pièces justificatives"}
@@ -81,7 +81,7 @@ export function getConteneurPieceJustificative(
       />
     </ConteneurRetractable>
   );
-}
+};
 
 export const estOuvertRegistrePapier = (registrePapier: Registre | null, decretNaturalisaton?: IDecretNaturalisation | null): boolean => {
   let estOuvert = false;
@@ -99,14 +99,14 @@ export const estOuvertRegistrePapier = (registrePapier: Registre | null, decretN
   return estOuvert;
 };
 
-function estModifieBulletinIdentification(saisieProjetPostulant: ISaisieProjetPostulantForm, projetActe?: IProjetActe): boolean {
+const estModifieBulletinIdentification = (saisieProjetPostulant: ISaisieProjetPostulantForm, projetActe?: IProjetActe): boolean => {
   return projetActe ? estModifieBulletinIdentificationCompareAvecProjetActe(saisieProjetPostulant, projetActe) : false;
-}
+};
 
-function estModifieBulletinIdentificationCompareAvecProjetActe(
+const estModifieBulletinIdentificationCompareAvecProjetActe = (
   saisieProjetPostulant: ISaisieProjetPostulantForm,
   projetActe: IProjetActe
-): boolean {
+): boolean => {
   const postulantProjetActe = getPostulantProjetActe(projetActe);
   const analyseMarginalePostulant = getPostulantAnalyseMarginale(projetActe.analyseMarginales);
 
@@ -130,53 +130,53 @@ function estModifieBulletinIdentificationCompareAvecProjetActe(
       postulantProjetActe.naissance?.ville
     )
   );
-}
+};
 
-function getPostulantProjetActe(projetActe: IProjetActe): ITitulaireProjetActe {
+const getPostulantProjetActe = (projetActe: IProjetActe): ITitulaireProjetActe => {
   return projetActe.titulaires[0];
-}
+};
 
-function getPostulantAnalyseMarginale(analysesMarginales?: IProjetAnalyseMarginale[]): ITitulaireProjetActe | undefined {
+const getPostulantAnalyseMarginale = (analysesMarginales?: IProjetAnalyseMarginale[]): ITitulaireProjetActe | undefined => {
   return analysesMarginales?.find(analyseMarginale => !analyseMarginale.dateFin)?.titulaires[0];
-}
+};
 
-function estModifieAnalyseMarginale(valeurs: ISaisieAnalyseMarginale, nomBI?: string, prenomBI?: string[]): boolean {
+const estModifieAnalyseMarginale = (valeurs: ISaisieAnalyseMarginale, nomBI?: string, prenomBI?: string[]): boolean => {
   const saisiePrenoms = Object.values(valeurs.prenoms).filter(prenom => prenom !== "");
 
   return Boolean(valeurs.nom !== nomBI || saisiePrenoms.toString() !== prenomBI?.toString());
-}
+};
 
-function estModifieSexe(sexeSaisie: string, sexeBI?: string): boolean {
+const estModifieSexe = (sexeSaisie: string, sexeBI?: string): boolean => {
   return sexeSaisie !== sexeBI;
-}
+};
 
-function estModifieDateDeNaissance(saisieDate: ISaisieDate, jourBI?: number, moisBI?: number, anneeBI?: number): boolean {
+const estModifieDateDeNaissance = (saisieDate: ISaisieDate, jourBI?: number, moisBI?: number, anneeBI?: number): boolean => {
   return (
     Boolean(saisieDate.annee && anneeBI !== Number(saisieDate.annee)) ||
     Boolean(saisieDate.mois && moisBI !== Number(saisieDate.mois)) ||
     Boolean(saisieDate.jour && jourBI !== Number(saisieDate.jour))
   );
-}
+};
 
-function estModifieLieuDeNaissance(
+const estModifieLieuDeNaissance = (
   saisieLieuNaissance: ISaisieLieuNaissance,
   paysSaisie?: string,
   regionSaisie?: string,
   villeSaisie?: string
-): boolean {
+): boolean => {
   const { paysNaissance, villeNaissance, regionNaissance } = saisieLieuNaissance;
   return (
     getValeurOuVide(paysNaissance.toUpperCase()) !== getValeurOuVide(paysSaisie?.toUpperCase()) ||
     getValeurOuVide(villeNaissance?.toUpperCase()) !== getValeurOuVide(villeSaisie?.toUpperCase()) ||
     getValeurOuVide(regionNaissance?.toUpperCase()) !== getValeurOuVide(regionSaisie?.toUpperCase())
   );
-}
+};
 
-export function estModificationsDonneesBIAAnnuler(
+export const estModificationsDonneesBIAAnnuler = (
   avancement: AvancementProjetActe,
   projetActe: IProjetActe,
   saisieProjetPostulant: ISaisieProjetPostulantForm
-): boolean {
+): boolean => {
   return (
     (AvancementProjetActe.estProjetValide(avancement) || AvancementProjetActe.estActeASigner(avancement)) &&
     estModifieBulletinIdentification(saisieProjetPostulant, projetActe) &&
@@ -184,12 +184,12 @@ export function estModificationsDonneesBIAAnnuler(
       `Attention ! Vous avez modifié des données des cinq items après validation du BI ou après publication du décret.\n\nVoulez-vous continuer ?`
     )
   );
-}
+};
 
-export function annulerModificationBulletinIdentification(
+export const annulerModificationBulletinIdentification = (
   formikHelpers: FormikHelpers<ISaisieProjetPostulantForm>,
   projetActe: IProjetActe
-): void {
+): void => {
   const modifierChampAvecValeur = (nomsChamp: string[], valeur?: string | number | Prenoms) => {
     formikHelpers.setFieldValue(jointAvec(nomsChamp, "."), valeur);
   };
@@ -222,4 +222,4 @@ export function annulerModificationBulletinIdentification(
   modifierChampAvecValeur([TITULAIRE, LIEU_DE_NAISSANCE, VILLE_NAISSANCE], postulantProjetActe.naissance?.ville ?? "");
   modifierChampAvecValeur([TITULAIRE, LIEU_DE_NAISSANCE, ETAT_CANTON_PROVINCE], postulantProjetActe.naissance?.region ?? "");
   modifierChampAvecValeur([TITULAIRE, LIEU_DE_NAISSANCE, PAYS_NAISSANCE], postulantProjetActe.naissance?.pays ?? "");
-}
+};

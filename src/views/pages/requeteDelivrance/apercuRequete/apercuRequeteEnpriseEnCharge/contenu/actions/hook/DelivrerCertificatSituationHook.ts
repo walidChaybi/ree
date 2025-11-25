@@ -20,12 +20,12 @@ interface IResultDelivrerCertificatSituation {
   contenuDocumentReponse?: string;
 }
 
-export function useDelivrerCertificatSituationHook(
+export const useDelivrerCertificatSituationHook = (
   codeDocumentDemande: string,
   requete?: IRequeteTableauDelivrance,
   dataRMCAutoInscription?: TResultatRMCInscription[],
   inscriptionsRcRadiation?: IInscriptionRc
-) {
+) => {
   const [resultDelivrerCertificatSituation, setResultDelivrerCertificatSituation] = useState<IResultDelivrerCertificatSituation>();
 
   const [paramsCertificatSituation, setParamsCertificatSituation] = useState<IGenerationCertificatSituationParams>();
@@ -85,4 +85,4 @@ export function useDelivrerCertificatSituationHook(
   }, [resultGenerationCertificatSituation, idAction]);
 
   return resultDelivrerCertificatSituation;
-}
+};

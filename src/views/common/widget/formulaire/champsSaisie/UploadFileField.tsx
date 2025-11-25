@@ -65,6 +65,14 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
 
   const refLabelButton = useRef<HTMLLabelElement>(null);
 
+  /**
+   * Convertion d'un tapleau de types de fichier en une chaîne utilisable par l'attribut "accept" d'un "input" HTML
+   * Ex: ["png", "pdf", "jpg", "jpeg"] => ".png, .pdf, .jpg, .jpeg"
+   */
+  const formatAcceptFileTypes = (fileTypes: ExtensionDocumentTypeMime[]) => {
+    return "." + fileTypes.map(f => f.extension).join(", .");
+  };
+
   return (
     <div className={props.className}>
       {!props.hideInput && (
@@ -140,14 +148,6 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
       </label>
     </div>
   );
-
-  /**
-   * Convertion d'un tapleau de types de fichier en une chaîne utilisable par l'attribut "accept" d'un "input" HTML
-   * Ex: ["png", "pdf", "jpg", "jpeg"] => ".png, .pdf, .jpg, .jpeg"
-   */
-  function formatAcceptFileTypes(fileTypes: ExtensionDocumentTypeMime[]) {
-    return "." + fileTypes.map(f => f.extension).join(", .");
-  }
 };
 
 export default UploadFileField;

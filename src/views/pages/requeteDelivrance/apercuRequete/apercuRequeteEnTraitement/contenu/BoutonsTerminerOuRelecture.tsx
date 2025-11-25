@@ -34,14 +34,14 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
 
   useCreationActionMiseAjourStatut(majStatutParams);
 
-  function onClickValidate(statut: StatutRequete, texte?: string) {
+  const onClickValidate = (statut: StatutRequete, texte?: string) => {
     setRetourParams({
       libelleAction: statut === StatutRequete.A_REVOIR ? statut.libelle : `Requête approuvée - ${statut.libelle}`,
       statutDemande: statut.nom,
       requeteId: props.requete.id,
       texteObservation: statut === StatutRequete.A_REVOIR ? `Requête relue - ${texte ?? ""}` : "Requête approuvée"
     });
-  }
+  };
 
   const idActionRetour = useRetourValideurApiHook(retourParams);
 

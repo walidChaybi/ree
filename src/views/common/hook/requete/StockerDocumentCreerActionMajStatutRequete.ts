@@ -12,7 +12,7 @@ export interface IStockerDocumentCreerActionMajStatutRequeteParams {
   requeteId?: string;
 }
 
-export function useStockerDocumentCreerActionMajStatutRequete(params?: IStockerDocumentCreerActionMajStatutRequeteParams) {
+export const useStockerDocumentCreerActionMajStatutRequete = (params?: IStockerDocumentCreerActionMajStatutRequeteParams) => {
   const [uuidDocumentReponse, setUuidDocumentReponse] = useState<string>();
 
   const { appelApi: patchStockerDocumentDelivrance } = useFetchApi(CONFIG_PATCH_STOCKER_DOCUMENT_DELIVRANCE);
@@ -37,4 +37,4 @@ export function useStockerDocumentCreerActionMajStatutRequete(params?: IStockerD
   }, [params]);
 
   return uuidDocumentReponse;
-}
+};

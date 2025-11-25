@@ -7,7 +7,7 @@ import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import { SectionPartProps } from "@widget/section/SectionPart";
 import { IParamsAffichage } from "../acte/FicheActeUtils";
 
-export function getFichesPersonneActe(personnes: Personne[], paramsAffichage: IParamsAffichage): SectionPanelProps[] {
+export const getFichesPersonneActe = (personnes: Personne[], paramsAffichage: IParamsAffichage): SectionPanelProps[] => {
   if (paramsAffichage.personnes === "visible") {
     return getFichesPersonne(personnes);
   } else if (paramsAffichage.personnes === "disabled") {
@@ -21,27 +21,27 @@ export function getFichesPersonneActe(personnes: Personne[], paramsAffichage: IP
     // paramsAffichage.personnes === "none"
     return [];
   }
-}
+};
 
-export function getFichesPersonne(personnes: Personne[]): SectionPanelProps[] {
+export const getFichesPersonne = (personnes: Personne[]): SectionPanelProps[] => {
   return personnes.map((personne, index) => {
     return {
       panelAreas: getPanelAreasFichesPersonnes(personne),
       title: `Fiche Personne ${index + 1}`
     };
   });
-}
+};
 
-function getPanelAreasFichesPersonnes(personne: Personne): SectionPanelAreaProps[] {
+const getPanelAreasFichesPersonnes = (personne: Personne): SectionPanelAreaProps[] => {
   return [
     {
       parts: [getInformationsPersonne(personne)],
       nbColonne: 3
     }
   ];
-}
+};
 
-function getInformationsPersonne(personne: Personne): SectionPartProps {
+const getInformationsPersonne = (personne: Personne): SectionPartProps => {
   return {
     partContent: {
       contents: [
@@ -59,74 +59,74 @@ function getInformationsPersonne(personne: Personne): SectionPartProps {
       title: "Personne"
     }
   };
-}
+};
 
-function getNomPersonne(nom: string): SectionContentProps {
+const getNomPersonne = (nom: string): SectionContentProps => {
   return {
     libelle: "Nom",
     value: nom
   };
-}
+};
 
-function getAutresNomsPersonne(autresNom: string): SectionContentProps {
+const getAutresNomsPersonne = (autresNom: string): SectionContentProps => {
   return {
     libelle: "Autres noms",
     value: autresNom
   };
-}
+};
 
-function getPrenomsPersonne(prenoms: string): SectionContentProps {
+const getPrenomsPersonne = (prenoms: string): SectionContentProps => {
   return {
     libelle: "Prénoms",
     value: prenoms
   };
-}
+};
 
-function getAutresPrenomsPersonne(autresPrenoms: string): SectionContentProps {
+const getAutresPrenomsPersonne = (autresPrenoms: string): SectionContentProps => {
   return {
     libelle: "Autres prénoms",
     value: autresPrenoms
   };
-}
+};
 
-function getLieuNaissance(lieuNaissance: string): SectionContentProps {
+const getLieuNaissance = (lieuNaissance: string): SectionContentProps => {
   return {
     libelle: "Lieu de naissance",
     value: lieuNaissance
   };
-}
+};
 
-function getLieuDeces(lieuDeces: string): SectionContentProps {
+const getLieuDeces = (lieuDeces: string): SectionContentProps => {
   return {
     libelle: "Lieu décès",
     value: lieuDeces
   };
-}
+};
 
-function getDateNaissance(dateNaissance: string): SectionContentProps {
+const getDateNaissance = (dateNaissance: string): SectionContentProps => {
   return {
     libelle: "Né(e) le",
     value: dateNaissance
   };
-}
+};
 
-function getDateDeces(dateDeces: string): SectionContentProps {
+const getDateDeces = (dateDeces: string): SectionContentProps => {
   return {
     libelle: "Date décès",
     value: dateDeces
   };
-}
+};
 
-function getNationalitePersonne(nationalite: string): SectionContentProps {
+const getNationalitePersonne = (nationalite: string): SectionContentProps => {
   return {
     libelle: "Nationalité",
     value: nationalite
   };
-}
+};
 
-function getSexePersonne(sexe: string): SectionContentProps {
+const getSexePersonne = (sexe: string): SectionContentProps => {
   return {
     libelle: "Sexe",
     value: sexe
   };
-}
+};

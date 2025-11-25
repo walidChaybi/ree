@@ -10,13 +10,7 @@ export interface SectionPanelAreaProps {
   nbColonne?: number;
 }
 
-export const SectionPanelArea: React.FC<SectionPanelAreaProps> = ({
-  parts,
-  value,
-  id = "",
-  title,
-  nbColonne = 1
-}) => {
+export const SectionPanelArea: React.FC<SectionPanelAreaProps> = ({ parts, value, id = "", title, nbColonne = 1 }) => {
   const cssGrid = nbColonne > 1 ? `nbColonnes${nbColonne}` : "";
   return (
     <div className={`SectionPanelArea ${cssGrid}`}>
@@ -24,10 +18,7 @@ export const SectionPanelArea: React.FC<SectionPanelAreaProps> = ({
       {value && <div>{value}</div>}
       {parts &&
         parts.map((part, index) => {
-          const classNamePart =
-            part.classNameContent == null && nbColonne > 1
-              ? getCssColonne(nbColonne, index)
-              : part.classNameContent;
+          const classNamePart = part.classNameContent == null && nbColonne > 1 ? getCssColonne(nbColonne, index) : part.classNameContent;
           return (
             <SectionPart
               key={`section-panel-area-${index}-${id}`}
@@ -40,7 +31,7 @@ export const SectionPanelArea: React.FC<SectionPanelAreaProps> = ({
   );
 };
 
-function getCssColonne(nbColonnes: number, indexPart: number): string {
+const getCssColonne = (nbColonnes: number, indexPart: number): string => {
   let className = "";
   if ((indexPart + 1) % nbColonnes === 0) {
     className = `Colonne${nbColonnes}`;
@@ -48,4 +39,4 @@ function getCssColonne(nbColonnes: number, indexPart: number): string {
     className = `Colonne${(indexPart + 1) % nbColonnes}`;
   }
   return className;
-}
+};

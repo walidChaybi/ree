@@ -127,7 +127,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
   );
 };
 
-function mapPiecesJustificatives(pieces?: IPieceJustificative[]): IPieceJointe[] {
+const mapPiecesJustificatives = (pieces?: IPieceJustificative[]): IPieceJointe[] => {
   return pieces
     ? pieces.map(piece => ({
         id: piece.id,
@@ -136,4 +136,4 @@ function mapPiecesJustificatives(pieces?: IPieceJustificative[]): IPieceJointe[]
         typePiece: TypePieceJointe.PIECE_JUSTIFICATIVE
       }))
     : [];
-}
+};

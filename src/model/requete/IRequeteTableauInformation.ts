@@ -25,23 +25,23 @@ export interface IRequeteTableauInformation extends IRequeteTableau {
 /** Requetes: mapping après appel d'api */
 //////////////////////////////////////////
 
-export function mappingRequetesTableauInformation(
+export const mappingRequetesTableauInformation = (
   resultatsRecherche: any,
   mappingSupplementaire: boolean,
   utilisateurs: Utilisateur[],
   services: IService[]
-): IRequeteTableauInformation[] {
+): IRequeteTableauInformation[] => {
   return resultatsRecherche?.map((requete: any) => {
     return mappingUneRequeteTableauInformation(requete, mappingSupplementaire, utilisateurs, services);
   });
-}
+};
 
-function mappingUneRequeteTableauInformation(
+const mappingUneRequeteTableauInformation = (
   requete: any,
   mappingSupplementaire: boolean,
   utilisateurs: Utilisateur[],
   services: IService[]
-): IRequeteTableauInformation {
+): IRequeteTableauInformation => {
   return {
     idRequete: requete?.id || undefined,
     type: TypeRequete.INFORMATION.libelle,
@@ -57,17 +57,17 @@ function mappingUneRequeteTableauInformation(
     idUtilisateur: requete?.idUtilisateur || undefined,
     attribueA: mapAttribueA(requete, utilisateurs, services)
   } as IRequeteTableauInformation;
-}
+};
 
-function getTypeRequerant(qualiteRequerant: string, typeMandataire: string) {
+const getTypeRequerant = (qualiteRequerant: string, typeMandataire: string) => {
   if (typeMandataire != null) {
     return TypeMandataireReq.getEnumFor(typeMandataire ?? "").libelle;
   } else {
     return Qualite.getEnumFor(qualiteRequerant ?? "").libelle;
   }
-}
+};
 
-function getNomsTitulaires(titulaires: ITitulaireRequeteTableau[]) {
+const getNomsTitulaires = (titulaires: ITitulaireRequeteTableau[]) => {
   let res = "";
   let premiere = true;
   if (titulaires) {
@@ -81,5 +81,5 @@ function getNomsTitulaires(titulaires: ITitulaireRequeteTableau[]) {
     }
   }
   return res;
-}
+};
 /* v8 ignore stop */

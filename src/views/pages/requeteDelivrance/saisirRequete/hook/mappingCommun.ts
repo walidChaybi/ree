@@ -63,7 +63,7 @@ import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/in
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";
 import { ParticulierFormDefaultValues } from "../sousFormulaires/requerant/particulier/ParticulierForm";
 
-export function getPrenomsTableauStringVersPrenomsOrdonnes(prenoms?: Prenoms): IPrenomOrdonnes[] {
+export const getPrenomsTableauStringVersPrenomsOrdonnes = (prenoms?: Prenoms): IPrenomOrdonnes[] => {
   const prenomsInteresse = [] as IPrenomOrdonnes[];
 
   if (prenoms) {
@@ -76,9 +76,9 @@ export function getPrenomsTableauStringVersPrenomsOrdonnes(prenoms?: Prenoms): I
   }
 
   return prenomsInteresse;
-}
+};
 
-export function getPrenomsOrdonneVersPrenomsDefaultValues(prenomsOrdonne?: IPrenomOrdonnes[], typeDeValeurParDefaut?: string): Prenoms {
+export const getPrenomsOrdonneVersPrenomsDefaultValues = (prenomsOrdonne?: IPrenomOrdonnes[], typeDeValeurParDefaut?: string): Prenoms => {
   const prenomsDefaultValues: Prenoms = genererDefaultValuesPrenoms(typeDeValeurParDefaut);
 
   if (prenomsOrdonne) {
@@ -92,9 +92,9 @@ export function getPrenomsOrdonneVersPrenomsDefaultValues(prenomsOrdonne?: IPren
   }
 
   return prenomsDefaultValues;
-}
+};
 
-export function saisiePJ(requete: IRequeteDelivrance): PieceJointe[] {
+export const saisiePJ = (requete: IRequeteDelivrance): PieceJointe[] => {
   return requete.piecesJustificatives.map(PJ => {
     return {
       base64File: {
@@ -112,7 +112,7 @@ export function saisiePJ(requete: IRequeteDelivrance): PieceJointe[] {
       }
     };
   });
-}
+};
 
 export const saisieTitulaire = (titulaire?: ITitulaireRequete): ISaisieIdentite | undefined => {
   return titulaire

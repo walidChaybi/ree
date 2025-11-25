@@ -10,16 +10,16 @@ import DateUtils from "@util/DateUtils";
 import { compareNombre, formatNom, triListeObjetsSurPropriete } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
-export function getDecisionExequatur(data: FicheRcRca): string | undefined {
+export const getDecisionExequatur = (data: FicheRcRca): string | undefined => {
   let decision = undefined;
   if (DECISIONS_JURIDICTION.includes(data.decision?.type as ETypeDecision) && data.decision?.dateDecisionEtrangere) {
     const dateDecisionEtrangere = DateUtils.getDateFormatJasper(DateUtils.getDateFromTimestamp(data.decision?.dateDecisionEtrangere));
     decision = `prise en exequatur de la décision étrangère en date du ${dateDecisionEtrangere}`;
   }
   return decision;
-}
+};
 
-export function getDecisionJuridiction(infos: FicheRcRca, dateDecision: string, localite: string) {
+export const getDecisionJuridiction = (infos: FicheRcRca, dateDecision: string, localite: string) => {
   let typeDecision: string;
 
   switch (infos.decision?.type) {
@@ -42,9 +42,9 @@ export function getDecisionJuridiction(infos: FicheRcRca, dateDecision: string, 
   decisionRecue += `en date du ${dateDecision}`;
 
   return decisionRecue;
-}
+};
 
-export function getDecisionNotaire(infos: FicheRcRca, dateDecision: string, localite: string) {
+export const getDecisionNotaire = (infos: FicheRcRca, dateDecision: string, localite: string) => {
   let decisionRecue = "";
   // décision de Notaire de type "Convention"
   if (infos.decision?.type === ETypeDecision.CONVENTION) {
@@ -77,9 +77,9 @@ export function getDecisionNotaire(infos: FicheRcRca, dateDecision: string, loca
   decisionRecue += `le ${dateDecision}`;
 
   return decisionRecue;
-}
+};
 
-export function getParagrapheFin(infosRcRca: FicheRcRca, decrets: IDecret[]) {
+export const getParagrapheFin = (infosRcRca: FicheRcRca, decrets: IDecret[]) => {
   let paragrapheFin = `Conformément à l'`;
 
   if (infosRcRca.categorie === ETypeFiche.RCA) {
@@ -111,17 +111,17 @@ export function getParagrapheFin(infosRcRca: FicheRcRca, decrets: IDecret[]) {
   }
 
   return paragrapheFin;
-}
+};
 
-function addPhrase(phrase: string, phraseSuivante: string) {
+const addPhrase = (phrase: string, phraseSuivante: string) => {
   if (phrase === "") {
     return `${phraseSuivante}`;
   } else {
     return `${phrase}\n${phraseSuivante}`;
   }
-}
+};
 
-function getPrenomsParents(data: IParent) {
+const getPrenomsParents = (data: IParent) => {
   let prenoms = "";
 
   if (data.prenomsParents) {
@@ -131,9 +131,9 @@ function getPrenomsParents(data: IParent) {
     prenoms += " ";
   }
   return prenoms;
-}
+};
 
-function getLignesPrenomsNomNaissance(data: Interesse | IParent, isParent: boolean) {
+const getLignesPrenomsNomNaissance = (data: Interesse | IParent, isParent: boolean) => {
   // Partie Prenoms/Nom
   const prenoms = isParent ? getPrenomsParents(data as IParent) : (data as Interesse).prenoms.concat(" ");
 
@@ -146,9 +146,9 @@ function getLignesPrenomsNomNaissance(data: Interesse | IParent, isParent: boole
     `Lieu de naissance: ${LieuxUtils.getLieu(data.villeNaissance, data.regionNaissance, data.paysNaissance, data.arrondissementNaissance)}`
   );
   return result;
-}
+};
 
-function getLignesParentsInteresse(data: IParent[]) {
+const getLignesParentsInteresse = (data: IParent[]) => {
   let parents = "";
   data.forEach(parent => {
     if (parents !== "") {
@@ -157,9 +157,9 @@ function getLignesParentsInteresse(data: IParent[]) {
     parents = addPhrase(parents, getLignesPrenomsNomNaissance(parent, true));
   });
   return parents;
-}
+};
 
-function getLignesInteresseDecision(data: Interesse, showDeces: boolean) {
+const getLignesInteresseDecision = (data: Interesse, showDeces: boolean) => {
   // Partie Prenoms/Nom/Naissance
   let interesse = `${getLignesPrenomsNomNaissance(data, false)}`;
 
@@ -182,9 +182,9 @@ function getLignesInteresseDecision(data: Interesse, showDeces: boolean) {
     interesse = addPhrase(interesse, getLignesParentsInteresse(parents));
   }
   return interesse;
-}
+};
 
-function getLignesMariageInteresses(data: IMariageInteresse): string {
+const getLignesMariageInteresses = (data: IMariageInteresse): string => {
   let mariageInteresses = "\nmariés";
 
   mariageInteresses +=
@@ -194,9 +194,9 @@ function getLignesMariageInteresses(data: IMariageInteresse): string {
   mariageInteresses += data.dateMariage.jour && data.dateMariage.mois && data.dateMariage.annee ? " le" : " en";
   mariageInteresses += ` ${DateUtils.getDateFormatJasperFromCompose(data.dateMariage)}`;
   return mariageInteresses;
-}
+};
 
-export function getInteressesDecision(data: FicheRcRca): string {
+export const getInteressesDecision = (data: FicheRcRca): string => {
   let interesses = "";
 
   const showDeces = data.categorie === ETypeFiche.RCA && data.decision?.type === ETypeDecision.ONAC;
@@ -215,4 +215,4 @@ export function getInteressesDecision(data: FicheRcRca): string {
   }
 
   return interesses;
-}
+};

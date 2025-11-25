@@ -111,7 +111,7 @@ export const BoutonValiderTerminer: React.FC<IBoutonValiderTerminerProps> = prop
   );
 };
 
-function recupererIdRepertoiresDocumentReponsesCs(requete: IRequeteDelivrance): IDerniereDelivranceRcRcaPacsParams[] {
+const recupererIdRepertoiresDocumentReponsesCs = (requete: IRequeteDelivrance): IDerniereDelivranceRcRcaPacsParams[] => {
   const repertoiresAMaj = [] as IDerniereDelivranceRcRcaPacsParams[];
 
   requete?.documentsReponses?.forEach(el => {
@@ -134,4 +134,4 @@ function recupererIdRepertoiresDocumentReponsesCs(requete: IRequeteDelivrance): 
   });
 
   return repertoiresAMaj;
-}
+};

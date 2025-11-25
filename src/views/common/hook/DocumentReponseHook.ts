@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import AfficherMessage, { estTableauErreurApi } from "../../../utils/AfficherMessage";
 
-export function useGetDocumentReponseApi(idDocumentReponse?: string): IDocumentReponse | undefined {
+export const useGetDocumentReponseApi = (idDocumentReponse?: string): IDocumentReponse | undefined => {
   const [documentReponse, setDocumentReponse] = useState<IDocumentReponse | undefined>();
 
   const { appelApi: getDocumentReponse } = useFetchApi(CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE);
@@ -23,12 +23,12 @@ export function useGetDocumentReponseApi(idDocumentReponse?: string): IDocumentR
   }, [idDocumentReponse]);
 
   return documentReponse;
-}
+};
 
-export function usePostDocumentsReponseApi(idRequete?: string, documentsReponse?: IDocumentReponse[]): string[] | undefined {
+export const usePostDocumentsReponseApi = (idRequete?: string, documentsReponse?: IDocumentReponse[]): string[] | undefined => {
   const [uuidPostDocuments, setUuidPostDocuments] = useState<string[] | undefined>();
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async() => {
       if (idRequete && documentsReponse && documentsReponse.length > 0) {
         try {
           const result = await postDocumentReponseApi(idRequete, documentsReponse);
@@ -44,4 +44,4 @@ export function usePostDocumentsReponseApi(idRequete?: string, documentsReponse?
   }, [idRequete, documentsReponse]);
 
   return uuidPostDocuments;
-}
+};

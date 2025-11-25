@@ -18,7 +18,7 @@ export interface ISauvegardeValidationSaisieExtraitParams {
   valeursCourrierParDefaut: SaisieCourrier;
 }
 
-export function useSauvegardeValidationSaisieExtrait(params?: ISauvegardeValidationSaisieExtraitParams) {
+export const useSauvegardeValidationSaisieExtrait = (params?: ISauvegardeValidationSaisieExtraitParams) => {
   const [regenerationDocumentsParams, setRegenerationDocumentsParams] = useState<IRegenerationDocumentsParams>();
 
   const [majEtatCivilSuiteSaisieExtraitParams, setMajEtatCivilSuiteSaisieExtraitParams] = useState<IMajEtatCivilSuiteSaisieExtraitParams>();
@@ -49,4 +49,4 @@ export function useSauvegardeValidationSaisieExtrait(params?: ISauvegardeValidat
       });
     }
   }, [resultatMajEtatCivilSuiteSaisieExtrait]);
-}
+};

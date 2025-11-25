@@ -34,6 +34,6 @@ export const FenetreDocumentReponse: React.FC<DocumentReponseProps> = props => {
   );
 };
 
-function onClose(props: React.PropsWithChildren<DocumentReponseProps>) {
+const onClose = (props: React.PropsWithChildren<DocumentReponseProps>) => {
   props.toggleFenetre();
-}
+};

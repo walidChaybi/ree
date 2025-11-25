@@ -48,7 +48,7 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({ parametresReq
     });
   }, []);
 
-  function onClickOnLine(idRequete: string, data: IRequeteTableauInformation[], idx: number) {
+  const onClickOnLine = (idRequete: string, data: IRequeteTableauInformation[], idx: number) => {
     const requete = data[idx];
     const urlCourante = location.pathname;
     setOperationEnCours(true);
@@ -57,7 +57,7 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({ parametresReq
       callback: finOperationEnCours,
       urlCourante
     });
-  }
+  };
 
   const finOperationEnCours = () => {
     setOperationEnCours(false);

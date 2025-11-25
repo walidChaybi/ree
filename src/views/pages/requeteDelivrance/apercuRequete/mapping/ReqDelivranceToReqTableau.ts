@@ -7,7 +7,7 @@ import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
 
-export function mappingRequeteDelivranceToRequeteTableau(requete: IRequeteDelivrance): IRequeteTableauDelivrance {
+export const mappingRequeteDelivranceToRequeteTableau = (requete: IRequeteDelivrance): IRequeteTableauDelivrance => {
   return {
     idRequete: requete.id,
     numero: requete.numero,
@@ -21,7 +21,7 @@ export function mappingRequeteDelivranceToRequeteTableau(requete: IRequeteDelivr
     sousType: requete.sousType.libelleCourt ?? "",
     documentsReponses: requete.documentsReponses
   };
-}
+};
 export const mappingRequeteTableauVersRequeteDelivrance = (requeteTableauDelivrance?: IRequeteTableauDelivrance): IRequeteDelivrance =>
   requeteTableauDelivrance?.titulaires
     ? ({

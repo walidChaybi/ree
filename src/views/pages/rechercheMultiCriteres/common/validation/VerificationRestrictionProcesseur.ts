@@ -5,10 +5,10 @@ export interface IVerificationErreur {
   messageErreur: string;
 }
 
-export function getMessageSiVerificationEnErreur(
+export const getMessageSiVerificationEnErreur = (
   objetAVerifier: IRMCActeInscription,
   verificationsErreurs: IVerificationErreur[]
-): string | undefined {
+): string | undefined => {
   let messageErreur: string | undefined;
   let index = 0;
 
@@ -21,4 +21,4 @@ export function getMessageSiVerificationEnErreur(
   }
 
   return messageErreur;
-}
+};

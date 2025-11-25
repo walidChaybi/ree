@@ -49,16 +49,16 @@ export const ApercuRequeteEtablissementSimplePage: React.FC<ApercuRequeteEtablis
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
 
-  function rechargerRequete() {
+  const rechargerRequete = () => {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
       estConsultationHistoriqueAction: true
     });
-  }
+  };
 
-  function onRenommePieceJustificativeSimple(idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) {
+  const onRenommePieceJustificativeSimple = (idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) => {
     onRenommePieceJustificativeEtablissement(requete, setRequete, idPieceJustificative, nouveauLibelle, idDocumentPJ);
-  }
+  };
 
   const liste: ItemListe[] = [
     {

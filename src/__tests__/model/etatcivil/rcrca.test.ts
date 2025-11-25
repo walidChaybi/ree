@@ -15,6 +15,7 @@ import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IDecisionRcRcaDTO } from "@model/etatcivil/rcrca/DecisionRcRca";
 import { FicheRcRca, IFicheRcDto, IFicheRcaDto } from "@model/etatcivil/rcrca/FicheRcRca";
 import { mappingInscriptionsRCDepuisFicheRcDto } from "@model/etatcivil/rcrca/IInscriptionRC";
+import { IMariageInteresse, getLibelleLieuMariage, getLieuMariage } from "@model/etatcivil/rcrca/IMariageInteresse";
 import { IInteresseDTO, Interesse } from "@model/etatcivil/rcrca/Interesse";
 import DateUtils from "@util/DateUtils";
 import { describe, expect, test, vi } from "vitest";
@@ -310,5 +311,99 @@ describe("test IInscriptionRC", () => {
         typeInscription: "Inscription"
       }
     ]);
+  });
+});
+
+describe("test getLibelleLieuMariage ", () => {
+  test('devrait retourner "Mariés à" si le mariage est en France', () => {
+    const mariage: IMariageInteresse = {
+      villeMariage: "Lyon",
+      regionMariage: "Rhône-Alpes",
+      paysMariage: "France",
+      dateMariage: { annee: "2025", mois: "11", jour: "18" },
+      aletranger: false
+    };
+    const result = getLibelleLieuMariage(mariage);
+
+    expect(result).toBe("Mariés à");
+  });
+
+  test("devrait retourner 'Mariés' si l'attribut aletranger est false et paysMariage not France", () => {
+    const mariage: IMariageInteresse = {
+      villeMariage: "New York",
+      regionMariage: "New York",
+      paysMariage: "USA",
+      dateMariage: { annee: "2025", mois: "11", jour: "18" },
+      aletranger: false
+    };
+    const result = getLibelleLieuMariage(mariage);
+
+    expect(result).toBe("Mariés");
+  });
+});
+
+describe("test getLieuMariage", () => {
+  test("devrait retourner la bonne chaîne pour un mariage à l'étranger", () => {
+    const mariage: IMariageInteresse = {
+      aletranger: true,
+      villeMariage: "New York",
+      regionMariage: "New York",
+      paysMariage: "USA",
+      dateMariage: { annee: "2025", mois: "11", jour: "18" }
+    };
+    const result = getLieuMariage(mariage);
+    expect(result).toBe("New York - New York (USA)");
+  });
+
+  test("devrait retourner un mariage devant les autorités consulaires de un pays en France", () => {
+    const mariage: IMariageInteresse = {
+      aletranger: false,
+      paysMariage: "Italie",
+      villeMariage: "Paris",
+      regionMariage: "ROMA",
+      dateMariage: { annee: "2025", mois: "11", jour: "18" }
+    };
+    const result = getLieuMariage(mariage);
+    expect(result).toBe("devant les autorités consulaires de Italie en France");
+  });
+
+  test("devrait retourner la ville et la région entre parenthèses si pas d'arrondissement", () => {
+    const mariage: IMariageInteresse = {
+      aletranger: false,
+      villeMariage: "Paris",
+      regionMariage: "Île-de-France",
+      arrondissementMariage: undefined,
+      paysMariage: "France",
+      dateMariage: { annee: "2025", mois: "11", jour: "18" }
+    };
+    const result = getLieuMariage(mariage);
+    expect(result).toBe("Paris (Île-de-France)");
+  });
+
+  test("devrait formater correctement avec arrondissement", () => {
+    const mariage: IMariageInteresse = {
+      aletranger: false,
+      villeMariage: "Paris",
+      regionMariage: "Île-de-France",
+      arrondissementMariage: "10",
+      paysMariage: "France",
+      dateMariage: { annee: "2025", mois: "11", jour: "18" }
+    };
+
+    const result = getLieuMariage(mariage);
+    expect(result).toBe("Paris 10ème arrondissement ");
+  });
+
+  test("devrait retourner un mariage en dehors de Paris avec région entre parenthèses", () => {
+    const mariage: IMariageInteresse = {
+      aletranger: false,
+      villeMariage: "Lyon",
+      regionMariage: "Rhône-Alpes",
+      arrondissementMariage: undefined,
+      paysMariage: "France",
+      dateMariage: { annee: "2025", mois: "11", jour: "18" }
+    };
+    const result = getLieuMariage(mariage);
+    expect(result).toBe("Lyon (Rhône-Alpes)");
   });
 });

@@ -11,7 +11,7 @@ export interface ICompositionProjetActeParams {
   projetActeComposition: IProjetActeComposition;
 }
 
-export function useCompositionProjetActeApiHook(params?: ICompositionProjetActeParams): ICompositionProjetActeApiHookResultat {
+export const useCompositionProjetActeApiHook = (params?: ICompositionProjetActeParams): ICompositionProjetActeApiHookResultat => {
   const [document, setDocument] = useState<ICompositionDto>({} as ICompositionDto);
   useEffect(() => {
     if (params) {
@@ -32,4 +32,4 @@ export function useCompositionProjetActeApiHook(params?: ICompositionProjetActeP
   return {
     documentCompose: document
   };
-}
+};

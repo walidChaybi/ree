@@ -1,15 +1,5 @@
 import { ICompositionIdentiteRequerant } from "@model/composition/commun/IRequerantComposition";
-import {
-  chainesEgalesIgnoreCasse,
-  DEUX,
-  enMajuscule,
-  formatNom,
-  formatPrenom,
-  getValeurOuUndefined,
-  getValeurOuVide,
-  SNP,
-  UN
-} from "@util/Utils";
+import { chainesEgalesIgnoreCasse, DEUX, enMajuscule, formatNom, formatPrenom, getValeurOuUndefined, SNP, UN } from "@util/Utils";
 import { Qualite } from "./enum/Qualite";
 import { TypeInstitutionnel } from "./enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "./enum/TypeMandataireReq";
@@ -139,9 +129,9 @@ export const Requerant = {
     return {
       id: requerant.id,
       dateCreation: requerant.dateCreation,
-      nomFamille: getValeurOuVide(requerant.nomFamille),
-      nomUsage: getValeurOuVide(requerant.detailQualiteParticulier?.nomUsage),
-      prenom: getValeurOuVide(requerant.prenom),
+      nomFamille: requerant.nomFamille,
+      nomUsage: requerant.detailQualiteParticulier?.nomUsage,
+      prenom: requerant.prenom,
       courriel: requerant.courriel,
       telephone: requerant.telephone,
       adresse: requerant.adresse as IAdresseRequerant,
@@ -154,15 +144,15 @@ export const Requerant = {
 };
 
 ///////// mapping des requerants venant du serveur //////////
-function getLienRequerant(lienRequerant: any): ILienRequerant {
+const getLienRequerant = (lienRequerant: any): ILienRequerant => {
   return {
     id: lienRequerant.id,
     lien: lienRequerant.typeLienRequerant,
     natureLien: lienRequerant.nature
   };
-}
+};
 
-function getQualiteRequerant(requerant: any): IQualiteRequerant {
+const getQualiteRequerant = (requerant: any): IQualiteRequerant => {
   return {
     qualite: Qualite.getEnumFor(requerant.qualite),
     utilisateurRece: requerant.detailQualiteRece as IUtilisateurRece,
@@ -171,9 +161,9 @@ function getQualiteRequerant(requerant: any): IQualiteRequerant {
     autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
     institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
   };
-}
+};
 
-function getMandataireHabilite(mandataire: any): IMandataireHabilite {
+const getMandataireHabilite = (mandataire: any): IMandataireHabilite => {
   if (mandataire) {
     return {
       type: TypeMandataireReq.getEnumFor(mandataire.type),
@@ -183,9 +173,9 @@ function getMandataireHabilite(mandataire: any): IMandataireHabilite {
     };
   }
   return {} as IMandataireHabilite;
-}
+};
 
-function getInstitutionnel(institutionnel: any): IInstitutionnel {
+const getInstitutionnel = (institutionnel: any): IInstitutionnel => {
   if (institutionnel) {
     return {
       type: TypeInstitutionnel.getEnumFor(institutionnel.type),
@@ -194,4 +184,4 @@ function getInstitutionnel(institutionnel: any): IInstitutionnel {
     };
   }
   return {} as IInstitutionnel;
-}
+};

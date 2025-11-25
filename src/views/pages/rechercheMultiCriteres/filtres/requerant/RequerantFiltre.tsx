@@ -35,10 +35,10 @@ export const RequerantValidationSchema = Yup.object({
 export type RequerantFiltreProps = ComponentFiltreProps & FormikComponentProps;
 
 const RequerantFiltre: React.FC<RequerantFiltreProps> = props => {
-  function onBlurChamp(e: any) {
+  const onBlurChamp = (e: any) => {
     traiteEspace(e, props.formik.handleChange);
     props.formik.handleBlur(e);
-  }
+  };
 
   return (
     <div className={props.nomFiltre}>

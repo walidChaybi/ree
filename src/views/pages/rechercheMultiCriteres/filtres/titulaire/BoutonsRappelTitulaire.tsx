@@ -3,42 +3,29 @@ import { getLibelle, UN } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 
 interface IBoutonsRappelTitulaireProps {
-  onClickRappelCriteresTitulaire: (
-    event: React.MouseEvent<HTMLButtonElement>,
-    titulaire: ITitulaireRequete
-  ) => void;
+  onClickRappelCriteresTitulaire: (event: React.MouseEvent<HTMLButtonElement>, titulaire: ITitulaireRequete) => void;
   titulaires?: ITitulaireRequete[];
 }
 
-export const BoutonsRappelTitulaire: React.FC<
-  IBoutonsRappelTitulaireProps
-> = props => {
+export const BoutonsRappelTitulaire: React.FC<IBoutonsRappelTitulaireProps> = props => {
   return (
     <div className="containerRappelTitulaire">
       {props.titulaires?.map(titulaire => (
         <BoutonDoubleSubmit
           key={titulaire.id}
-          onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
-            props.onClickRappelCriteresTitulaire(event, titulaire)
-          }
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => props.onClickRappelCriteresTitulaire(event, titulaire)}
         >
-          {`${getLibelle("Rappel titulaire")}${getPositionTitulaireAsTexte(
-            titulaire.position,
-            props.titulaires
-          )}`}
+          {`${getLibelle("Rappel titulaire")}${getPositionTitulaireAsTexte(titulaire.position, props.titulaires)}`}
         </BoutonDoubleSubmit>
       ))}
     </div>
   );
 };
 
-function getPositionTitulaireAsTexte(
-  position: number,
-  titulaires?: ITitulaireRequete[]
-): string {
+const getPositionTitulaireAsTexte = (position: number, titulaires?: ITitulaireRequete[]): string => {
   let positionTexte = "";
   if (titulaires && titulaires.length > UN) {
     positionTexte = ` ${position}`;
   }
   return positionTexte;
-}
+};

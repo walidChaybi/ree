@@ -4,7 +4,7 @@ import { IDonneesComposition } from "@model/composition/commun/retourApiComposit
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
-export function useCertificatSituationApiHook(certificatSituationComposition?: ICertificatSituationComposition) {
+export const useCertificatSituationApiHook = (certificatSituationComposition?: ICertificatSituationComposition) => {
   const [donneesComposition, setDonneesComposition] = useState<IDonneesComposition | undefined>();
 
   useEffect(() => {
@@ -24,4 +24,4 @@ export function useCertificatSituationApiHook(certificatSituationComposition?: I
   }, [certificatSituationComposition]);
 
   return donneesComposition;
-}
+};

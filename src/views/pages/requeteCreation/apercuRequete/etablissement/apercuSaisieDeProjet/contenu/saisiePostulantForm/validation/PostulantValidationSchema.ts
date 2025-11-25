@@ -54,7 +54,7 @@ import {
 import * as Yup from "yup";
 import { CaracteresAutorises, CaracteresAutorisesAvecVirgule } from "../../../../../../../../../ressources/Regex";
 
-export function getPostulantValidationSchema(avancement?: AvancementProjetActe) {
+export const getPostulantValidationSchema = (avancement?: AvancementProjetActe) => {
   return Yup.lazy(() =>
     Yup.object({
       [TITULAIRE]: validationSchemaPostulant(),
@@ -66,9 +66,9 @@ export function getPostulantValidationSchema(avancement?: AvancementProjetActe) 
       [ACQUISITION]: validationSchemaAcquisition(avancement)
     })
   );
-}
+};
 
-function validationSchemaPostulant() {
+const validationSchemaPostulant = () => {
   return Yup.object({
     [NOM]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE).required("La saisie du nom est obligatoire"),
     [NOM_SECABLE]: NomSecableStrictFormValidation,
@@ -88,9 +88,9 @@ function validationSchemaPostulant() {
       [NE_DANS_MARIAGE]: Yup.string().required("La saisie né dans le mariage est obligatoire")
     })
   });
-}
+};
 
-function validationSchemaParent() {
+const validationSchemaParent = () => {
   return Yup.object({
     [NOM]: Yup.lazy(() => Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)),
     [PRENOM]: Yup.lazy(() =>
@@ -136,8 +136,8 @@ function validationSchemaParent() {
 
       return nomOuPrenomRenseigne && departementObligatoire && !departement ? this.createError(paramsError) : true;
     });
-}
-function validationSchemaAutres() {
+};
+const validationSchemaAutres = () => {
   return Yup.object({
     [ADRESSE]: Yup.string().required("La saisie de l'adresse est obligatoire"),
     [VILLE]: Yup.string().matches(CaracteresAutorisesAvecVirgule, CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE),
@@ -158,12 +158,12 @@ function validationSchemaAutres() {
       then: Yup.string().required("La saisie autre déclarant est obligatoire")
     })
   });
-}
+};
 
-function validationSchemaAcquisition(avancement?: AvancementProjetActe) {
+const validationSchemaAcquisition = (avancement?: AvancementProjetActe) => {
   const estASigner = avancement && AvancementProjetActe.estActeASigner(avancement);
   return Yup.object({
     [NATURE]: estASigner ? Yup.string().required(NATURE_ACTE_OBLIGATOIRE) : Yup.string().notRequired(),
     [DATE]: estASigner ? DateValidationCompleteSchemaSansTestFormatRequired : DateValidationSchemaSansTestFormat
   });
-}
+};

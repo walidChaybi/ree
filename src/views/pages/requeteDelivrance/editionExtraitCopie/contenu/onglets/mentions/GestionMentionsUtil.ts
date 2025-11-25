@@ -14,14 +14,14 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Options } from "@util/Type";
 import AfficherMessage from "../../../../../../../utils/AfficherMessage";
 
-function miseAJourMention(
+const miseAJourMention = (
   mentionSelect: IMentionAffichage | undefined,
   mentions: IMentionAffichage[],
   index: number,
   setMentionSelect: React.Dispatch<React.SetStateAction<IMentionAffichage | undefined>>,
   setMentions: React.Dispatch<React.SetStateAction<IMentionAffichage[] | undefined>>,
   estExtraitPlurilingue: boolean
-) {
+) => {
   // Si le texte est vide, on remet le texte de la liste
   if (mentionSelect?.texte === "") {
     AfficherMessage.avertissement("Le texte de la mention est obligatoire", { fermetureAuto: true });
@@ -38,7 +38,7 @@ function miseAJourMention(
     temp[index].texte = texte;
     setMentions(temp);
   }
-}
+};
 
 export const getTextePlurilingueAPartirTexte = (texte?: string, nature?: INatureMention | null): string => `${nature?.code} ${texte}`;
 
@@ -49,7 +49,7 @@ export const getTexteAPartirMentionPlurilingue = (texteMentionPlurilingue?: stri
   return matches?.[1] ?? "";
 };
 
-export function handleReorga(mentions: IMentionAffichage[] | undefined, setMentions: any, oldIndex: number, newIndex: number) {
+export const handleReorga = (mentions: IMentionAffichage[] | undefined, setMentions: any, oldIndex: number, newIndex: number) => {
   if (mentions) {
     const newList = [...mentions];
     const item = newList[oldIndex];
@@ -60,15 +60,15 @@ export function handleReorga(mentions: IMentionAffichage[] | undefined, setMenti
     });
     setMentions(newList);
   }
-}
+};
 
-export function handleCheckBox(mentions: IMentionAffichage[] | undefined, setMentions: any, index: number) {
+export const handleCheckBox = (mentions: IMentionAffichage[] | undefined, setMentions: any, index: number) => {
   if (mentions && index >= 0) {
     const newListe = [...mentions];
     newListe[index].estPresent = !mentions[index].estPresent;
     setMentions(newListe);
   }
-}
+};
 
 export const selectionneEtMiseAJour = (
   mentions: IMentionAffichage[] | undefined,
@@ -89,14 +89,14 @@ export const selectionneEtMiseAJour = (
   }
 };
 
-export function handleBlur(
+export const handleBlur = (
   mentions: IMentionAffichage[] | undefined,
   mentionSelect: IMentionAffichage | undefined,
   mentionsApi: Mention[] | undefined,
   setMentionSelect: React.Dispatch<React.SetStateAction<IMentionAffichage | undefined>>,
   setMentions: React.Dispatch<React.SetStateAction<IMentionAffichage[] | undefined>>,
   estExtraitPlurilingue: boolean
-) {
+) => {
   if (mentions && mentionsApi && mentionSelect) {
     const indexMention = mentions.findIndex(el => el.id === mentionSelect?.id);
     const indexMentionApi = mentionsApi.findIndex(el => el.id === mentionSelect?.id);
@@ -114,7 +114,7 @@ export function handleBlur(
       miseAJourMention(mentionSelect, mentions, indexMention, setMentionSelect, setMentions, estExtraitPlurilingue);
     }
   }
-}
+};
 
 const miseAjourEnFonctionNature = (
   mentions: IMentionAffichage[],
@@ -159,43 +159,43 @@ const texteNonModifieNatureChangePasDeTexteDelivrance = (
   );
 };
 
-function aucuneMentionsAffichageNationalite(mentions?: IMentionAffichage[]) {
+const aucuneMentionsAffichageNationalite = (mentions?: IMentionAffichage[]) => {
   return mentions?.filter(el => el.estPresent).every(mention => mention.nature?.libelle !== "Nationalité");
-}
+};
 
-export function aucuneMentionsNationalite(mentionsRetirees?: string[], mentions?: Mention[]) {
+export const aucuneMentionsNationalite = (mentionsRetirees?: string[], mentions?: Mention[]) => {
   return mentions?.filter(el => !mentionsRetirees?.includes(el.id)).every(el => el.typeMention.natureMention?.libelle !== "Nationalité");
-}
+};
 
-export function boutonReinitialiserEstDisabled(
+export const boutonReinitialiserEstDisabled = (
   estdeverrouille: boolean,
   mentionsApi?: Mention[],
   mentions?: IMentionAffichage[],
   document?: IDocumentReponse,
   natureActe?: keyof typeof ENatureActe
-) {
+) => {
   if (DocumentDelivrance.estCopieIntegrale(document?.typeDocument)) {
     return !estdeverrouille || (estdeverrouille && !modificationEffectuee(mentions, mentionsApi, document, natureActe));
   } else {
     return !modificationEffectuee(mentions, mentionsApi, document, natureActe);
   }
-}
+};
 
-export function getValeurEstdeverrouillerCommencement(document?: IDocumentReponse) {
+export const getValeurEstdeverrouillerCommencement = (document?: IDocumentReponse) => {
   if (document?.mentionsRetirees) {
     return document.mentionsRetirees.length > 0;
   } else {
     return false;
   }
-}
+};
 
-export function validerMentions(
+export const validerMentions = (
   mentions: IMentionAffichage[] | undefined,
   sauvegarderMentions: () => void,
   mentionsApi?: Mention[],
   acte?: FicheActe,
   document?: IDocumentReponse
-) {
+) => {
   const estDocumentCopieIntegrale = DocumentDelivrance.estCopieIntegrale(document?.typeDocument);
 
   const messageControleMention = controleMentions(mentions, acte, document);
@@ -216,9 +216,9 @@ export function validerMentions(
   } else {
     sauvegarderMentions();
   }
-}
+};
 
-function controleMentions(mentions?: IMentionAffichage[], acte?: FicheActe, document?: IDocumentReponse) {
+const controleMentions = (mentions?: IMentionAffichage[], acte?: FicheActe, document?: IDocumentReponse) => {
   const estExtraitAvecFilliation = DocumentDelivrance.estExtraitAvecFilliation(document?.typeDocument);
 
   const estDocumentExtrait = DocumentDelivrance.estExtraitAvecOuSansFilliation(document?.typeDocument);
@@ -247,9 +247,9 @@ function controleMentions(mentions?: IMentionAffichage[], acte?: FicheActe, docu
     message += `Voulez-vous continuer ?`;
   }
   return message;
-}
+};
 
-export function validerMentionsPlusieursDocuments(callback: () => void, acte?: FicheActe, documents?: IDocumentReponse[]) {
+export const validerMentionsPlusieursDocuments = (callback: () => void, acte?: FicheActe, documents?: IDocumentReponse[]) => {
   const messageControleMention = controleMentionsPlusieursDocs(acte, documents);
   if (messageControleMention) {
     if (window.confirm(messageControleMention)) {
@@ -258,9 +258,9 @@ export function validerMentionsPlusieursDocuments(callback: () => void, acte?: F
   } else {
     callback();
   }
-}
+};
 
-function controleMentionsPlusieursDocs(acte?: FicheActe, documents?: IDocumentReponse[]) {
+const controleMentionsPlusieursDocs = (acte?: FicheActe, documents?: IDocumentReponse[]) => {
   let message = "";
   documents?.forEach(document => {
     const estExtraitAvecFilliation = DocumentDelivrance.estExtraitAvecFilliation(document?.typeDocument);
@@ -298,15 +298,15 @@ function controleMentionsPlusieursDocs(acte?: FicheActe, documents?: IDocumentRe
     message += `Voulez-vous continuer ?`;
   }
   return message;
-}
+};
 
-function getNaturesMentionsAffichage(mentionsAffichage?: IMentionAffichage[]): (INatureMention | null)[] {
+const getNaturesMentionsAffichage = (mentionsAffichage?: IMentionAffichage[]): (INatureMention | null)[] => {
   return mentionsAffichage?.filter(mentionAffichage => mentionAffichage.estPresent).map(mentionAffichage => mentionAffichage.nature) ?? [];
-}
+};
 
-export function getNaturesMentions(mentionsRetirees?: string[], mentions?: Mention[]): (INatureMention | null)[] {
+export const getNaturesMentions = (mentionsRetirees?: string[], mentions?: Mention[]): (INatureMention | null)[] => {
   return mentions?.filter(mention => !mentionsRetirees?.includes(mention.id)).map(mention => mention.typeMention.natureMention) ?? [];
-}
+};
 
 export const getOptionsMentions = (estExtraitPlurilingue: boolean, natureActe?: keyof typeof ENatureActe): Options => {
   if (!estExtraitPlurilingue) {

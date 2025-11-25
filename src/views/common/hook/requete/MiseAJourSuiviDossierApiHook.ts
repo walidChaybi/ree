@@ -7,7 +7,7 @@ export interface IMiseAJourSuiviDossierParams {
   idActe: string;
 }
 
-export function useMiseAJourSuiviDossierApiHook(params?: IMiseAJourSuiviDossierParams) {
+export const useMiseAJourSuiviDossierApiHook = (params?: IMiseAJourSuiviDossierParams) => {
   useEffect(() => {
     if (params?.idActe && params?.idSuiviDossier) {
       patchMiseAJourIdSuiviDossier(params.idSuiviDossier, params.idActe)
@@ -22,4 +22,4 @@ export function useMiseAJourSuiviDossierApiHook(params?: IMiseAJourSuiviDossierP
         });
     }
   }, [params]);
-}
+};

@@ -7,7 +7,7 @@ export interface IgnorerParams {
   texteObservation?: string;
 }
 
-export function useIgnorerApi(params?: IgnorerParams) {
+export const useIgnorerApi = (params?: IgnorerParams) => {
   const [res, setRes] = useState<string | undefined>();
   useEffect(() => {
     if (params && params.idRequete && params.texteObservation) {
@@ -25,4 +25,4 @@ export function useIgnorerApi(params?: IgnorerParams) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   return res;
-}
+};

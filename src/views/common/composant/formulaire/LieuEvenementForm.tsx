@@ -149,6 +149,32 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
     [creerEvenementAPartirDeLaSaisie, majLieuComplet, nomLieuComplet, nomPays, props.formik]
   );
 
+  const getFonctionValidation = (nomChamp: string) => {
+    return props.validation
+      ? (value: string) => valideCompletudeLieu(props.formik, nomChamp, value, props.nom, modeSaisiLieuInconnu)
+      : undefined;
+  };
+
+  const decomposerLieuActifOuPasDeLieuRepriseRenseigne = (): boolean => {
+    return decomposerLieu || !lieuCompletRenseigne;
+  };
+
+  const affichageVilleRegionPays = (): boolean => {
+    const afficheVilleRegionPays =
+      (!modeSaisiLieuInconnu && !lieuCompletRenseigne) ||
+      (!lieuCompletRenseigne && !props.gestionEtrangerFrance) ||
+      (decomposerLieu && !modeSaisiLieuInconnu);
+
+    // Mise à jour de la propriété "villeEstAffichee" sans passer par Formik pour ne pas positionner le flag dirty à true
+    // On a besoin de de positionner cette propriété pour le mapping (cf. mappingFormulaireSaisirExtraitVersExtraitAEnvoyer.ts)
+    //   mais sans que pour autant le formulaire soit dirty
+    const lieuEvenementForm: any = getValeurProprieteAPartirChemin(props.nom, props.formik.values);
+    if (lieuEvenementForm) {
+      lieuEvenementForm.villeEstAffichee = afficheVilleRegionPays;
+    }
+    return afficheVilleRegionPays;
+  };
+
   return (
     <div className="LieuEvenementForm">
       <div className="LieuComplet">
@@ -215,32 +241,6 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
       )}
     </div>
   );
-
-  function getFonctionValidation(nomChamp: string) {
-    return props.validation
-      ? (value: string) => valideCompletudeLieu(props.formik, nomChamp, value, props.nom, modeSaisiLieuInconnu)
-      : undefined;
-  }
-
-  function decomposerLieuActifOuPasDeLieuRepriseRenseigne(): boolean {
-    return decomposerLieu || !lieuCompletRenseigne;
-  }
-
-  function affichageVilleRegionPays(): boolean {
-    const afficheVilleRegionPays =
-      (!modeSaisiLieuInconnu && !lieuCompletRenseigne) ||
-      (!lieuCompletRenseigne && !props.gestionEtrangerFrance) ||
-      (decomposerLieu && !modeSaisiLieuInconnu);
-
-    // Mise à jour de la propriété "villeEstAffichee" sans passer par Formik pour ne pas positionner le flag dirty à true
-    // On a besoin de de positionner cette propriété pour le mapping (cf. mappingFormulaireSaisirExtraitVersExtraitAEnvoyer.ts)
-    //   mais sans que pour autant le formulaire soit dirty
-    const lieuEvenementForm: any = getValeurProprieteAPartirChemin(props.nom, props.formik.values);
-    if (lieuEvenementForm) {
-      lieuEvenementForm.villeEstAffichee = afficheVilleRegionPays;
-    }
-    return afficheVilleRegionPays;
-  }
 };
 
 export default connect<ComponentFormProps>(LieuEvenementForm);

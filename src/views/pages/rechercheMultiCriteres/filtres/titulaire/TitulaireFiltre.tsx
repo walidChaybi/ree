@@ -76,19 +76,19 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
     nomDate: dateNaissanceNamespace
   } as DateComposeFormProps;
 
-  function onBlurChamp(e: React.ChangeEvent<HTMLInputElement>): void {
+  const onBlurChamp = (e: React.ChangeEvent<HTMLInputElement>): void => {
     traiteEspace(e, props.formik.handleChange);
     props.formik.handleBlur(e);
-  }
+  };
 
-  function switchNomPrenom() {
+  const switchNomPrenom = () => {
     const nomOld = props.formik.getFieldProps(withNamespace(props.nomFiltre, NOM)).value;
     const prenomOld = props.formik.getFieldProps(withNamespace(props.nomFiltre, PRENOM)).value;
     props.formik.setFieldValue(withNamespace(props.nomFiltre, NOM), prenomOld);
     props.formik.setFieldValue(withNamespace(props.nomFiltre, PRENOM), nomOld);
-  }
+  };
 
-  function onClickRappelCriteresTitulaire(event: React.MouseEvent, titulaire: ITitulaireRequete): void {
+  const onClickRappelCriteresTitulaire = (event: React.MouseEvent, titulaire: ITitulaireRequete): void => {
     event.preventDefault();
     reinitialiserChamps(props.nomFiltre, [NOM, PRENOM, PAYS_NAISSANCE], props.formik);
     reinitialiserChamps(dateNaissanceNamespace, [JOUR, MOIS, ANNEE], props.formik);
@@ -114,7 +114,7 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
     if (titulaire.anneeNaissance) {
       props.formik.setFieldValue(withNamespace(dateNaissanceNamespace, ANNEE), titulaire.anneeNaissance);
     }
-  }
+  };
 
   return (
     <div className={props.nomFiltre}>

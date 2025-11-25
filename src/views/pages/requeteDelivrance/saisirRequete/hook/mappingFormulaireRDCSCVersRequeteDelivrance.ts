@@ -12,10 +12,10 @@ import { SNP, getValeurOuVide } from "@util/Utils";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "./mappingCommun";
 
-export function mappingFormulaireRDCSCVersRequeteDelivrance(
+export const mappingFormulaireRDCSCVersRequeteDelivrance = (
   requeteRDCSC: CreationRequeteRDCSC | UpdateRequeteRDCSC,
   nbTitulaires?: number
-): IRequeteDelivrance {
+): IRequeteDelivrance => {
   const requete = {
     type: TypeRequete.DELIVRANCE.nom,
     sousType: SousTypeDelivrance.RDCSC.nom,
@@ -30,16 +30,16 @@ export function mappingFormulaireRDCSCVersRequeteDelivrance(
     piecesJustificatives: getPiecesJustificativesAGarder(requeteRDCSC.saisie)
   } as any as IRequeteDelivrance;
   return nettoyerAttributsDto(requete);
-}
+};
 
 // Renvoie des PJs déjà intégrées (sans contenu base64String) afin de gérer les suppressions
-function getPiecesJustificativesAGarder(saisie: SaisieRequeteRDCSC) {
+const getPiecesJustificativesAGarder = (saisie: SaisieRequeteRDCSC) => {
   const piecesJustificatives: IPieceJustificative[] = [];
   saisie?.piecesJointes?.filter(pj => !pj.base64File.base64String).forEach(pj => piecesJustificatives.push(mapPieceJustificative(pj)));
   return piecesJustificatives;
-}
+};
 
-function getTitulaireRequete(titulaire: ISaisieIdentite, position = 1) {
+const getTitulaireRequete = (titulaire: ISaisieIdentite, position = 1) => {
   return titulaire
     ? {
         position,
@@ -56,7 +56,7 @@ function getTitulaireRequete(titulaire: ISaisieIdentite, position = 1) {
         parentsTitulaire: []
       }
     : {};
-}
+};
 
 const Requerant = {
   MANDATAIRE: "MANDATAIRE",

@@ -27,12 +27,12 @@ export interface IRequeteTableauCreation extends IRequeteTableau {
   alerte: string;
 }
 
-export function mappingUneRequeteTableauCreation(
+export const mappingUneRequeteTableauCreation = (
   requete: any,
   mappingSupplementaire: boolean,
   utilisateurs: Utilisateur[],
   services: IService[]
-): IRequeteTableauCreation {
+): IRequeteTableauCreation => {
   const titulaires = mapTitulaires(filtrerUniquementTitulairesHorsFamille(requete?.titulaires), mappingSupplementaire);
   return {
     idRequete: getValeurOuUndefined(requete?.id),
@@ -58,8 +58,8 @@ export function mappingUneRequeteTableauCreation(
     attribueA: mapAttribueA(requete, utilisateurs, services) ?? undefined,
     alerte: requete.alerte
   };
-}
-function getPostulant(titulaires: ITitulaireRequeteTableau[]) {
+};
+const getPostulant = (titulaires: ITitulaireRequeteTableau[]) => {
   return titulaires.length > 0
     ? titulaires
         .map(el => `${el.nom} ${getValeurOuVide(el.prenoms[0])}`)
@@ -67,9 +67,9 @@ function getPostulant(titulaires: ITitulaireRequeteTableau[]) {
           return `${accumulateur}, ${valeurCourante}`;
         })
     : "";
-}
+};
 
-function filtrerUniquementTitulairesHorsFamille(titulaires: any) {
+const filtrerUniquementTitulairesHorsFamille = (titulaires: any) => {
   return titulaires.filter((titulaire: any) => titulaire.typeObjetTitulaire !== TypeObjetTitulaire.FAMILLE);
-}
+};
 /* v8 ignore stop */

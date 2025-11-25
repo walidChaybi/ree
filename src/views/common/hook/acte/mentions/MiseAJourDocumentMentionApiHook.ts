@@ -11,7 +11,7 @@ interface IMiseAJourDocumentMentionResultat {
   resultat?: boolean;
 }
 
-export function useMiseAJourDocumentMentionApiHook(params?: IMiseAJourDocumentMentionParams) {
+export const useMiseAJourDocumentMentionApiHook = (params?: IMiseAJourDocumentMentionParams) => {
   const [fait, setFait] = useState<IMiseAJourDocumentMentionResultat>();
 
   useEffect(() => {
@@ -34,4 +34,4 @@ export function useMiseAJourDocumentMentionApiHook(params?: IMiseAJourDocumentMe
   }, [params]);
 
   return fait;
-}
+};

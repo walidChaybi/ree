@@ -11,7 +11,7 @@ interface IStockeCTVResultat {
   resultat: boolean;
 }
 
-export function useStockeCTV(params?: IStockeCTVParams): IStockeCTVResultat | undefined {
+export const useStockeCTV = (params?: IStockeCTVParams): IStockeCTVResultat | undefined => {
   const [res, setRes] = useState<IStockeCTVResultat>();
 
   useEffect(() => {
@@ -35,4 +35,4 @@ export function useStockeCTV(params?: IStockeCTVParams): IStockeCTVResultat | un
   }, [params]);
 
   return res;
-}
+};

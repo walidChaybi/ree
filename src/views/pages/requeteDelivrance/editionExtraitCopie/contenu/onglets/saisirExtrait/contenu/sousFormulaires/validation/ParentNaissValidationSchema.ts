@@ -3,6 +3,7 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IParentNaissanceForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import { auMoinsUneProprieteEstRenseigne, estNonRenseigne } from "@util/Utils";
 import * as Yup from "yup";
+
 import {
   DATE_NAISSANCE_OU_AGE_DE,
   ETRANGER_FRANCE,
@@ -13,9 +14,9 @@ import {
   REGION_DEPARTEMENT,
   SEXE,
   VILLE
-} from "../../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
-import { DateNaissanceOuAgeDeValidationSchema } from "../../../../../../../../../common/composant/formulaire/validation/DateNaissanceOuAgeDeFormValidation";
-import { sexeObligatoireValidation } from "../../../../../../../../../common/composant/formulaire/validation/SexeObligatoireValidation";
+} from "@views/common/composant/formulaire/ConstantesNomsForm";
+import { DateNaissanceOuAgeDeValidationSchema } from "@views/common/composant/formulaire/validation/DateNaissanceOuAgeDeFormValidation";
+import { sexeObligatoireValidation } from "@views/common/composant/formulaire/validation/SexeObligatoireValidation";
 
 export const ParentNaissValidationSchema = Yup.object({
   [DATE_NAISSANCE_OU_AGE_DE]: DateNaissanceOuAgeDeValidationSchema,
@@ -49,7 +50,7 @@ export const ParentNaissSansDateAgeDeValidationSchema = Yup.object({
     return nomParentObligatoireValidation(this, value, error);
   });
 
-function nomParentObligatoireValidation(context: any, value: any, error: any) {
+const nomParentObligatoireValidation = (context: any, value: any, error: any) => {
   let res: any = true;
   const parentNaissanceForm: IParentNaissanceForm = value;
   const parentNaissanceFormSansValeurInconnu = supprimeValeurInconnu(parentNaissanceForm);
@@ -66,9 +67,9 @@ function nomParentObligatoireValidation(context: any, value: any, error: any) {
     res = context.createError(paramsError);
   }
   return res;
-}
+};
 
-function supprimeValeurInconnu(parentNaissanceForm?: IParentNaissanceForm): IParentNaissanceForm | undefined {
+const supprimeValeurInconnu = (parentNaissanceForm?: IParentNaissanceForm): IParentNaissanceForm | undefined => {
   let parentNaissanceFormSansValeurInconnu;
   if (parentNaissanceForm) {
     parentNaissanceFormSansValeurInconnu = { ...parentNaissanceForm };
@@ -91,4 +92,4 @@ function supprimeValeurInconnu(parentNaissanceForm?: IParentNaissanceForm): IPar
   }
 
   return parentNaissanceFormSansValeurInconnu;
-}
+};

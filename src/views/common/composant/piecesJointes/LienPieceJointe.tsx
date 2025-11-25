@@ -41,10 +41,7 @@ export const LienPieceJointe: React.FC<IDataLienFicheProps> = props => {
             <FenetrePiecesJointes
               toggleFenetre={toggleFenetre}
               numRequete={props.numRequete}
-              nom={getNomPieceJointeOuDefaut(
-                props.index,
-                props.pieceJointe.nom
-              )}
+              nom={getNomPieceJointeOuDefaut(props.index, props.pieceJointe.nom)}
               idPiece={props.pieceJointe.id}
               typePiece={props.pieceJointe.typePiece}
             ></FenetrePiecesJointes>
@@ -55,6 +52,6 @@ export const LienPieceJointe: React.FC<IDataLienFicheProps> = props => {
   );
 };
 
-function getNomPieceJointeOuDefaut(index: number, propriete?: string): string {
+const getNomPieceJointeOuDefaut = (index: number, propriete?: string): string => {
   return propriete ? propriete : `${getLibelle("Pièce n°")} ${index}}`;
-}
+};

@@ -3,7 +3,7 @@ import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
 import { TableauStatut } from "./TableauStatut";
 
-export function getStatuts(statutsFiche: StatutFiche[]): SectionPartProps[] {
+export const getStatuts = (statutsFiche: StatutFiche[]): SectionPartProps[] => {
   return [
     {
       partContent: {
@@ -11,10 +11,10 @@ export function getStatuts(statutsFiche: StatutFiche[]): SectionPartProps[] {
       }
     }
   ];
-}
+};
 
-function getTableauStatuts(statutsFiche: StatutFiche[]): SectionContentProps {
+const getTableauStatuts = (statutsFiche: StatutFiche[]): SectionContentProps => {
   return {
     value: <TableauStatut statutsFiche={statutsFiche}></TableauStatut>
   };
-}
+};

@@ -124,10 +124,10 @@ export const TableauRece: React.FC<React.PropsWithChildren<TableauReceProps>> = 
     [pageState, props, paramsTableau]
   );
 
-  function onClickOnLine(identifiant: string, idxOnePage: number) {
+  const onClickOnLine = (identifiant: string, idxOnePage: number) => {
     const idxDataState = estTableauPagine() ? (pageState % nbPages) * props.nbLignesParPage + idxOnePage : idxOnePage;
     props.onClickOnLine(identifiant, props.dataState, idxDataState);
-  }
+  };
 
   // Obligatoire pour les styles qui sont chargés dynamiquement lorsque le tableau est dans une fenetre externe
   useEffect(() => {

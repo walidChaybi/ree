@@ -10,15 +10,15 @@ export interface IMariageInteresse {
   aletranger: boolean;
 }
 
-export function getLibelleLieuMariage(mariage: IMariageInteresse): string {
+export const getLibelleLieuMariage = (mariage: IMariageInteresse): string => {
   if (!mariage.aletranger && !LieuxUtils.estPaysFrance(mariage.paysMariage)) {
     return "Mariés";
   } else {
     return "Mariés à";
   }
-}
+};
 
-export function getLieuMariage(mariage: IMariageInteresse) {
+export const getLieuMariage = (mariage: IMariageInteresse) => {
   const villeString = mariage.villeMariage ? `${mariage.villeMariage.charAt(0).toUpperCase()}${mariage.villeMariage.slice(1)}` : "";
   const regionString = mariage.regionMariage ? `${mariage.regionMariage.charAt(0).toUpperCase()}${mariage.regionMariage.slice(1)}` : "";
   const paysString = mariage.paysMariage ? `${mariage.paysMariage.charAt(0).toUpperCase()}${mariage.paysMariage.slice(1)}` : "";
@@ -37,4 +37,4 @@ export function getLieuMariage(mariage: IMariageInteresse) {
       true
     )} ${LieuxUtils.estVilleParis(villeString) ? "" : regionStringParentheses}`;
   }
-}
+};

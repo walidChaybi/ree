@@ -6,7 +6,7 @@ interface ILabel {
   evenement: string;
   titulaireEtOuEvenenement: string;
 }
-export function getLabels(natureActe: keyof typeof ENatureActe): ILabel {
+export const getLabels = (natureActe: keyof typeof ENatureActe): ILabel => {
   const libelleNatureEnMinuscule = ENatureActe[natureActe].toLowerCase();
   return {
     dateEvenement: `Date de ${libelleNatureEnMinuscule}`,
@@ -14,4 +14,4 @@ export function getLabels(natureActe: keyof typeof ENatureActe): ILabel {
     evenement: `Evénement ${libelleNatureEnMinuscule}`,
     titulaireEtOuEvenenement: natureActe === "NAISSANCE" ? "Titulaire / Evénement" : "Titulaire"
   };
-}
+};

@@ -27,11 +27,11 @@ export const commonHeadersTableauRMC = [
   })
 ];
 
-export function goToLinkRMC(link: string): string {
+export const goToLinkRMC = (link: string): string => {
   let range = "";
   if (link.indexOf("range") > 0) {
     const params: string[] = link.split(/rmc\?|rmcauto\?/)[1].split("&");
     range = params[0].split("=")[1];
   }
   return range;
-}
+};

@@ -88,8 +88,8 @@ const NomSecableForm: React.FC<NomSecableFormProps> = ({
   );
 };
 
-function estDisabled(nomPartie1?: string, origineTitulaireActe = false) {
+const estDisabled = (nomPartie1?: string, origineTitulaireActe = false) => {
   return !origineTitulaireActe || nomPartie1 === ABSENCE_VALIDEE;
-}
+};
 
 export default connect<ComponentFormProps>(NomSecableForm);

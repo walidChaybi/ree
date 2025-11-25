@@ -6,7 +6,7 @@ export interface IDateComposeForm {
   annee?: string;
 }
 
-export function buildDatePickerValue(dateSaisie: IDateComposeForm): Date {
+export const buildDatePickerValue = (dateSaisie: IDateComposeForm): Date => {
   let datePickerValue = new Date();
   const dateSaisieComplete = { ...dateSaisie };
 
@@ -26,4 +26,4 @@ export function buildDatePickerValue(dateSaisie: IDateComposeForm): Date {
   }
 
   return datePickerValue;
-}
+};

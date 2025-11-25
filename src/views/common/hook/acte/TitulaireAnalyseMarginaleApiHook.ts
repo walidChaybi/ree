@@ -9,7 +9,7 @@ export interface IAnalyseMarginaleResultat {
   prenoms: string[];
 }
 
-export function useTitulaireAnalyseMarginaleApiHook(identifiantsActes: string[]): IAnalyseMarginaleResultat[] {
+export const useTitulaireAnalyseMarginaleApiHook = (identifiantsActes: string[]): IAnalyseMarginaleResultat[] => {
   const [resultat, setResultat] = useState<IAnalyseMarginaleResultat[]>([]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export function useTitulaireAnalyseMarginaleApiHook(identifiantsActes: string[])
   }, [identifiantsActes]);
 
   return resultat;
-}
+};
 
 const mapAnalyseMarginale = (data: any): IAnalyseMarginaleResultat => {
   return {

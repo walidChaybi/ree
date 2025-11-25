@@ -3,7 +3,7 @@ import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import DateUtils from "@util/DateUtils";
 import { triListeObjetsSurPropriete } from "@util/Utils";
 
-export function mapAlerteActe(data: any): IAlerte {
+export const mapAlerteActe = (data: any): IAlerte => {
   const typeAlerte = TypeAlerte.depuisId(data.idTypeAlerte) as ITypeAlerte;
 
   return {
@@ -24,12 +24,12 @@ export function mapAlerteActe(data: any): IAlerte {
     codeCouleur: TypeAlerte.codeCouleurAlerte(typeAlerte),
     type: typeAlerte
   } as IAlerte;
-}
+};
 
-export function mapAlertesActe(data: any[]): IAlerte[] {
+export const mapAlertesActe = (data: any[]): IAlerte[] => {
   return trierAlertesActeParDateCreationDesc(data)?.map(mapAlerteActe);
-}
+};
 
-function trierAlertesActeParDateCreationDesc(data: any[]): any[] {
+const trierAlertesActeParDateCreationDesc = (data: any[]): any[] => {
   return triListeObjetsSurPropriete(data as { dateCreation: number }[], "dateCreation")?.reverse();
-}
+};

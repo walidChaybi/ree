@@ -22,12 +22,12 @@ const EVENT_NON_DISPO = {
   }
 };
 
-export function signerDocument(
+export const signerDocument = (
   document: string,
   handleBackFromWebExtensionCallback: (event: CustomEvent) => void,
   infos: IDetailInfos[] = [],
   codePin?: string
-) {
+) => {
   if (codePin !== undefined) {
     const modeSignature: ModeSignature = ModeSignatureUtil.estValide(gestionnaireSignatureFlag.getModeSignature())
       ? gestionnaireSignatureFlag.getModeSignature()
@@ -49,14 +49,14 @@ export function signerDocument(
       window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
     }
   }
-}
+};
 
-export function handleBackFromWebExtension(
+export const handleBackFromWebExtension = (
   detail: DetailSignature,
   setResultatWebext: React.Dispatch<React.SetStateAction<DetailSignatureToCallApp | undefined>>
-): void {
+): void => {
   gestionnaireTimer.annuleTimer(TIMER_SIGNATURE);
   if (detail.direction === DIRECTION_TO_CALL_APP) {
     setResultatWebext(detail);
   }
-}
+};

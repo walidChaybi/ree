@@ -11,7 +11,7 @@ interface IValiderProjetActeResultat {
   projetEstValide: boolean;
 }
 
-export function useValiderProjetActeApiHook(params?: IValiderProjetActeParams): IValiderProjetActeResultat {
+export const useValiderProjetActeApiHook = (params?: IValiderProjetActeParams): IValiderProjetActeResultat => {
   const [projetEstValide, setProjetEstValide] = useState<boolean>(false);
   useEffect(() => {
     if (params?.idSuiviDossier) {
@@ -33,4 +33,4 @@ export function useValiderProjetActeApiHook(params?: IValiderProjetActeParams): 
   return {
     projetEstValide
   };
-}
+};

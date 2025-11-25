@@ -15,19 +15,19 @@ import { useContext, useEffect, useState } from "react";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
-export function useRequeteDelivranceApiHook(
+export const useRequeteDelivranceApiHook = (
   parametresLienRequete: IQueryParametersPourRequetes | undefined,
   typeRequete: TypeAppelRequete,
   setParametresLienRequete?: React.Dispatch<React.SetStateAction<IQueryParametersPourRequetes | undefined>>,
   rafraichirLaRecherche?: boolean
-) {
+) => {
   const { utilisateurs, services } = useContext(RECEContextData);
   const [dataState, setDataState] = useState<IRequeteTableauDelivrance[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
   const [filtresReq, setFiltresReq] = useState<IFiltreServiceRequeteDelivranceFormValues>({} as IFiltreServiceRequeteDelivranceFormValues);
 
   useEffect(() => {
-    async function fetchMesRequetes() {
+    const fetchMesRequetes = async () => {
       try {
         if (parametresLienRequete) {
           const listeStatuts = parametresLienRequete?.statuts?.join(",");
@@ -47,11 +47,11 @@ export function useRequeteDelivranceApiHook(
           erreurs: estTableauErreurApi(erreurs) ? erreurs : []
         });
       }
-    }
+    };
     fetchMesRequetes();
   }, [parametresLienRequete, typeRequete, filtresReq, rafraichirLaRecherche]);
 
-  function onSubmitFiltres(values: IFiltreServiceRequeteDelivranceFormValues) {
+  const onSubmitFiltres = (values: IFiltreServiceRequeteDelivranceFormValues) => {
     setFiltresReq({ ...values });
     if (setParametresLienRequete && parametresLienRequete) {
       setParametresLienRequete({
@@ -59,11 +59,11 @@ export function useRequeteDelivranceApiHook(
         range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
       });
     }
-  }
+  };
 
   return {
     dataState,
     paramsTableau,
     onSubmitFiltres
   };
-}
+};

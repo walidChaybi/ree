@@ -59,19 +59,19 @@ const DeclarationConjointeForm: React.FC<DeclarationConjointeFormProps> = props 
   );
 };
 
-function initDateDeclaration(props: React.PropsWithChildren<DeclarationConjointeFormProps>) {
+const initDateDeclaration = (props: React.PropsWithChildren<DeclarationConjointeFormProps>) => {
   props.formik.setFieldValue(withNamespace(withNamespace(props.nom, DATE), JOUR), "");
   props.formik.setFieldValue(withNamespace(withNamespace(props.nom, DATE), MOIS), "");
   props.formik.setFieldValue(withNamespace(withNamespace(props.nom, DATE), ANNEE), "");
-}
+};
 
-function afficheDate(type: keyof typeof ETypeDeclarationConjointe | null): boolean {
+const afficheDate = (type: keyof typeof ETypeDeclarationConjointe | null): boolean => {
   return Boolean(type && !["ABSENCE_DECLARATION_VALIDEE", "ABSENCE_DECLARATION"].includes(type));
-}
+};
 
-function estDisabled(type: keyof typeof ETypeDeclarationConjointe | null, origineTitulaireActe = false) {
+const estDisabled = (type: keyof typeof ETypeDeclarationConjointe | null, origineTitulaireActe = false) => {
   return type === "ABSENCE_DECLARATION_VALIDEE" || (type !== "ABSENCE_DECLARATION" && type != null && !origineTitulaireActe);
-}
+};
 
 const typeDeclarationConjointeVersOptions = (typeDeclaration: keyof typeof ETypeDeclarationConjointe | null): Option[] => {
   switch (typeDeclaration) {

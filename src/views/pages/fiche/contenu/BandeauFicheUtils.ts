@@ -10,7 +10,7 @@ import { FournisseurDonneeBandeauActe } from "./fournisseurDonneesBandeau/Fourni
 import { FournisseurDonneeBandeauPacs } from "./fournisseurDonneesBandeau/FournisseurDonneesBandeauPacs";
 import { FournisseurDonneesBandeauRcRca } from "./fournisseurDonneesBandeau/FournisseurDonneesBandeauRcRca";
 
-export function setDataBandeau(typeFiche: ETypeFiche, fiche: TFiche | null): IBandeauFiche {
+export const setDataBandeau = (typeFiche: ETypeFiche, fiche: TFiche | null): IBandeauFiche => {
   if (!fiche) return {} as IBandeauFiche;
 
   const fournisseurDonneesBandeau = (() => {
@@ -46,9 +46,9 @@ export function setDataBandeau(typeFiche: ETypeFiche, fiche: TFiche | null): IBa
     dateDerniereMaj: fiche.dateDerniereMaj?.format("JJ/MM/AAAA") ?? "",
     dateDerniereDelivrance: fiche.dateDerniereDelivrance?.format("JJ/MM/AAAA") ?? ""
   };
-}
+};
 
-function setAlertes(alertes: IAlerte[]) {
+const setAlertes = (alertes: IAlerte[]) => {
   const alertesInscription: IAlerte[] = [];
   if (alertes) {
     alertes.forEach(a => {
@@ -57,4 +57,4 @@ function setAlertes(alertes: IAlerte[]) {
     });
   }
   return alertesInscription;
-}
+};

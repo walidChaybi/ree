@@ -83,17 +83,17 @@ export const ListePiecesJustificativesEtablissement: React.FC<ListePiecesJustifi
     );
   };
 
-  function ouvrirModal() {
+  const ouvrirModal = () => {
     setEstModaleOuverte(true);
-  }
+  };
 
-  function fermerModal() {
+  const fermerModal = () => {
     setEstModaleOuverte(false);
     setDocumentPJTries([]);
     if (props.rechargerRequete) {
       props.rechargerRequete();
     }
-  }
+  };
 
   const listeCategoriePJ: Options = documentPJTries.map(documentPJ => {
     return {
@@ -101,6 +101,16 @@ export const ListePiecesJustificativesEtablissement: React.FC<ListePiecesJustifi
       libelle: documentPJ.categorie.libelleAAfficher
     };
   });
+
+  const handleReorga = (oldIndex: number, newIndex: number) => {
+    if (documentPJTries) {
+      const newList = [...documentPJTries];
+      const item = newList[oldIndex];
+      newList.splice(oldIndex, 1);
+      newList.splice(newIndex, 0, item);
+      setDocumentPJTries(newList);
+    }
+  };
 
   return (
     <span className="PiecesJustificativesContainer">
@@ -137,19 +147,9 @@ export const ListePiecesJustificativesEtablissement: React.FC<ListePiecesJustifi
       />
     </span>
   );
-
-  function handleReorga(oldIndex: number, newIndex: number) {
-    if (documentPJTries) {
-      const newList = [...documentPJTries];
-      const item = newList[oldIndex];
-      newList.splice(oldIndex, 1);
-      newList.splice(newIndex, 0, item);
-      setDocumentPJTries(newList);
-    }
-  }
 };
 
-function majLibellesPiecesJustificatives(documentsPJAMettreAJour: IDocumentPJ[], documentsPJReference: IDocumentPJ[]) {
+const majLibellesPiecesJustificatives = (documentsPJAMettreAJour: IDocumentPJ[], documentsPJReference: IDocumentPJ[]) => {
   documentsPJAMettreAJour.forEach(documentPJAMettreAJour => {
     documentPJAMettreAJour.piecesJustificatives.forEach(pjAMettreAJour => {
       const pjReference = DocumentPJ.getPieceJustificative(documentsPJReference, documentPJAMettreAJour.id, pjAMettreAJour.id);
@@ -159,4 +159,4 @@ function majLibellesPiecesJustificatives(documentsPJAMettreAJour: IDocumentPJ[],
     });
   });
   return documentsPJAMettreAJour;
-}
+};

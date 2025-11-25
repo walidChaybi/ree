@@ -10,9 +10,9 @@ import {
 import { IDataTableauActeInscriptionSelectionne } from "../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { IDataTableauPersonneSelectionnee } from "../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
 
-export function mapDataTableauRMCPersonneVersDataTableauPersonneSelectionnee(
+export const mapDataTableauRMCPersonneVersDataTableauPersonneSelectionnee = (
   data: IDataTableauRMCPersonne
-): IDataTableauPersonneSelectionnee {
+): IDataTableauPersonneSelectionnee => {
   return {
     idPersonne: data.idPersonneOuActeInscription,
     nom: data.nom,
@@ -22,12 +22,12 @@ export function mapDataTableauRMCPersonneVersDataTableauPersonneSelectionnee(
     lieuNaissance: data.lieuNaissance,
     sexe: data.sexe
   };
-}
+};
 
-export function mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelectionne(
+export const mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelectionne = (
   data: IDataTableauRMCPersonne,
   resultatRMCPersonne: IRMCPersonneResultat[]
-): IDataTableauActeInscriptionSelectionne {
+): IDataTableauActeInscriptionSelectionne => {
   const personne = resultatRMCPersonne.find(resultatCourant =>
     resultatCourant.actesInscriptions.some(acteInscriptionLie => acteInscriptionLie.idActeInscription === data.idPersonneOuActeInscription)
   )?.personne as IPersonneRMCPersonne;
@@ -42,12 +42,12 @@ export function mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelection
     lieuNaissance: personne.lieuNaissance,
     ...formatDataTableauPersonne(personne)
   };
-}
+};
 
-export function triDataTableauPersonneSelectionneeSurNomPrenom(
+export const triDataTableauPersonneSelectionneeSurNomPrenom = (
   personne1: IDataTableauPersonneSelectionnee,
   personne2: IDataTableauPersonneSelectionnee
-): number {
+): number => {
   let compareNom = 0;
   let comparePrenoms = 0;
   if (personne1.nom && personne2.nom) {
@@ -57,13 +57,13 @@ export function triDataTableauPersonneSelectionneeSurNomPrenom(
     comparePrenoms = personne1.prenoms.localeCompare(personne2.prenoms);
   }
   return compareNom || comparePrenoms;
-}
+};
 
-export function getTitulairesAsOptions(sousTypeRequete?: SousTypeCreation, titulaires?: ITitulaireRequeteCreation[]): Options {
+export const getTitulairesAsOptions = (sousTypeRequete?: SousTypeCreation, titulaires?: ITitulaireRequeteCreation[]): Options => {
   return titulaires
     ? titulaires.map(titulaire => ({
         cle: titulaire.id,
         libelle: getLibelleMenuItemPersonne(titulaire, sousTypeRequete)
       }))
     : ([] as Options);
-}
+};

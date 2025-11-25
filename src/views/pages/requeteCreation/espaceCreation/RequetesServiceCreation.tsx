@@ -149,13 +149,13 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
 
   const columnHeaders = getColonnesTableauRequetesServiceCreation(colonneCaseACocherAttribueAParams);
 
-  function soumettreFiltre(values: IFiltreServiceRequeteCreationFormValues) {
+  const soumettreFiltre = (values: IFiltreServiceRequeteCreationFormValues) => {
     if (!parametresLienRequete && !values.numeroRequete) {
       setParametresLienRequete(props.queryParametersPourRequetes);
     }
     onSubmit(values);
     setEstTableauARafraichir(true);
-  }
+  };
 
   return (
     <>

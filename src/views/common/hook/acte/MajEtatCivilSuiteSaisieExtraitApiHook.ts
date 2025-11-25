@@ -25,7 +25,7 @@ interface IMajEtatCivilSuiteSaisieExtraitResultat {
   data: any;
 }
 
-export function useMajEtatCivilSuiteSaisieExtrait(params?: IMajEtatCivilSuiteSaisieExtraitParams) {
+export const useMajEtatCivilSuiteSaisieExtrait = (params?: IMajEtatCivilSuiteSaisieExtraitParams) => {
   const [resultat, setResultat] = useState<IMajEtatCivilSuiteSaisieExtraitResultat>();
 
   useEffect(() => {
@@ -44,4 +44,4 @@ export function useMajEtatCivilSuiteSaisieExtrait(params?: IMajEtatCivilSuiteSai
   }, [params]);
 
   return resultat;
-}
+};

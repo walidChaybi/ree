@@ -5,11 +5,11 @@ import { RouteObject, createMemoryRouter } from "react-router";
 import { EditionDelivranceContext } from "../../contexts/EditionDelivranceContextProvider";
 import requeteDelivrance from "../mock/data/requeteDelivrance";
 
-export function deepCopie(objet: any) {
+export const deepCopie = (objet: any) => {
   return JSON.parse(JSON.stringify(objet));
-}
+};
 
-export function createTestingRouter(routes: RouteObject[], initialEntries: string[]) {
+export const createTestingRouter = (routes: RouteObject[], initialEntries: string[]) => {
   return createMemoryRouter(
     routes.map(route => {
       return { path: route.path, element: route.element };
@@ -18,7 +18,7 @@ export function createTestingRouter(routes: RouteObject[], initialEntries: strin
       initialEntries
     }
   );
-}
+};
 
 export const elementAvecEditionDelivranceContexte = (children: React.ReactElement, requete?: IRequeteDelivrance, acte?: FicheActe): any => {
   const valeursContext = {

@@ -9,11 +9,11 @@ interface BandeauFicheRcRcaPacsNumeroProps {
 
 export const BandeauFicheRcRcaPacsNumero: React.FC<BandeauFicheRcRcaPacsNumeroProps> = props => {
   const data = props.dataBandeau;
-  function getPrenomNom() {
+  const getPrenomNom = () => {
     const nomsPrenoms = data.personnes.map(personne => `${personne.prenom} ${personne.nom}`);
 
     return jointAvec(nomsPrenoms, " et ");
-  }
+  };
   return (
     <>
       <div className="LigneNumeroRcRcaPacs">

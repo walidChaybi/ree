@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 
 // Schéma de validation des champs
-export function getFormValidationCarAutorisesEtNAtureObligatoireShema(autreKey: string) {
+export const getFormValidationCarAutorisesEtNAtureObligatoireShema = (autreKey: string) => {
   return Yup.object()
     .shape({
       [TYPE]: Yup.string(),
@@ -23,4 +23,4 @@ export function getFormValidationCarAutorisesEtNAtureObligatoireShema(autreKey: 
       };
       return type === "AUTRE" && nature == null ? this.createError(paramsError) : true;
     });
-}
+};

@@ -12,9 +12,9 @@ interface IDataTableauActesInscriptionsSelectionnesHook {
   setDataActesInscriptionsSelectionnes: React.Dispatch<React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>>;
 }
 
-export function useDataTableauActesInscriptionsSelectionnesHook(
+export const useDataTableauActesInscriptionsSelectionnesHook = (
   piecesJustificatives?: IPieceJustificativeCreation[]
-): IDataTableauActesInscriptionsSelectionnesHook {
+): IDataTableauActesInscriptionsSelectionnesHook => {
   const [piecesJustificativesActesInscriptions, setPiecesJustificativesActesInscriptions] = useState<IPieceJustificativeCreation[]>([]);
   const [dataActesInscriptionsSelectionnes, setDataActesInscriptionsSelectionnes] = useState<IDataTableauActeInscriptionSelectionne[]>();
   const [actesInscriptionsSauvegardesParams, setActesInscriptionsSauvegardesParams] = useState<IActeInscriptionSauvegardeDto[]>();
@@ -60,12 +60,12 @@ export function useDataTableauActesInscriptionsSelectionnesHook(
     dataActesInscriptionsSelectionnes,
     setDataActesInscriptionsSelectionnes
   };
-}
+};
 
-function mapDataTableauActeInscriptionSelectionne(
+const mapDataTableauActeInscriptionSelectionne = (
   data: IActeInscriptionSauvegardeDto,
   piecesActesInscriptionsSauvegardees: IPieceJustificativeCreation[]
-): IDataTableauActeInscriptionSelectionne {
+): IDataTableauActeInscriptionSelectionne => {
   return {
     idPersonne: data.personne.idPersonne,
     idActeInscription: data.idActeOuInscription,
@@ -81,27 +81,27 @@ function mapDataTableauActeInscriptionSelectionne(
     lieuNaissance: data.personne.lieuNaissance,
     sexe: data.personne.sexe?.charAt(0)
   };
-}
+};
 
-function estActeInscriptionSauvegarde(pieceJustificative: IPieceJustificativeCreation): boolean | undefined {
+const estActeInscriptionSauvegarde = (pieceJustificative: IPieceJustificativeCreation): boolean | undefined => {
   return (
     Boolean(pieceJustificative.idPersonne) &&
     Boolean(pieceJustificative.idRc ?? pieceJustificative.idRca ?? pieceJustificative.idPacs ?? pieceJustificative.idActe)
   );
-}
+};
 
-function getIdActeInscriptionFromPieceJustificativeCreation(piece: IPieceJustificativeCreation): string | undefined {
+const getIdActeInscriptionFromPieceJustificativeCreation = (piece: IPieceJustificativeCreation): string | undefined => {
   return piece.idActe ?? piece.idRc ?? piece.idRca ?? piece.idPacs;
-}
+};
 
-function auMoinsUnParametreActeInscriptionSauvegardeManque(
+const auMoinsUnParametreActeInscriptionSauvegardeManque = (
   params: IActeInscriptionSauvegardeDto[],
   resultats: IActeInscriptionSauvegardeDto[]
-): boolean {
+): boolean => {
   return (
     params?.length > ZERO &&
     !params?.some(acteInscriptionParam =>
       resultats.some(resultat => resultat.idActeOuInscription === acteInscriptionParam.idActeOuInscription)
     )
   );
-}
+};

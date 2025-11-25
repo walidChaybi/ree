@@ -46,15 +46,15 @@ export const FiltreServiceRequeteCreationForm: React.FC<FiltreServiceRequeteCrea
 
   const filtreStatutRequete: Options = StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.CREATION);
 
-  function onSubmitFiltresEtRecherche(values: IFiltreServiceRequeteCreationFormValues) {
+  const onSubmitFiltresEtRecherche = (values: IFiltreServiceRequeteCreationFormValues) => {
     if (values) {
       props.onSubmit(values);
     }
-  }
+  };
 
-  function onReset(reset: () => void) {
+  const onReset = (reset: () => void) => {
     reset();
-  }
+  };
 
   return (
     <div className="FiltreServiceRequeteCreationForm">

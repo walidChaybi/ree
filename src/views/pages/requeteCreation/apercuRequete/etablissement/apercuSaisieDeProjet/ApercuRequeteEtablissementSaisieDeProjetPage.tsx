@@ -198,28 +198,31 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
 
-  function rechargerRequete() {
+  const rechargerRequete = () => {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
       estConsultationHistoriqueAction: true
     });
-  }
+  };
 
-  function onRenommePieceJustificativeSaisieProjet(idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) {
+  const onRenommePieceJustificativeSaisieProjet = (idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) => {
     onRenommePieceJustificativeEtablissement(requete, setRequete, idPieceJustificative, nouveauLibelle, idDocumentPJ);
-  }
+  };
 
-  function navigueEtAffichePdfProjetActe(): void {
+  const navigueEtAffichePdfProjetActe = (): void => {
     setOngletSelectionne(DEUX);
     setIsDirty(false);
-  }
+  };
   const getValeursPostulantForm = (postulant: ITitulaireRequeteCreation): ISaisieProjetPostulantForm => {
     return estProjetExistant
       ? mappingProjetActeVersFormulairePostulant(postulant, projetActe)
       : mappingTitulairesVersFormulairePostulant(postulant, parentMasculinEtOuPositionUn, parentFemininEtOuPositionDeux, requete?.nature);
   };
 
-  function onSubmitSaisieProjetForm(valeurs: ISaisieProjetPostulantForm, formikHelpers?: FormikHelpers<ISaisieProjetPostulantForm>): void {
+  const onSubmitSaisieProjetForm = (
+    valeurs: ISaisieProjetPostulantForm,
+    formikHelpers?: FormikHelpers<ISaisieProjetPostulantForm>
+  ): void => {
     if (
       dossierProjetActe &&
       projetActe &&
@@ -232,7 +235,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
       navigueEtAffichePdfProjetActe();
       setRafraichirForm(() => formikHelpers?.resetForm);
     }
-  }
+  };
 
   const listeOngletsGauche: ItemListe[] = [
     {

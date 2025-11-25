@@ -31,9 +31,9 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   icone,
   getRowClassName
 }) => {
-  function onClickRowHandler(identifiant: string, idx: number) {
+  const onClickRowHandler = (identifiant: string, idx: number) => {
     onClickOnLine(identifiant, idx);
-  }
+  };
 
   const contenuCellule = useMemo(() => {
     if (enChargement) {
@@ -77,7 +77,7 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   );
 };
 
-function getRowRender(columnHeaders: TableauTypeColumn[], row: any, idx: number, icone?: IconeParams): JSX.Element[] {
+const getRowRender = (columnHeaders: TableauTypeColumn[], row: any, idx: number, icone?: IconeParams): JSX.Element[] => {
   const tableauBodyCellList = [];
 
   for (const column of columnHeaders) {
@@ -111,4 +111,4 @@ function getRowRender(columnHeaders: TableauTypeColumn[], row: any, idx: number,
   }
 
   return tableauBodyCellList;
-}
+};

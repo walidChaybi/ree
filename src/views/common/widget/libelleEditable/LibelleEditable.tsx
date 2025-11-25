@@ -19,9 +19,9 @@ export const LibelleEditable: React.FC<ILibelleEditable> = props => {
     }
   };
 
-  function afficherBoutonAnnuler() {
+  const afficherBoutonAnnuler = () => {
     return props.handleMiseAJourLibelle && props.libelle && props.libelle !== props.libelleOrigine;
-  }
+  };
 
   return (
     <div className="LibelleEditable">

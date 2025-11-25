@@ -20,11 +20,11 @@ import { SPC, UN, ZERO, getNombreOuNull } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "../../../../../../../requeteDelivrance/saisirRequete/hook/mappingCommun";
 
-export function mappingSaisieProjetPostulantFormVersProjetActe(
+export const mappingSaisieProjetPostulantFormVersProjetActe = (
   saisieProjetPostulant: ISaisieProjetPostulantForm,
   numeroDossierNational?: string,
   projetActeExistant?: IProjetActe
-): IProjetActe {
+): IProjetActe => {
   const projetActeAEnvoyer = projetActeExistant ? { ...projetActeExistant, corpsTexte: undefined } : ({} as IProjetActe);
   projetActeAEnvoyer.modeCreation = ETypeRedactionActe.ETABLI;
 
@@ -77,12 +77,12 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
       } as IDeclarant)
     : null;
   return projetActeAEnvoyer;
-}
+};
 
-function mapPostulantVersTitulaireProjetActe(
+const mapPostulantVersTitulaireProjetActe = (
   acte: ISaisieProjetPostulantForm,
   naissancePostulantEvenement: IEvenement
-): ITitulaireProjetActe {
+): ITitulaireProjetActe => {
   const postulant: ISaisiePostulantSousForm = acte.titulaire;
   const prenoms: string[] = getPrenomsTitulaire(postulant);
   const adresse = acte.autres.adresse;
@@ -120,9 +120,9 @@ function mapPostulantVersTitulaireProjetActe(
         : null,
     reconnuPar: acte.autres.reconnaissance || null
   } as ITitulaireProjetActe;
-}
+};
 
-function getFiliationParParent(parentForm: ISaisieParentSousForm, ordre: number): IFiliationProjetActeTranscrit {
+const getFiliationParParent = (parentForm: ISaisieParentSousForm, ordre: number): IFiliationProjetActeTranscrit => {
   const prenoms = getPrenomsTableauStringVersPrenomsOrdonnes(parentForm.prenom.prenoms).map(p => p.prenom);
   return {
     lienParente: ELienParente.PARENT,
@@ -133,9 +133,9 @@ function getFiliationParParent(parentForm: ISaisieParentSousForm, ordre: number)
     age: parseInt(parentForm.dateNaissance.age) || null,
     prenoms: prenoms.length ? prenoms.map(prenom => prenom.trim()) : null
   } as IFiliationProjetActeTranscrit;
-}
+};
 
-function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
+const getFiliationNaissance = (parentForm: ISaisieParentSousForm) => {
   const lieuNaissanceExiste = !LieuxUtils.estPaysInconnu(parentForm.lieuNaissance.lieuNaissance);
   const lieuNaissanceEstFrance = LieuxUtils.estPaysFrance(parentForm.lieuNaissance.lieuNaissance);
 
@@ -151,8 +151,8 @@ function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
     mois: getNombreOuNull(parentForm.dateNaissance.date?.mois),
     jour: getNombreOuNull(parentForm.dateNaissance.date?.jour)
   };
-}
-function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
+};
+const getRegionNaissanceFiliation = (parentForm: ISaisieParentSousForm) => {
   const lieuNaissanceEstEtranger = LieuxUtils.estPaysEtranger(parentForm.lieuNaissance.lieuNaissance);
   const lieuNaissanceEstFrance = LieuxUtils.estPaysFrance(parentForm.lieuNaissance.lieuNaissance);
   if (lieuNaissanceEstEtranger) {
@@ -162,9 +162,9 @@ function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
   } else {
     return null;
   }
-}
+};
 
-function getFiliation(acte: ISaisieProjetPostulantForm): IFiliationProjetActeTranscrit[] {
+const getFiliation = (acte: ISaisieProjetPostulantForm): IFiliationProjetActeTranscrit[] => {
   let filiation: IFiliationProjetActeTranscrit[] = [];
   const listeParents: ISaisieParentSousForm[] = [];
   acte.parents.parent1 && estParentRenseigne(acte.parents.parent1) && listeParents.push(acte.parents.parent1);
@@ -174,13 +174,13 @@ function getFiliation(acte: ISaisieProjetPostulantForm): IFiliationProjetActeTra
     filiation = [...filiation, getFiliationParParent(parent, ordreDuParent)];
   });
   return filiation;
-}
+};
 
-function getPrenomsTitulaire(postulant: ISaisiePostulantSousForm): string[] {
+const getPrenomsTitulaire = (postulant: ISaisiePostulantSousForm): string[] => {
   const listePrenoms: string[] = getPrenomsTableauStringVersPrenomsOrdonnes(postulant.prenoms.prenoms).map(p => p.prenom.trim());
   return listePrenoms.length ? listePrenoms : [SPC];
-}
+};
 
-function estParentRenseigne(parent: ISaisieParentSousForm): boolean {
+const estParentRenseigne = (parent: ISaisieParentSousForm): boolean => {
   return Boolean(parent.nom) || getPrenomsTableauStringVersPrenomsOrdonnes(parent.prenom?.prenoms)?.length > ZERO;
-}
+};

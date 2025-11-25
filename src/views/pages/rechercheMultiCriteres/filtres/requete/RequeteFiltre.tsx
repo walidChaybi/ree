@@ -135,12 +135,12 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
   );
 };
 
-function estTypeRequeteDirty(values: IRMCRequeteForm<keyof typeof ETypeRequete | "">) {
+const estTypeRequeteDirty = (values: IRMCRequeteForm<keyof typeof ETypeRequete | "">) => {
   return values.requete?.typeRequete !== "";
-}
+};
 
-function esSousTypeRequeteDirty(values: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
+const esSousTypeRequeteDirty = (values: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean => {
   return estRenseigne(values.requete?.sousTypeRequete);
-}
+};
 
 export default connect(RequeteFiltre);

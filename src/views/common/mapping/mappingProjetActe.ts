@@ -19,7 +19,7 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { IDateCompose } from "@util/DateUtils";
 import { getValeurOuUndefined } from "@util/Utils";
 
-export function mappingProjetActe(data: any): IProjetActe {
+export const mappingProjetActe = (data: any): IProjetActe => {
   return {
     id: data.id,
     titulaires: mapTitulairesProjetActe(data.titulaires),
@@ -45,9 +45,9 @@ export function mappingProjetActe(data: any): IProjetActe {
     dateInitialisation: getValeurOuUndefined(data.dateInitialisation),
     modeCreation: getValeurOuUndefined(data.modeCreation)
   };
-}
+};
 
-function mapTitulairesProjetActe(titulaires: any[]): ITitulaireProjetActe[] {
+const mapTitulairesProjetActe = (titulaires: any[]): ITitulaireProjetActe[] => {
   return titulaires.map(titulaire => ({
     nom: getValeurOuUndefined(titulaire.nom),
     prenoms: getValeurOuUndefined(titulaire.prenoms),
@@ -71,9 +71,9 @@ function mapTitulairesProjetActe(titulaires: any[]): ITitulaireProjetActe[] {
     pasDePrenom: getValeurOuUndefined(titulaire.pasDePrenom),
     reconnuPar: titulaire.reconnuPar
   }));
-}
+};
 
-function mapEvenement(naissance?: any): IEvenement {
+const mapEvenement = (naissance?: any): IEvenement => {
   return {
     id: getValeurOuUndefined(naissance?.id),
     heure: getValeurOuUndefined(naissance?.heure),
@@ -90,9 +90,9 @@ function mapEvenement(naissance?: any): IEvenement {
     lieuFormate: getValeurOuUndefined(naissance?.lieuFormate),
     neDansLeMariage: getValeurOuUndefined(naissance?.neDansLeMariage)
   };
-}
+};
 
-function mapDomicile(domicile?: any): IAdresse {
+const mapDomicile = (domicile?: any): IAdresse => {
   return {
     voie: getValeurOuUndefined(domicile?.voie),
     ville: getValeurOuUndefined(domicile?.ville),
@@ -100,9 +100,9 @@ function mapDomicile(domicile?: any): IAdresse {
     region: getValeurOuUndefined(domicile?.region) ?? null,
     pays: getValeurOuUndefined(domicile?.pays)
   };
-}
+};
 
-function mapFiliations(filiations: any[]): IFiliationProjetActeTranscrit[] {
+const mapFiliations = (filiations: any[]): IFiliationProjetActeTranscrit[] => {
   return filiations.map(filiation => ({
     lienParente: getValeurOuUndefined(filiation.lienParente),
     ordre: getValeurOuUndefined(filiation.ordre),
@@ -114,9 +114,9 @@ function mapFiliations(filiations: any[]): IFiliationProjetActeTranscrit[] {
     domicile: mapDomicile(filiation?.domicile),
     prenoms: getValeurOuUndefined(filiation.prenoms)
   }));
-}
+};
 
-function mapDecretNaturalisation(decretNaturalisation: any): IDecretNaturalisation | null {
+const mapDecretNaturalisation = (decretNaturalisation: any): IDecretNaturalisation | null => {
   return decretNaturalisation
     ? {
         numeroDecret: getValeurOuUndefined(decretNaturalisation?.numeroDecret),
@@ -124,9 +124,9 @@ function mapDecretNaturalisation(decretNaturalisation: any): IDecretNaturalisati
         natureDecret: getValeurOuUndefined(decretNaturalisation?.natureDecret)
       }
     : null;
-}
+};
 
-function mapPersonnes(personnes?: any[]): IPersonne[] {
+const mapPersonnes = (personnes?: any[]): IPersonne[] => {
   return (
     personnes?.map(personne => ({
       id: getValeurOuUndefined(personne.id),
@@ -145,49 +145,49 @@ function mapPersonnes(personnes?: any[]): IPersonne[] {
       rcas: mapFicheLien(personne.rcas)
     })) || []
   );
-}
+};
 
-function mapAutresNoms(autresNoms: any[]): IAutresNoms[] {
+const mapAutresNoms = (autresNoms: any[]): IAutresNoms[] => {
   return autresNoms.map(autreNom => ({
     nom: getValeurOuUndefined(autreNom.nom),
     type: AutresNoms.getEnumFor(getValeurOuUndefined(autreNom.type))
   }));
-}
+};
 
-function mapLieuEvenement(evenement: any): ILieuEvenement {
+const mapLieuEvenement = (evenement: any): ILieuEvenement => {
   return {
     pays: getValeurOuUndefined(evenement.pays),
     ville: getValeurOuUndefined(evenement.ville),
     region: getValeurOuUndefined(evenement.region),
     arrondissement: getValeurOuUndefined(evenement.arrondissement)
   };
-}
+};
 
-function mapDateEvenement(evenement: any): IDateCompose {
+const mapDateEvenement = (evenement: any): IDateCompose => {
   return {
     jour: getValeurOuUndefined(evenement.jour),
     mois: getValeurOuUndefined(evenement.mois),
     annee: evenement.annee
   };
-}
+};
 
-function mapFicheLien(ficheLiens: any[]): IFicheLien[] {
+const mapFicheLien = (ficheLiens: any[]): IFicheLien[] => {
   return ficheLiens.map(ficheLien => ({
     numero: getValeurOuUndefined(ficheLien.numero),
     id: getValeurOuUndefined(ficheLien.id),
     statut: getValeurOuUndefined(ficheLien.statut),
     referenceComplete: getValeurOuUndefined(ficheLien.referenceComplete)
   }));
-}
+};
 
-function mapAnalyseMarginales(projetsAnalyseMarginale: any[]): IProjetAnalyseMarginale[] {
+const mapAnalyseMarginales = (projetsAnalyseMarginale: any[]): IProjetAnalyseMarginale[] => {
   return projetsAnalyseMarginale;
-}
+};
 
-function mapCorpsTexte(corpsTexte: any): ICorpsTexte {
+const mapCorpsTexte = (corpsTexte: any): ICorpsTexte => {
   return corpsTexte;
-}
+};
 
-function mapDeclarant(declarant: any): IDeclarant {
+const mapDeclarant = (declarant: any): IDeclarant => {
   return declarant;
-}
+};

@@ -22,20 +22,20 @@ import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/
 import { creationCompositionExtraitPlurilingue } from "./creationComposition/creationCompositionExtraitPlurilingue";
 import { IGenerationECParams } from "./generationECHook";
 
-function estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(acte: FicheActe, choixDelivrance: ChoixDelivrance) {
+const estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte = (acte: FicheActe, choixDelivrance: ChoixDelivrance) => {
   return (
     ChoixDelivrance.estAvecOuSansFiliation(choixDelivrance) ||
     (ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance) && acte.type === "TEXTE")
   );
-}
+};
 
-function estDemandeExtraitPlurilingue(choixDelivrance: ChoixDelivrance) {
+const estDemandeExtraitPlurilingue = (choixDelivrance: ChoixDelivrance) => {
   return ChoixDelivrance.estPlurilingue(choixDelivrance);
-}
+};
 
-function estDemandeCopieActeImage(acte: FicheActe, choixDelivrance: ChoixDelivrance) {
+const estDemandeCopieActeImage = (acte: FicheActe, choixDelivrance: ChoixDelivrance) => {
   return ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance) && acte.type === "IMAGE";
-}
+};
 
 export const getNomDocument = (choixDelivrance: ChoixDelivrance): string => {
   switch (choixDelivrance) {
@@ -55,7 +55,7 @@ export const getNomDocument = (choixDelivrance: ChoixDelivrance): string => {
   }
 };
 
-function creationComposition(
+const creationComposition = (
   acte: FicheActe,
   requete: IRequeteDelivrance,
   validation: EValidation,
@@ -63,7 +63,7 @@ function creationComposition(
   choixDelivrance: ChoixDelivrance,
   ctv: string,
   images: IImage[]
-): IExtraitCopieComposition | IExtraitPlurilingueComposition | undefined {
+): IExtraitCopieComposition | IExtraitPlurilingueComposition | undefined => {
   let composition;
 
   if (estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(acte, choixDelivrance)) {
@@ -74,7 +74,7 @@ function creationComposition(
     composition = creationCompositionCopieActeImage(acte, requete, choixDelivrance, EValidation.O, ctv, images);
   }
   return composition;
-}
+};
 
 const getValidationEC = (acte: FicheActe, choixDelivrance: ChoixDelivrance, images: IImage[], validation = EValidation.O) => {
   switch (choixDelivrance) {
@@ -94,7 +94,7 @@ const getValidationEC = (acte: FicheActe, choixDelivrance: ChoixDelivrance, imag
   return validation;
 };
 
-function getValidationExtrait(acte: FicheActe, choixDelivrance: ChoixDelivrance, validation: EValidation) {
+const getValidationExtrait = (acte: FicheActe, choixDelivrance: ChoixDelivrance, validation: EValidation) => {
   // Pour un choix de délivrance d'extrait avec ou sans filiation d'un acte de mariage ou de naissance
   // Si l'acte ne comporte pas de corps d'extrait modifié correspondant au choix de delivrance
   // ou que les noms et prenoms de l'analyse marginales sont absents
@@ -109,9 +109,9 @@ function getValidationExtrait(acte: FicheActe, choixDelivrance: ChoixDelivrance,
     return EValidation.E;
   }
   return validation;
-}
+};
 
-function getValidationExtraitPlurilingue(acte: FicheActe, validation: EValidation) {
+const getValidationExtraitPlurilingue = (acte: FicheActe, validation: EValidation) => {
   switch (acte.nature) {
     case "MARIAGE":
     case "NAISSANCE":
@@ -129,7 +129,7 @@ function getValidationExtraitPlurilingue(acte: FicheActe, validation: EValidatio
   }
 
   return validation;
-}
+};
 
 const aRectificationCorpsExtraitCorrespondantAuChoixDelivrance = (
   rectificationsCorpsExtrait: RectificationCorpsExtrait[],
@@ -143,14 +143,14 @@ const aRectificationCorpsExtraitCorrespondantAuChoixDelivrance = (
     )
   );
 
-export function creationEC(
+export const creationEC = (
   acte: FicheActe | undefined,
   params: IGenerationECParams | undefined,
   setValidation: any,
   setExtraitCopieApiHookParams: any,
   images: IImage[],
   ctv?: string
-) {
+) => {
   if (acte && params) {
     // Verification des données pour la génération d'extrait mariage/naissance
     // En cas de validation en erreur alors un extrait en erreur sera généré
@@ -173,30 +173,30 @@ export function creationEC(
       extraitCopieComposition: composition
     });
   }
-}
+};
 
-export function creationECSansCTV(
+export const creationECSansCTV = (
   acte: FicheActe | undefined,
   params: IGenerationECParams | undefined,
   setValidation: any,
   setExtraitCopieApiHookParams: any,
   images: IImage[]
-) {
+) => {
   creationEC(acte, params, setValidation, setExtraitCopieApiHookParams, images, "");
-}
+};
 
-export function toutesLesDonneesSontPresentes(
+export const toutesLesDonneesSontPresentes = (
   uuidDocumentReponse: string | undefined,
   uuidDocumentReponseSansAction: string | undefined,
   extraitCopieApiHookResultat?: IExtraitCopieApiHookResultat
-) {
+) => {
   return (uuidDocumentReponse || uuidDocumentReponseSansAction) && extraitCopieApiHookResultat?.donneesComposition;
-}
+};
 
-export function estPresentIdActeEtChoixDelivrance(params?: IGenerationECParams | ICreerCourrierECParams): boolean {
+export const estPresentIdActeEtChoixDelivrance = (params?: IGenerationECParams | ICreerCourrierECParams): boolean => {
   return Boolean(params?.idActe && params?.requete?.choixDelivrance);
-}
+};
 
-export function estDocumentAvecCTV(typeDocument: string | null, sousTypeDelivrance?: SousTypeDelivrance) {
+export const estDocumentAvecCTV = (typeDocument: string | null, sousTypeDelivrance?: SousTypeDelivrance) => {
   return DocumentDelivrance.estExtraitCopieAsigner(typeDocument) && SousTypeDelivrance.estSousTypeSignable(sousTypeDelivrance);
-}
+};

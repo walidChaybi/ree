@@ -7,10 +7,10 @@ export type IColonneFontAwesomeIcone<TData, TIdentifiant> = Omit<
   "identifiantsSelectionnes" | "setIdentifiantsSelectionnes"
 >;
 
-export function getColonneFontAwesomeIcone<TData, TIdentifiant, TEvenement extends TMouseEventSurSVGSVGElement>(
+export const getColonneFontAwesomeIcone = <TData, TIdentifiant, TEvenement extends TMouseEventSurSVGSVGElement>(
   colonneParams: IColonneFontAwesomeIcone<TData, TIdentifiant>,
   conteneurPropsPartielles?: IConteneurElementPropsPartielles<TData, TIdentifiant, TEvenement>
-) {
+) => {
   const getElement = getConteneurAvecElement(
     { ...conteneurPropsPartielles },
     colonneParams.getIdentifiant,
@@ -25,4 +25,4 @@ export function getColonneFontAwesomeIcone<TData, TIdentifiant, TEvenement exten
     getElement: () => getElement,
     style: colonneParams.style
   });
-}
+};

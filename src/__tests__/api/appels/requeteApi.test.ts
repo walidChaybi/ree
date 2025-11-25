@@ -1,24 +1,48 @@
 import {
+  creationRequeteDelivrance,
+  deleteDocumentComplementaire,
   deleteDocumentsReponseApi,
+  getDetailRequete,
+  getPieceComplementInformationById,
+  getPieceJustificativeById,
+  getPrendreEnChargeRequeteSuivante,
+  getReponsesReqInfo,
+  getRequetesCreation,
+  getRequetesInformation,
+  getTableauRequetesDelivrance,
+  IQueryParametersPourRequetes,
   mettreAJourStatutApresSignature,
   patchMiseAJourIdSuiviDossier,
+  patchMiseAJourLibellePJ,
   patchModificationAvancementProjet,
   postAjoutPieceJustificativeAUneRequeteCreation,
   postCreationAction,
+  postCreationActionEtMiseAjourStatut,
+  postDocumentReponseApi,
+  postIgnorerRequete,
+  postMessageRetourSDANFEtUpdateStatutRequete,
   postObservation,
+  postPieceComplementInformationApi,
   postPieceJustificative,
   postRequetesServiceCreation,
   postRetourValideur,
+  postSauvCourrierCreerActionMajStatutRequete,
   postSauvegardePersonneEtActeSelectionne,
   postTableauRequetesDelivranceService,
-  postValiderProjetActe
+  postValiderProjetActe,
+  sauvegarderReponseReqInfo,
+  updateChoixDelivrance,
+  updateRequeteDelivrance
 } from "@api/appels/requeteApi";
+import { IEchange } from "@model/requete/IEchange";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { ITypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { describe, expect, test, vi } from "vitest";
 import { EMimeType } from "../../../ressources/EMimeType";
 
 describe("Test des appels API requête", () => {
-  test("Couverture en attendant le passage a useFetch", async () => {
+  test("Couverture en attendant le passage a useFetch 1", async () => {
     const { ApiManager } = await import("../../../api/ApiManager");
 
     const manager = ApiManager.getInstance("rece-requete-api", "v2");
@@ -92,5 +116,30 @@ describe("Test des appels API requête", () => {
 
     await postValiderProjetActe("", "");
     expect(spyFetch).toHaveBeenCalled();
+  });
+
+  test("Couverture en attendant le passage a useFetch 2", async () => {
+    await getTableauRequetesDelivrance("test", { statuts: ["test"], tri: "test", sens: "ASC" });
+    getRequetesCreation("test", { statuts: ["test"], tri: "test", sens: "ASC" });
+    getRequetesInformation({} as IQueryParametersPourRequetes);
+    getDetailRequete("id", false);
+    creationRequeteDelivrance({ requete: {} as IRequeteDelivrance, futurStatut: StatutRequete.ABANDONNEE, refus: true });
+    updateRequeteDelivrance({ idRequete: "id", requete: {} as IRequeteDelivrance, futurStatut: StatutRequete.ABANDONNEE, refus: true });
+    await postSauvCourrierCreerActionMajStatutRequete("id", StatutRequete.ABANDONNEE, {}, "test");
+    postDocumentReponseApi("test", []);
+    getPieceComplementInformationById("id");
+    postPieceComplementInformationApi("id", "test");
+    getPieceJustificativeById("id");
+    postCreationActionEtMiseAjourStatut("id", "libelle", "BROUILLON");
+    await updateChoixDelivrance("id", null);
+    postIgnorerRequete("id", "test");
+    getPrendreEnChargeRequeteSuivante();
+    await getReponsesReqInfo();
+    await sauvegarderReponseReqInfo("id", "string", "test");
+    deleteDocumentComplementaire("id", "id2");
+    postMessageRetourSDANFEtUpdateStatutRequete("id", {} as IEchange);
+    patchMiseAJourLibellePJ("id", "test");
+
+    vi.resetAllMocks();
   });
 });

@@ -9,13 +9,13 @@ import { DoubleClicUtil } from "@util/DoubleClicUtil";
 import { Options } from "@util/Type";
 import { MutableRefObject } from "react";
 
-export function reinitialiserOnClick(refs: MutableRefObject<HTMLElement[]>) {
+export const reinitialiserOnClick = (refs: MutableRefObject<HTMLElement[]>) => {
   refs.current.forEach(ref => {
     DoubleClicUtil.reactiveOnClick(ref);
   });
-}
+};
 
-export function listeServicesToOptions(services: IService[]): Options {
+export const listeServicesToOptions = (services: IService[]): Options => {
   return [
     ...services
       .filter(service => service.estDansScec)
@@ -24,7 +24,7 @@ export function listeServicesToOptions(services: IService[]): Options {
         return { cle: service.idService, libelle: service.libelleService };
       })
   ];
-}
+};
 
 export const getUtilisateursParTypeRequeteVersOptions = (
   typeRequete: TypeRequete,
@@ -134,11 +134,11 @@ const filtreUtilisateurRequeteDelivrance = (
 const filtrerValideur = (utilisateur: Utilisateur, idUtilisateurRequete?: string): boolean =>
   Boolean(utilisateur.estDuSCEC && utilisateur.estHabilitePour({ leDroit: Droit.DELIVRER }) && idUtilisateurRequete !== utilisateur.id);
 
-export function getValideursVersOptions(
+export const getValideursVersOptions = (
   utilisateurs: Utilisateur[],
   idUtilisateurRequete?: string,
   seulementUtilisateursActifs = false
-): Options {
+): Options => {
   const utilisateursFiltres = seulementUtilisateursActifs ? utilisateurs.filter(utilisateur => utilisateur.actif) : utilisateurs;
 
   return [
@@ -147,4 +147,4 @@ export function getValideursVersOptions(
       .sort((a, b) => a.prenomNom.localeCompare(b.prenomNom))
       .map(utilisateur => utilisateur.versOption)
   ];
-}
+};

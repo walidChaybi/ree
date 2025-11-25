@@ -15,7 +15,7 @@ export interface INavigationApercuReqInfoParams {
   urlCourante: string;
 }
 
-export function useNavigationApercuInformation(params?: INavigationApercuReqInfoParams) {
+export const useNavigationApercuInformation = (params?: INavigationApercuReqInfoParams) => {
   const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<ICreationActionMiseAjourStatutHookParams | undefined>();
 
   const navigate = useNavigate();
@@ -49,4 +49,4 @@ export function useNavigationApercuInformation(params?: INavigationApercuReqInfo
       }
     }
   }, [params]);
-}
+};

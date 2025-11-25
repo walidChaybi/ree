@@ -4,11 +4,11 @@ import { useContext } from "react";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import { IHabiliationDescription, NomComposant, habilitationsDescription } from "./habilitationsDescription";
 
-function getHabilitationPourLeComposant(nomComposant: string, habsDesc: IHabiliationDescription[]) {
+const getHabilitationPourLeComposant = (nomComposant: string, habsDesc: IHabiliationDescription[]) => {
   return habsDesc.find(habDesc => habDesc.nomComposant === nomComposant);
-}
+};
 
-function getComportement(habilitationPourLeComposant: IHabiliationDescription, utilisateurConnecte: UtilisateurConnecte) {
+const getComportement = (habilitationPourLeComposant: IHabiliationDescription, utilisateurConnecte: UtilisateurConnecte) => {
   const authorise = habilitationPourLeComposant.tousLesDroits
     ? utilisateurConnecte.estHabilitePour({ tousLesDroits: habilitationPourLeComposant.tousLesDroits })
     : habilitationPourLeComposant.unDesDroits
@@ -19,7 +19,7 @@ function getComportement(habilitationPourLeComposant: IHabiliationDescription, u
       ? habilitationPourLeComposant.comportementSiAutorise
       : {}
     : habilitationPourLeComposant.comportementSiNonAutorise;
-}
+};
 /**
  * HOC permettant d'injecter un comportement à un composant en fonction des droits de l'utilisateur connecté
  * ComponentToWrap: composant recevant un comportement (props) en fonction des droits
@@ -62,7 +62,7 @@ const WithHabilitation = (
 
 export default WithHabilitation;
 
-function visibiliteComposant(habilitationPourLeComposant: IHabiliationDescription, utilisateurConnecte: UtilisateurConnecte): boolean {
+const visibiliteComposant = (habilitationPourLeComposant: IHabiliationDescription, utilisateurConnecte: UtilisateurConnecte): boolean => {
   if (
     habilitationPourLeComposant.visiblePourLesDroits &&
     !utilisateurConnecte.estHabilitePour({ unDesDroits: habilitationPourLeComposant.visiblePourLesDroits })
@@ -79,4 +79,4 @@ function visibiliteComposant(habilitationPourLeComposant: IHabiliationDescriptio
     return false;
   }
   return true;
-}
+};

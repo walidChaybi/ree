@@ -153,7 +153,7 @@ export const ListeGlisserDeposer: React.FC<ListeGlisserDeposerProps> = props => 
     [props]
   );
 
-  function renderSortableItems(el: ListeItem, index: number) {
+  const renderSortableItems = (el: ListeItem, index: number) => {
     const component = (
       <SortableItem
         key={`item-${el.id}`}
@@ -180,7 +180,7 @@ export const ListeGlisserDeposer: React.FC<ListeGlisserDeposerProps> = props => 
     }
 
     return component;
-  }
+  };
 
   return (
     <DndContext
@@ -199,9 +199,9 @@ export const ListeGlisserDeposer: React.FC<ListeGlisserDeposerProps> = props => 
     </DndContext>
   );
 };
-function afficherHandle(props: React.PropsWithChildren<ListeGlisserDeposerProps>) {
+const afficherHandle = (props: React.PropsWithChildren<ListeGlisserDeposerProps>) => {
   return props.handleReorga && props.liste?.length !== 1 && props.afficheDragHandle;
-}
+};
 
 ListeGlisserDeposer.defaultProps = {
   nombreCaracteresMaximum: CARACTERES_MAXIMUM_LIBELLE_LISTE

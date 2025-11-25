@@ -41,23 +41,23 @@ export interface IRequeteTableauDelivrance extends IRequeteTableau {
 /** Requetes: mapping après appel d'api */
 //////////////////////////////////////////
 
-export function mappingRequetesTableauDelivrance(
+export const mappingRequetesTableauDelivrance = (
   resultatsRecherche: any,
   mappingSupplementaire: boolean,
   utilisateurs: Utilisateur[],
   services: IService[]
-): IRequeteTableauDelivrance[] {
+): IRequeteTableauDelivrance[] => {
   return resultatsRecherche?.map((requete: any) => {
     return mappingUneRequeteTableauDelivrance(requete, mappingSupplementaire, utilisateurs, services);
   });
-}
+};
 
-function mappingUneRequeteTableauDelivrance(
+const mappingUneRequeteTableauDelivrance = (
   requete: any,
   mappingSupplementaire: boolean,
   utilisateurs: Utilisateur[],
   services: IService[]
-): IRequeteTableauDelivrance {
+): IRequeteTableauDelivrance => {
   const requerant = requete?.requerant ? Requerant.mappingRequerant(requete?.requerant) : undefined;
   return {
     idRequete: requete?.id,
@@ -87,9 +87,9 @@ function mappingUneRequeteTableauDelivrance(
     documentsReponses: requete.documentsReponses,
     tagPriorisation: TagPriorisation.getEnumFor(requete.tagPriorisation).libelle
   };
-}
+};
 
-function getSousType(type: string, sousType: string) {
+const getSousType = (type: string, sousType: string) => {
   switch (TypeRequete.getEnumFor(type)) {
     case TypeRequete.DELIVRANCE:
       return SousTypeDelivrance.getEnumFor(sousType).libelleCourt;
@@ -102,9 +102,9 @@ function getSousType(type: string, sousType: string) {
     default:
       return null;
   }
-}
+};
 
-export function mapAttribueA(requete: any, utilisateurs: Utilisateur[], services: IService[]): string | null {
+export const mapAttribueA = (requete: any, utilisateurs: Utilisateur[], services: IService[]): string | null => {
   let attribueA: string | null = null;
   if (requete?.idUtilisateur) {
     attribueA = `${utilisateurs.find(utilisateur => utilisateur.id === requete?.idUtilisateur)?.prenomNom ?? ""}`;
@@ -112,12 +112,12 @@ export function mapAttribueA(requete: any, utilisateurs: Utilisateur[], services
     attribueA = Service.libelleDepuisId(requete.idService, services);
   }
   return attribueA;
-}
+};
 
 // Recherche Requete
 export const SEPARATOR_NUMERO_ELEMENT = ") ";
 
-function mapObservations(observations: string[]) {
+const mapObservations = (observations: string[]) => {
   const observationsTitulaire: string[] = [];
 
   if (observations && observations.length > 0) {
@@ -127,4 +127,4 @@ function mapObservations(observations: string[]) {
   }
 
   return observationsTitulaire;
-}
+};

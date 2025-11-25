@@ -7,7 +7,7 @@ interface LinkTabProps {
   disabled?: boolean;
 }
 
-export function LinkTab(props: LinkTabProps) {
+export const LinkTab = (props: LinkTabProps) => {
   return (
     <Tab
       component="a"
@@ -18,4 +18,4 @@ export function LinkTab(props: LinkTabProps) {
       className={props.disabled ? "tab-disabled" : ""}
     />
   );
-}
+};

@@ -115,13 +115,13 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({ idActeInit, addActe,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSuppressionAlerte]);
 
-  function estOuvert() {
+  const estOuvert = () => {
     if (idActeInit) {
       return alertes.get(idActeInit)?.length !== 0;
     } else {
       return alertes.size > 0;
     }
-  }
+  };
 
   return (
     <div className="AlertesActes">

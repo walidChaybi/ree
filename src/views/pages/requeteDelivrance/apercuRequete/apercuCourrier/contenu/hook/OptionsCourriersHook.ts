@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../../../utils/AfficherMessage";
 import { recupererLesOptionsDisponiblesPourLeCourrier } from "../contenuForm/sousFormulaires/GestionOptionsCourrier";
 
-export function useOptionsCourriersApiHook(
+export const useOptionsCourriersApiHook = (
   documentDelivranceChoisi?: IDocumentDelivrance | null,
   requete?: IRequeteDelivrance
-): OptionsCourrier {
+): OptionsCourrier => {
   const [optionsCourrierDisponibles, setOptionsCourrierDisponibles] = useState<OptionsCourrier>([]);
 
   useEffect(() => {
@@ -32,4 +32,4 @@ export function useOptionsCourriersApiHook(
     }
   }, [documentDelivranceChoisi, requete?.evenement?.natureActe]);
   return optionsCourrierDisponibles;
-}
+};

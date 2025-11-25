@@ -15,11 +15,20 @@ type GestionnaireElementScrollProps = {
   elementListe: GestionnaireElementScrollItemProps[];
 };
 
-export const GestionnaireElementScroll: React.FC<
-  GestionnaireElementScrollProps
-> = props => {
+export const GestionnaireElementScroll: React.FC<GestionnaireElementScrollProps> = props => {
   const refListe = useRef<Array<Element | null>>([]);
   const [etapeActive, setEtapeActive] = React.useState(0);
+
+  const onElementEstVisibleCallback = (entries: IntersectionObserverEntry[]) => {
+    const tableauRatio = entries.map(entry => entry.intersectionRatio);
+    const ratioElementLePlusVisible = Math.max(...tableauRatio);
+    const elementChoisi = entries.find(en => en.intersectionRatio === ratioElementLePlusVisible);
+    if (elementChoisi) {
+      const index = refListe.current.indexOf(elementChoisi?.target);
+      setEtapeActive(index);
+    }
+  };
+
   const [observer] = useState<IntersectionObserver>(
     new IntersectionObserver(onElementEstVisibleCallback, {
       root: null,
@@ -28,30 +37,18 @@ export const GestionnaireElementScroll: React.FC<
     })
   );
 
-  function handleStep(i: number) {
+  const handleStep = (i: number) => {
     setEtapeActive(i);
     handleSmoothScroll(i);
-  }
+  };
 
-  function handleSmoothScroll(index: number) {
+  const handleSmoothScroll = (index: number) => {
     refListe.current[index]?.scrollIntoView({
       block: "center",
       inline: "nearest",
       behavior: "smooth"
     });
-  }
-
-  function onElementEstVisibleCallback(entries: IntersectionObserverEntry[]) {
-    const tableauRatio = entries.map(entry => entry.intersectionRatio);
-    const ratioElementLePlusVisible = Math.max(...tableauRatio);
-    const elementChoisi = entries.find(
-      en => en.intersectionRatio === ratioElementLePlusVisible
-    );
-    if (elementChoisi) {
-      const index = refListe.current.indexOf(elementChoisi?.target);
-      setEtapeActive(index);
-    }
-  }
+  };
 
   const initObserver = useCallback(() => {
     const tableauRef = refListe.current;
@@ -79,7 +76,10 @@ export const GestionnaireElementScroll: React.FC<
   return (
     <div>
       <div className="selecteursContainer">
-        <Stepper nonLinear activeStep={etapeActive}>
+        <Stepper
+          nonLinear
+          activeStep={etapeActive}
+        >
           {props.elementListe.map((el, i) => {
             return el ? (
               <Step key={i}>
@@ -98,7 +98,10 @@ export const GestionnaireElementScroll: React.FC<
       <div className="formDiv">
         {props.elementListe.map((ele, i) => {
           return ele ? (
-            <div key={i} ref={elref => (refListe.current[i] = elref)}>
+            <div
+              key={i}
+              ref={elref => (refListe.current[i] = elref)}
+            >
               {ele.element}
             </div>
           ) : undefined;

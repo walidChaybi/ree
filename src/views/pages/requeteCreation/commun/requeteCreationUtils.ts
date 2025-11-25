@@ -8,36 +8,36 @@ import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { UN } from "@util/Utils";
 import { NavigationApercuReqCreationParams } from "@views/common/hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 
-export function setParamsUseApercuCreation(
+export const setParamsUseApercuCreation = (
   idRequete: string,
   setParamsCreation: (params: NavigationApercuReqCreationParams) => void,
   sousType: keyof typeof ESousTypeCreation,
   statut: keyof typeof EStatutRequete,
   idUtilisateur?: string
-) {
+) => {
   return setParamsCreation({
     idRequete: idRequete,
     sousType: sousType,
     statut: statut,
     idUtilisateur: idUtilisateur
   });
-}
+};
 
-function getPostulantNationalite(requete: IRequeteCreationEtablissement): ITitulaireRequeteCreation {
+const getPostulantNationalite = (requete: IRequeteCreationEtablissement): ITitulaireRequeteCreation => {
   return Requete.getTitulaireAvecTypeObjet(requete, TypeObjetTitulaire.POSTULANT_NATIONALITE) as ITitulaireRequeteCreation;
-}
+};
 
-function getTitulaireActeTranscritDresse(requete: IRequeteCreationTranscription): ITitulaireRequeteCreation {
+const getTitulaireActeTranscritDresse = (requete: IRequeteCreationTranscription): ITitulaireRequeteCreation => {
   return Requete.getTitulaireAvecTypeObjetEnPosition(
     requete,
     TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE,
     UN
   ) as ITitulaireRequeteCreation;
-}
+};
 
-export function getPostulantNationaliteOuTitulaireActeTranscritDresse(
+export const getPostulantNationaliteOuTitulaireActeTranscritDresse = (
   requete?: IRequeteCreationTranscription | IRequeteCreationEtablissement
-): ITitulaireRequeteCreation | undefined {
+): ITitulaireRequeteCreation | undefined => {
   let postulantOuTitulaire;
   if (requete && (SousTypeCreation.estSousTypeTranscription(requete.sousType) || SousTypeCreation.estRCADC(requete.sousType))) {
     postulantOuTitulaire = getTitulaireActeTranscritDresse(requete);
@@ -45,4 +45,4 @@ export function getPostulantNationaliteOuTitulaireActeTranscritDresse(
     postulantOuTitulaire = getPostulantNationalite(requete);
   }
   return postulantOuTitulaire;
-}
+};

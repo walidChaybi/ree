@@ -5,7 +5,7 @@ import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificat
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
-export function useGetPieceJointeApi(type: TypePieceJointe, id?: string): IPieceJustificative | IPieceComplementInformation | undefined {
+export const useGetPieceJointeApi = (type: TypePieceJointe, id?: string): IPieceJustificative | IPieceComplementInformation | undefined => {
   const [PieceJointe, setPieceJointe] = useState<IPieceJustificative | IPieceComplementInformation | undefined>();
   useEffect(() => {
     if (id && type === TypePieceJointe.PIECE_JUSTIFICATIVE) {
@@ -27,12 +27,12 @@ export function useGetPieceJointeApi(type: TypePieceJointe, id?: string): IPiece
     }
   }, [type, id]);
   return PieceJointe;
-}
+};
 
 /* istanbul ignore next */
-function gereErreur(erreurs: any) {
+const gereErreur = (erreurs: any) => {
   AfficherMessage.erreur("Impossible de récupérer le document", {
     erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
     fermetureAuto: true
   });
-}
+};

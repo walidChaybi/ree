@@ -4,7 +4,7 @@ import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
 
-export function getEvenement(acte: FicheActe): SectionPartProps[] {
+export const getEvenement = (acte: FicheActe): SectionPartProps[] => {
   const evenement: SectionPartProps[] = [
     {
       partContent: {
@@ -26,9 +26,9 @@ export function getEvenement(acte: FicheActe): SectionPartProps[] {
   });
 
   return evenement;
-}
+};
 
-function getDateLieuEvenement(evenement: IEvenementDto | null): SectionContentProps[] {
+const getDateLieuEvenement = (evenement: IEvenementDto | null): SectionContentProps[] => {
   return [
     {
       libelle: `Date de l'évènement`,
@@ -39,4 +39,4 @@ function getDateLieuEvenement(evenement: IEvenementDto | null): SectionContentPr
       value: <span>{evenement?.lieuFormate ?? ""}</span>
     }
   ];
-}
+};

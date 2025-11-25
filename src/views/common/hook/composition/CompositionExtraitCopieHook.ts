@@ -20,7 +20,7 @@ export interface IExtraitCopieApiHookParams {
   choixDelivrance: ChoixDelivrance;
 }
 
-export function useExtraitCopieApiHook(params?: IExtraitCopieApiHookParams) {
+export const useExtraitCopieApiHook = (params?: IExtraitCopieApiHookParams) => {
   const [extraitCopieApiHookResultat, setExtraitCopieApiHookResultat] = useState<IExtraitCopieApiHookResultat>();
 
   useEffect(() => {
@@ -57,4 +57,4 @@ export function useExtraitCopieApiHook(params?: IExtraitCopieApiHookParams) {
   }, [params]);
 
   return extraitCopieApiHookResultat;
-}
+};

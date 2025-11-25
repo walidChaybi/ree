@@ -9,7 +9,7 @@ export interface ICourrierParams {
   courrierComposition?: ICourrierComposition;
 }
 
-export function useCourrierApiHook(courrierParams?: ICourrierParams) {
+export const useCourrierApiHook = (courrierParams?: ICourrierParams) => {
   const [donneesComposition, setDonneesComposition] = useState<IDonneesComposition | undefined>();
 
   useEffect(() => {
@@ -29,4 +29,4 @@ export function useCourrierApiHook(courrierParams?: ICourrierParams) {
   }, [courrierParams]);
 
   return donneesComposition;
-}
+};

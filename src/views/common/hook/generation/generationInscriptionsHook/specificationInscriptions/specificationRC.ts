@@ -16,7 +16,7 @@ import {
   getParagrapheFin
 } from "./specificationCommunes";
 
-function getParagrapheDecisionRecue1(infosRC: FicheRcRca) {
+const getParagrapheDecisionRecue1 = (infosRC: FicheRcRca) => {
   let decisionRecue = "";
 
   if (infosRC.decision) {
@@ -38,9 +38,9 @@ function getParagrapheDecisionRecue1(infosRC: FicheRcRca) {
     }
   }
   return decisionRecue;
-}
+};
 
-function getParagrapheDecisionRecue2(infosRC: FicheRcRca) {
+const getParagrapheDecisionRecue2 = (infosRC: FicheRcRca) => {
   let decisionRecue = "";
   if (infosRC.decision) {
     if (infosRC.typeInscription === ETypeInscriptionRc.RENOUVELLEMENT || infosRC.typeInscription === ETypeInscriptionRc.MODIFICATION) {
@@ -57,17 +57,17 @@ function getParagrapheDecisionRecue2(infosRC: FicheRcRca) {
     }
   }
   return decisionRecue;
-}
+};
 
-function getResume(data: FicheRcRca) {
+const getResume = (data: FicheRcRca) => {
   let resume = undefined;
   if (data.typeInscription === ETypeInscriptionRc.INSCRIPTION && data.nature.type === "Protection des majeurs") {
     resume = `sous le régime ${formatDe(data.nature.libelle)}${data.nature.libelle}`;
   }
   return resume;
-}
+};
 
-function getRenouvellementModification(data?: FicheRcRca, inscriptionsRcRadiation?: IInscriptionRc): string | undefined {
+const getRenouvellementModification = (data?: FicheRcRca, inscriptionsRcRadiation?: IInscriptionRc): string | undefined => {
   let renouvellementModification;
   if (data) {
     if (inscriptionsRcRadiation && data.typeInscription === ETypeInscriptionRc.MODIFICATION) {
@@ -78,9 +78,9 @@ function getRenouvellementModification(data?: FicheRcRca, inscriptionsRcRadiatio
   }
 
   return renouvellementModification;
-}
+};
 
-function getModificationJasper(data: FicheRcRca, inscriptionRcRadiation: IInscriptionRc): string {
+const getModificationJasper = (data: FicheRcRca, inscriptionRcRadiation: IInscriptionRc): string => {
   const typeInscription = data.typeInscription ?? "";
   let modificationTexte = `prononçant la ${typeInscription.toLocaleLowerCase()}`;
 
@@ -89,9 +89,9 @@ function getModificationJasper(data: FicheRcRca, inscriptionRcRadiation: IInscri
   modificationTexte += ` en ${data.nature.libelle}`;
 
   return modificationTexte;
-}
+};
 
-function getRenouvellementJasper(inscription: FicheRcRca) {
+const getRenouvellementJasper = (inscription: FicheRcRca) => {
   const typeInscription = inscription.typeInscription ?? "";
   const natureInscriptionImpactee = NatureRc.depuisId(inscription.inscriptionsImpactees[0].nature)?.libelle ?? "";
 
@@ -102,15 +102,15 @@ function getRenouvellementJasper(inscription: FicheRcRca) {
   renouvellementTexte += ` ${inscription.inscriptionsImpactees[0].annee} - ${inscription.inscriptionsImpactees[0].numero}`;
 
   return renouvellementTexte;
-}
+};
 
-function getDuree(data: FicheRcRca) {
+const getDuree = (data: FicheRcRca) => {
   let duree = undefined;
   if (data.duree) {
     duree = `pour une durée de ${data.duree.nombreDuree} ${data.duree.uniteDuree}`;
   }
   return duree;
-}
+};
 
 /////////////////////////////////////////////////////////////////////
 const SpecificationRC = {

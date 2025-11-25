@@ -10,7 +10,7 @@ import {
   MSG_DATE_MEP_MIN,
   MSG_MIN_YEAR
 } from "../FormulaireMessages";
-export function validateAnnee(value: number, anneeMin?: number, anneeMax?: number, anneeObligatoire = false) {
+export const validateAnnee = (value: number, anneeMin?: number, anneeMax?: number, anneeObligatoire = false) => {
   let messageErreur;
   if (value) {
     messageErreur = valideBornesAnnee(value, anneeMin, anneeMax);
@@ -19,9 +19,9 @@ export function validateAnnee(value: number, anneeMin?: number, anneeMax?: numbe
   }
 
   return messageErreur;
-}
+};
 
-function valideBornesAnnee(value: number, anneeMin?: number, anneeMax?: number) {
+const valideBornesAnnee = (value: number, anneeMin?: number, anneeMax?: number) => {
   let messageErreur;
   if (value.toString().length < MIN_LENGTH_ANNEE) {
     messageErreur = MIN_LENGTH_ANNEE_MESSAGE;
@@ -36,7 +36,7 @@ function valideBornesAnnee(value: number, anneeMin?: number, anneeMax?: number) 
     messageErreur = MSG_CURRENT_YEAR_MAX;
   }
   return messageErreur;
-}
+};
 
 export const DateValidationSchema = Yup.object()
   .shape({

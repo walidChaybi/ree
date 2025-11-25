@@ -11,8 +11,8 @@ export interface IPieceComplementInformation {
   mimeType: EMimeType;
 }
 
-export function mapPieceComplementInformation(pci: any) {
+export const mapPieceComplementInformation = (pci: any) => {
   const piece = mapDocumentSwift(pci);
   piece.provenance = "OEC";
   return piece;
-}
+};

@@ -23,7 +23,7 @@ export interface IMiseAJourMentionsResultat {
   resultat?: boolean;
 }
 
-export function useMiseAJourMentionsApiHook(params?: IMiseAJourMentionsParams) {
+export const useMiseAJourMentionsApiHook = (params?: IMiseAJourMentionsParams) => {
   const [fini, setFini] = useState<IMiseAJourMentionsResultat>();
 
   useEffect(() => {
@@ -43,4 +43,4 @@ export function useMiseAJourMentionsApiHook(params?: IMiseAJourMentionsParams) {
   }, [params]);
 
   return fini;
-}
+};

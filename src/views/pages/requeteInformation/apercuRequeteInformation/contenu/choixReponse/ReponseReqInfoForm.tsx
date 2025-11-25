@@ -151,12 +151,12 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   );
 };
 
-function getReponseForm(
+const getReponseForm = (
   formulaireDisabled: boolean,
   boutonVisible: boolean,
   reponse?: IReponseRequeteInfo,
   affichageBoutonPrendreEnCharge = false
-): JSX.Element {
+): JSX.Element => {
   const reponseReqInfoFromProps = {
     reponse,
     formulaireDisabled
@@ -179,4 +179,4 @@ function getReponseForm(
       />
     </>
   );
-}
+};

@@ -125,7 +125,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
   );
 };
 
-function priseEnChargePossible(utilisateurConnecte: UtilisateurConnecte, requete: TRequete) {
+const priseEnChargePossible = (utilisateurConnecte: UtilisateurConnecte, requete: TRequete) => {
   let estPriseEnChargePossible = false;
   const estDansMaStructureDeService = [
     utilisateurConnecte.idService,
@@ -143,4 +143,4 @@ function priseEnChargePossible(utilisateurConnecte: UtilisateurConnecte, requete
   }
 
   return estPriseEnChargePossible;
-}
+};

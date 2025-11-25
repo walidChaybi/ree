@@ -2,7 +2,7 @@ import { IProjetActeComposition } from "@model/composition/acte/IProjetActeCompo
 import { IMentionComposition } from "@model/composition/IMentionComposition";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 
-export function mappingProjetActeVersProjetActeComposition(acteEnregistre: IProjetActe): IProjetActeComposition {
+export const mappingProjetActeVersProjetActeComposition = (acteEnregistre: IProjetActe): IProjetActeComposition => {
   const projetActeComposition = {} as IProjetActeComposition;
   const { nature, titulaires, mentions, corpsTexte, analyseMarginales } = acteEnregistre;
   const titulaire = titulaires[0];
@@ -28,4 +28,4 @@ export function mappingProjetActeVersProjetActeComposition(acteEnregistre: IProj
   projetActeComposition.mentions = mentionsComposition;
   projetActeComposition.texte_corps_acte = corpsTexte?.texte;
   return projetActeComposition;
-}
+};

@@ -6,7 +6,7 @@ import DateUtils from "@util/DateUtils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
 
-export function getDecision(rcrca: FicheRcRca): SectionPartProps[] {
+export const getDecision = (rcrca: FicheRcRca): SectionPartProps[] => {
   let contentsDecision: SectionContentProps[] = [];
 
   if (rcrca.decision) {
@@ -38,9 +38,9 @@ export function getDecision(rcrca: FicheRcRca): SectionPartProps[] {
     });
   }
   return decision;
-}
+};
 
-function getContentJuridiction(decision: IDecisionRcRca, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] {
+const getContentJuridiction = (decision: IDecisionRcRca, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] => {
   const result = [
     {
       libelle: "Type",
@@ -69,9 +69,9 @@ function getContentJuridiction(decision: IDecisionRcRca, typeFiche: keyof typeof
       value: decision.enrolementPortalis || ""
     }
   ]);
-}
+};
 
-function getContentNotaire(decision: IDecisionRcRca): SectionContentProps[] {
+const getContentNotaire = (decision: IDecisionRcRca): SectionContentProps[] => {
   return [
     {
       libelle: "Type",
@@ -82,9 +82,9 @@ function getContentNotaire(decision: IDecisionRcRca): SectionContentProps[] {
       value: decision.dateDecision != null ? DateUtils.getDateString(DateUtils.getDateFromTimestamp(decision.dateDecision)) : ""
     }
   ];
-}
+};
 
-function getContentConfirmationDecision(decision: IDecisionRcRca, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] {
+const getContentConfirmationDecision = (decision: IDecisionRcRca, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] => {
   if (TypeAutoriteUtil.isJuridiction(decision.sourceConfirmation?.autorite.typeAutorite)) {
     const confirmationDecision = [
       {
@@ -125,4 +125,4 @@ function getContentConfirmationDecision(decision: IDecisionRcRca, typeFiche: key
   } else {
     return [];
   }
-}
+};

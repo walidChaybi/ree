@@ -24,7 +24,7 @@ export type NavigationApercuReqCreationParams = {
   handleTraitementTermine?: () => void;
 };
 
-export function useNavigationApercuCreation(params?: NavigationApercuReqCreationParams) {
+export const useNavigationApercuCreation = (params?: NavigationApercuReqCreationParams) => {
   const navigate = useNavigate();
   const { utilisateurConnecte } = useContext(RECEContextData);
 
@@ -41,15 +41,15 @@ export function useNavigationApercuCreation(params?: NavigationApercuReqCreation
       }
     }
   }, [params, navigate]);
-}
+};
 
-function redirectionEtablissement(
+const redirectionEtablissement = (
   navigate: NavigateFunction,
   utilisateurConnecte: UtilisateurConnecte,
   idRequete: string,
   statut: keyof typeof EStatutRequete,
   idUtilisateur?: string
-) {
+) => {
   let path: string;
   const statutsQuiRedirigentVersLeSuiviDossier: (keyof typeof EStatutRequete)[] = [
     "A_TRAITER",
@@ -65,15 +65,15 @@ function redirectionEtablissement(
     path = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_CONSULTATION.url, { idRequeteParam: idRequete });
   }
   navigate(path);
-}
+};
 
-function redirectionTranscription(
+const redirectionTranscription = (
   navigate: NavigateFunction,
   utilisateurConnecte: UtilisateurConnecte,
   idRequete: string,
   statut?: keyof typeof EStatutRequete,
   idUtilisateur?: string
-) {
+) => {
   let path: string;
   const appartientAUtilisateurConnecte = utilisateurConnecte.id === idUtilisateur;
 
@@ -98,4 +98,4 @@ function redirectionTranscription(
   }
 
   navigate(path);
-}
+};

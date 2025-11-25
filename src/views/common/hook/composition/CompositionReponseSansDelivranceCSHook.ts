@@ -4,7 +4,7 @@ import { IDonneesComposition } from "@model/composition/commun/retourApiComposit
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
-export function useCompositionReponseSansDelivranceCSApi(document?: string, reponseSansDelivranceCS?: IContenuReponseSansDelivranceCS) {
+export const useCompositionReponseSansDelivranceCSApi = (document?: string, reponseSansDelivranceCS?: IContenuReponseSansDelivranceCS) => {
   const [donneesComposition, setDonneesComposition] = useState<IDonneesComposition>();
 
   useEffect(() => {
@@ -24,4 +24,4 @@ export function useCompositionReponseSansDelivranceCSApi(document?: string, repo
   }, [reponseSansDelivranceCS, document]);
 
   return donneesComposition;
-}
+};

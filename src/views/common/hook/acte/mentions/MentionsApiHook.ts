@@ -13,7 +13,7 @@ export interface IMentionsResultat {
   mentions?: Mention[];
 }
 
-export function useMentionsApiHook(params?: IMentionsParams) {
+export const useMentionsApiHook = (params?: IMentionsParams) => {
   const [mentions, setMentions] = useState<IMentionsResultat>();
 
   useEffect(() => {
@@ -35,4 +35,4 @@ export function useMentionsApiHook(params?: IMentionsParams) {
   }, [params]);
 
   return mentions;
-}
+};

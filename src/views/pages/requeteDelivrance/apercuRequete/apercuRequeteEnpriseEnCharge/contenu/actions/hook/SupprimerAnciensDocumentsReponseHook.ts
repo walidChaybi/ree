@@ -3,10 +3,13 @@ import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/Res
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../../../../utils/AfficherMessage";
 
-export function useSupprimerAnciensDocumentsReponseHook(idRequete?: string, dataRMCAutoInscription?: TResultatRMCInscription[]): boolean {
+export const useSupprimerAnciensDocumentsReponseHook = (
+  idRequete?: string,
+  dataRMCAutoInscription?: TResultatRMCInscription[]
+): boolean => {
   const [isOldDocumentDeleted, setIsOldDocumentDeleted] = useState<boolean>(false);
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       if (idRequete && dataRMCAutoInscription) {
         try {
           await deleteDocumentsReponseApi(idRequete);
@@ -17,9 +20,9 @@ export function useSupprimerAnciensDocumentsReponseHook(idRequete?: string, data
           });
         }
       }
-    }
+    };
     fetchData();
   }, [idRequete, dataRMCAutoInscription]);
 
   return isOldDocumentDeleted;
-}
+};

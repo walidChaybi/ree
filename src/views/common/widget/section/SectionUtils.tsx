@@ -3,13 +3,13 @@ import { SectionPanelProps } from "./SectionPanel";
 import { SectionPanelAreaProps } from "./SectionPanelArea";
 import { SectionPartProps } from "./SectionPart";
 
-export function ajouterPanelAreasAuPanel(
+export const ajouterPanelAreasAuPanel = (
   panel: SectionPanelProps,
   param: any,
   fct: (p: any) => SectionPartProps[],
   nbColonne: number,
   title?: string
-) {
+) => {
   if (param) {
     panel.panelAreas.push({
       parts: fct(param),
@@ -17,16 +17,16 @@ export function ajouterPanelAreasAuPanel(
       nbColonne
     });
   }
-}
+};
 
-export function AjoutePartAuPanelAreas(
+export const AjoutePartAuPanelAreas = (
   panelAreas: SectionPanelAreaProps[],
   param: any,
   fct: (p: any) => SectionPartProps[],
   id?: string,
   title?: string,
   nbColonne?: number
-) {
+) => {
   if (param) {
     panelAreas.push({
       parts: fct(param),
@@ -35,18 +35,18 @@ export function AjoutePartAuPanelAreas(
       nbColonne
     } as SectionPanelAreaProps);
   }
-}
+};
 
-export function ajouterContentPartAuPartUneValeur(panel: SectionContentProps[], libelle: string, info?: string) {
+export const ajouterContentPartAuPartUneValeur = (panel: SectionContentProps[], libelle: string, info?: string) => {
   if (libelle != null && info != null && info !== "") {
     panel.push({
       libelle,
       value: <span>{info}</span>
     });
   }
-}
+};
 
-export function ajouterContentPartAuPartUneValeurVide(panel: SectionContentProps[], libelle: string, info?: string) {
+export const ajouterContentPartAuPartUneValeurVide = (panel: SectionContentProps[], libelle: string, info?: string) => {
   if (libelle != null && info != null && info !== "") {
     panel.push({
       libelle,
@@ -58,9 +58,9 @@ export function ajouterContentPartAuPartUneValeurVide(panel: SectionContentProps
       value: <span></span>
     });
   }
-}
+};
 
-export function ajouterContentPartAuPartMultiValeurs(panel: SectionContentProps[], libelle: string, infos: string[]) {
+export const ajouterContentPartAuPartMultiValeurs = (panel: SectionContentProps[], libelle: string, infos: string[]) => {
   if (libelle != null && infos != null && infos.length > 0) {
     const infosNonVide: string[] = [];
 
@@ -83,4 +83,4 @@ export function ajouterContentPartAuPartMultiValeurs(panel: SectionContentProps[
       });
     }
   }
-}
+};

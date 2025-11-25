@@ -28,7 +28,7 @@ export const TableauBodyCell: React.FC<TableauBodyCellProps> = ({ column, valueA
   );
 };
 
-function formaterData(datas: any[]) {
+const formaterData = (datas: any[]) => {
   let data = "";
   datas.forEach((d: any, i: number) => {
     if (i === 0) {
@@ -38,9 +38,9 @@ function formaterData(datas: any[]) {
     }
   });
   return data;
-}
+};
 
-function getValeursCellule(datas: any[]): JSX.Element {
+const getValeursCellule = (datas: any[]): JSX.Element => {
   return (
     <>
       {datas.map((d: any, index: number) => {
@@ -48,4 +48,4 @@ function getValeursCellule(datas: any[]): JSX.Element {
       })}
     </>
   );
-}
+};

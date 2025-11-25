@@ -8,6 +8,18 @@ import "./scss/PiecesJointesReqInfo.scss";
 const NOMBRE_PIECE_MAX = 2;
 
 const PiecesJointesReqInfoForm: React.FC<SubFormProps> = props => {
+  const getPiecesJointes = (): PieceJointe[] => {
+    return props.formik.getFieldProps(props.nom).value || [];
+  };
+
+  const setPiecesJointes = (nouvellesPiecesJointes: PieceJointe[]) => {
+    props.formik.setFieldValue(props.nom, nouvellesPiecesJointes);
+  };
+
+  const quotaDePiecesJointesAtteint = (): boolean => {
+    return getPiecesJointes().length >= NOMBRE_PIECE_MAX;
+  };
+
   return (
     <>
       {props.visible && (
@@ -22,18 +34,6 @@ const PiecesJointesReqInfoForm: React.FC<SubFormProps> = props => {
       )}
     </>
   );
-
-  function getPiecesJointes(): PieceJointe[] {
-    return props.formik.getFieldProps(props.nom).value || [];
-  }
-
-  function setPiecesJointes(nouvellesPiecesJointes: PieceJointe[]) {
-    props.formik.setFieldValue(props.nom, nouvellesPiecesJointes);
-  }
-
-  function quotaDePiecesJointesAtteint(): boolean {
-    return getPiecesJointes().length >= NOMBRE_PIECE_MAX;
-  }
 };
 
 export default connect<ISubForm>(PiecesJointesReqInfoForm);

@@ -49,7 +49,7 @@ export interface IGenerationCourrierParams {
   mettreAJourStatut: boolean;
 }
 
-export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
+export const useGenerationCourrierHook = (params?: IGenerationCourrierParams) => {
   const [resultatGenerationCourrier, setResultatGenerationCourrier] = useState<IResultGenerationUnDocument>();
 
   const [courrierParams, setCourrierParams] = useState<ICourrierParams>();
@@ -156,19 +156,19 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
   }, [uuidDocumentsReponse]);
 
   return resultatGenerationCourrier;
-}
+};
 
-function libelleSelonMajStatut(params: IGenerationCourrierParams | undefined): string | undefined {
+const libelleSelonMajStatut = (params: IGenerationCourrierParams | undefined): string | undefined => {
   return params?.mettreAJourStatut ? ChoixDelivrance.getStatutApresChoixDelivrance(params?.requete?.choixDelivrance).libelle : undefined;
-}
+};
 
-function setActApiHookParamsOuBasculerConstructionCourrier(
+const setActApiHookParamsOuBasculerConstructionCourrier = (
   setActeApiHookParams: any,
   setBasculerConstructionCourrier: any,
   setActe: any,
   acte?: FicheActe,
   idActe?: string
-) {
+) => {
   if (acte) {
     setActe(acte);
     setBasculerConstructionCourrier(true);
@@ -177,40 +177,40 @@ function setActApiHookParamsOuBasculerConstructionCourrier(
   } else {
     setBasculerConstructionCourrier(true);
   }
-}
+};
 
-function uuidCourrierPresent(generationCourrierParams?: IGenerationCourrierParams): boolean {
+const uuidCourrierPresent = (generationCourrierParams?: IGenerationCourrierParams): boolean => {
   return generationCourrierParams?.saisieCourrier?.choixCourrier.courrier != null;
-}
+};
 
-function presenceDeLaRequeteDuDocEtSaisieCourrier(params: IGenerationCourrierParams | undefined, basculerConstructionCourrier: boolean) {
+const presenceDeLaRequeteDuDocEtSaisieCourrier = (params: IGenerationCourrierParams | undefined, basculerConstructionCourrier: boolean) => {
   return basculerConstructionCourrier && params?.requete?.documentDemande && params.saisieCourrier;
-}
+};
 
-function verificationElementPourLaGeneration(params?: IGenerationCourrierParams, courrier?: IDocumentDelivrance | null) {
+const verificationElementPourLaGeneration = (params?: IGenerationCourrierParams, courrier?: IDocumentDelivrance | null) => {
   return (
     params?.requete?.titulaires &&
     params.requete.titulaires.length > 0 &&
     courrier &&
     estSousTypeRequeteRDDPEtChoixDelivranceEstReponseSansDelivrance(params)
   );
-}
+};
 
-function estSousTypeRequeteRDDPEtChoixDelivranceEstReponseSansDelivrance(params: IGenerationCourrierParams | undefined): boolean {
+const estSousTypeRequeteRDDPEtChoixDelivranceEstReponseSansDelivrance = (params: IGenerationCourrierParams | undefined): boolean => {
   if (SousTypeDelivrance.estRDDP(params?.requete?.sousType)) {
     return ChoixDelivrance.estReponseSansDelivrance(params?.requete?.choixDelivrance);
   } else {
     return true;
   }
-}
+};
 
-function construitCourrier(
+const construitCourrier = (
   elements: IElementsJasperCourrier,
   requete: IRequeteDelivrance,
   setCourrierParams: any,
   setResultGenerationCourrier: any,
   courrier: IDocumentDelivrance
-) {
+) => {
   if (elements && requete?.documentDemande) {
     const composition = creerCourrierComposition(elements, requete);
     setCourrierParams({
@@ -220,11 +220,11 @@ function construitCourrier(
   } else {
     setResultGenerationCourrier(RESULTAT_VIDE);
   }
-}
+};
 
-function creerCourrierComposition(elements: IElementsJasperCourrier, requete: IRequeteDelivrance): ICourrierComposition {
+const creerCourrierComposition = (elements: IElementsJasperCourrier, requete: IRequeteDelivrance): ICourrierComposition => {
   return CourrierComposition.creerCourrier(requete, elements);
-}
+};
 
 const mapCourrierPourSauvegarde = (
   saisieCourrier: SaisieCourrier | undefined,
@@ -260,7 +260,7 @@ const mapCourrierPourSauvegarde = (
   };
 };
 
-function requeteAvecSaisieRequerant(requete: IRequeteDelivrance, saisieCourrier: SaisieCourrier) {
+const requeteAvecSaisieRequerant = (requete: IRequeteDelivrance, saisieCourrier: SaisieCourrier) => {
   if (saisieCourrier[REQUERANT]) {
     requete.requerant = ajoutSaisieIdentiteRequerantVersRequerantRequete(saisieCourrier, requete.requerant);
   }
@@ -268,7 +268,7 @@ function requeteAvecSaisieRequerant(requete: IRequeteDelivrance, saisieCourrier:
     requete.requerant.adresse = mappingSaisieAdresseVersAdresseRequerant(saisieCourrier);
   }
   return requete;
-}
+};
 
 const mappingSaisieAdresseVersAdresseRequerant = (saisieCourrier: SaisieCourrier | undefined): IAdresseRequerant => {
   return {
@@ -282,7 +282,7 @@ const mappingSaisieAdresseVersAdresseRequerant = (saisieCourrier: SaisieCourrier
   };
 };
 
-function ajoutSaisieIdentiteRequerantVersRequerantRequete(saisieCourrier: SaisieCourrier, requerantRequete: IRequerant): IRequerant {
+const ajoutSaisieIdentiteRequerantVersRequerantRequete = (saisieCourrier: SaisieCourrier, requerantRequete: IRequerant): IRequerant => {
   const requerant: IRequerant = { ...requerantRequete };
 
   const nomRequerant = saisieCourrier[REQUERANT]?.[NOM];
@@ -316,4 +316,4 @@ function ajoutSaisieIdentiteRequerantVersRequerantRequete(saisieCourrier: Saisie
       break;
   }
   return requerant;
-}
+};

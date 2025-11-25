@@ -33,15 +33,15 @@ const FiltreServiceRequeteDelivranceFormDefaultValues: IFiltreServiceRequeteDeli
 export const FiltreServiceRequeteDelivranceForm: React.FC<IFiltreServiceRequeteDelivranceFormProps> = props => {
   const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
 
-  function onSubmitFiltresDelivrance(values: IFiltreServiceRequeteDelivranceFormValues) {
+  const onSubmitFiltresDelivrance = (values: IFiltreServiceRequeteDelivranceFormValues) => {
     if (values) {
       props.onSubmit(values);
     }
-  }
+  };
 
-  function onReset(reset: () => void) {
+  const onReset = (reset: () => void) => {
     reset();
-  }
+  };
 
   return (
     <div className="FiltreServiceRequeteDelivranceForm">

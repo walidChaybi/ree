@@ -32,10 +32,10 @@ interface ITableauSuiviDossierResultat {
   dataTableau: ILigneTableauSuiviDossier[];
 }
 
-export function useTableauSuiviDossierHook(
+export const useTableauSuiviDossierHook = (
   ligneEstCliquable: boolean,
   titulaires?: ITitulaireRequeteCreation[]
-): ITableauSuiviDossierResultat {
+): ITableauSuiviDossierResultat => {
   const [resultat, setResultat] = useState<ILigneTableauSuiviDossier[]>([]);
 
   const titulairesAAfficher = useMemo(() => getTitulairesAAfficher(titulaires), [titulaires]);
@@ -107,7 +107,7 @@ export function useTableauSuiviDossierHook(
   return {
     dataTableau: resultat
   };
-}
+};
 
 const getTitulairesAAfficher = (titulaires?: ITitulaireRequeteCreation[]): ITitulaireRequeteCreation[] => {
   return titulaires?.filter(titulaire => titulaire.suiviDossiers && titulaire.suiviDossiers?.length > 0) || [];

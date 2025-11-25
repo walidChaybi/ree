@@ -31,7 +31,7 @@ export interface ICreerCourrierECParams {
   setOperationEnCours: (op: boolean) => void;
 }
 
-export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
+export const useCreerCourrierEC = (params?: ICreerCourrierECParams) => {
   const [generationCourrierHookParams, setGenerationCourrierHookParams] = useState<IGenerationCourrierParams>();
   const [generationDocumentECParams, setGenerationDocumentECParams] = useState<IGenerationECParams>();
   const [idsMentionsRetirees, setIdsMentionsRetirees] = useState<string[]>();
@@ -154,7 +154,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatGenerationEC, resultatGenerationCourrier]);
-}
+};
 
 const nationaliteAjouteeSiBesoin = (
   majMentionFaite: IMiseAJourMentionsResultat | undefined,
@@ -162,11 +162,11 @@ const nationaliteAjouteeSiBesoin = (
   acte: FicheActe | null
 ): boolean => Boolean(acte && (!acte.necessiteMentionNationalite(params?.requete?.choixDelivrance) || majMentionFaite));
 
-function getIndexDocument(
+const getIndexDocument = (
   requete: IRequeteDelivrance,
   resultatGenerationEC?: IGenerationECResultat,
   resultatGenerationCourrier?: IResultGenerationUnDocument
-) {
+) => {
   let res = DocumentEC.Courrier;
   if (
     // Si un EC est crée mais pas de courrier
@@ -179,25 +179,25 @@ function getIndexDocument(
     res = DocumentEC.Principal;
   }
   return res;
-}
+};
 
-function getOngletSelectVenantDePriseEnCharge(sousType: SousTypeDelivrance, choixDelivrance?: ChoixDelivrance) {
+const getOngletSelectVenantDePriseEnCharge = (sousType: SousTypeDelivrance, choixDelivrance?: ChoixDelivrance) => {
   return choixDelivrance &&
     ChoixDelivrance.estReponseAvecDelivrance(choixDelivrance) &&
     SousTypeDelivrance.estSousTypeCreationCourrierAutomatique(sousType)
     ? DocumentEC.Principal
     : DocumentEC.Courrier;
-}
+};
 
-function traitementFini(
+const traitementFini = (
   params?: ICreerCourrierECParams,
   resultatGenerationCourrier?: IResultGenerationUnDocument,
   resultatGenerationEC?: IGenerationECResultat
-) {
+) => {
   return (
     params &&
     (resultatGenerationEC ||
       (resultatGenerationCourrier && ChoixDelivrance.estReponseSansDelivrance(params?.requete.choixDelivrance)) ||
       (resultatGenerationCourrier && params.requete.documentsReponses.length > 1))
   );
-}
+};

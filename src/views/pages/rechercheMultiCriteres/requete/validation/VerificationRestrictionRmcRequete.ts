@@ -13,6 +13,21 @@ import {
   prenomSaisiSansNom
 } from "@views/pages/rechercheMultiCriteres/common/validation/VerificationRestrictionRegles";
 
+const filtreDateCreationInformatiqueSaisiSeul = (rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean => {
+  return (
+    aucuneProprieteRenseignee(rMCSaisie.requerant) &&
+    aucuneProprieteRenseignee(rMCSaisie.requete) &&
+    aucuneProprieteRenseignee(rMCSaisie.titulaire)
+  );
+};
+
+const typeRequeteSaisiSansSousTypeOuStatut = (rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean => {
+  return (
+    estRenseigne(rMCSaisie.requete?.typeRequete) &&
+    (estNonRenseigne(rMCSaisie.requete?.sousTypeRequete) || estNonRenseigne(rMCSaisie.requete?.statutRequete))
+  );
+};
+
 const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
   {
     test: typeRequeteSaisiSansSousTypeOuStatut,
@@ -32,23 +47,8 @@ const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
   }
 ];
 
-export function getMessageSiVerificationRestrictionRmcRequeteEnErreur(
+export const getMessageSiVerificationRestrictionRmcRequeteEnErreur = (
   rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">
-): string | undefined {
+): string | undefined => {
   return getMessageSiVerificationEnErreur(rMCSaisie, verificationsRestrictionCriteresErreurs);
-}
-
-function filtreDateCreationInformatiqueSaisiSeul(rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
-  return (
-    aucuneProprieteRenseignee(rMCSaisie.requerant) &&
-    aucuneProprieteRenseignee(rMCSaisie.requete) &&
-    aucuneProprieteRenseignee(rMCSaisie.titulaire)
-  );
-}
-
-function typeRequeteSaisiSansSousTypeOuStatut(rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
-  return (
-    estRenseigne(rMCSaisie.requete?.typeRequete) &&
-    (estNonRenseigne(rMCSaisie.requete?.sousTypeRequete) || estNonRenseigne(rMCSaisie.requete?.statutRequete))
-  );
-}
+};

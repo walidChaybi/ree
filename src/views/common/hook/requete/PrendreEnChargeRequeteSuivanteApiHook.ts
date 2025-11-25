@@ -10,10 +10,10 @@ interface IPrendreEnChargeRequeteSuivanteResultat {
   erreur?: IErreurTraitementApi;
 }
 
-export function usePrendreEnChargeRequeteSuivanteApiHook(
+export const usePrendreEnChargeRequeteSuivanteApiHook = (
   type: TypeRequete,
   prendreEnCharge: boolean
-): IPrendreEnChargeRequeteSuivanteResultat {
+): IPrendreEnChargeRequeteSuivanteResultat => {
   const [idRequete, setIdRequete] = useState<string>();
   const [erreur, setErreur] = useState<IErreurTraitementApi>();
 
@@ -41,4 +41,4 @@ export function usePrendreEnChargeRequeteSuivanteApiHook(
   }, [type, prendreEnCharge]);
 
   return { idRequete, erreur };
-}
+};

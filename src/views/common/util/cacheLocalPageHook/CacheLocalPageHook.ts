@@ -7,21 +7,19 @@ interface ICacheLocalPage<CLE, VALEUR> {
   };
 }
 
-export function useCacheLocalPage<CLE, VALEUR>(
+export const useCacheLocalPage = <CLE, VALEUR>(
   fctTransformationCleEnString: (paramPourCalculerLaCle?: CLE) => string
-): ICacheLocalPage<CLE, VALEUR> {
-  const [cacheLocalPage, setCacheLocalPage] = useState(
-    new Map<string, VALEUR>()
-  );
+): ICacheLocalPage<CLE, VALEUR> => {
+  const [cacheLocalPage, setCacheLocalPage] = useState(new Map<string, VALEUR>());
 
-  function get(cle?: CLE): VALEUR | undefined {
+  const get = (cle?: CLE): VALEUR | undefined => {
     return cacheLocalPage.get(fctTransformationCleEnString(cle));
-  }
+  };
 
-  function set(cle: CLE, valeur: VALEUR) {
+  const set = (cle: CLE, valeur: VALEUR) => {
     cacheLocalPage.set(fctTransformationCleEnString(cle), valeur);
     setCacheLocalPage(new Map(cacheLocalPage));
-  }
+  };
 
   return {
     cacheLocalPage: {
@@ -29,4 +27,4 @@ export function useCacheLocalPage<CLE, VALEUR>(
       set
     }
   };
-}
+};

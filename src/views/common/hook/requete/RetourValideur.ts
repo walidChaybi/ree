@@ -9,7 +9,7 @@ export interface IRetourValideurParams {
   requeteId: string;
 }
 
-export function useRetourValideurApiHook(params?: IRetourValideurParams) {
+export const useRetourValideurApiHook = (params?: IRetourValideurParams) => {
   const [idAction, setIdAction] = useState<string | undefined>();
   useEffect(() => {
     if (params) {
@@ -28,4 +28,4 @@ export function useRetourValideurApiHook(params?: IRetourValideurParams) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   return idAction;
-}
+};

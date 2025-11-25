@@ -15,7 +15,7 @@ export interface ICreationActionParams {
   requeteId?: string;
 }
 
-export function usePostCreationActionEtMiseAjourStatutApi(params?: ICreationActionEtMiseAjourStatutParams | null) {
+export const usePostCreationActionEtMiseAjourStatutApi = (params?: ICreationActionEtMiseAjourStatutParams | null) => {
   const [idAction, setIdAction] = useState<string | undefined>();
   useEffect(() => {
     if (params?.requeteId && params.libelleAction && params.statutRequete) {
@@ -33,4 +33,4 @@ export function usePostCreationActionEtMiseAjourStatutApi(params?: ICreationActi
     }
   }, [params]);
   return idAction;
-}
+};

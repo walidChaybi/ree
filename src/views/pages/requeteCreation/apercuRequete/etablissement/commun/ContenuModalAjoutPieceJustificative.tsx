@@ -28,23 +28,23 @@ const ContenuModalAjoutPieceJustificative: React.FC<ContenuModalAjoutPieceJustif
     }
   }, [props.formik.values.categoriePJ, props.formik.values.file]);
 
-  function onFileChange(base64File: Base64File, type?: Option | undefined): void {
+  const onFileChange = (base64File: Base64File, type?: Option | undefined): void => {
     props.formik.setFieldValue("file", { base64File, type });
-  }
+  };
 
-  function supprimePieceJointe() {
+  const supprimePieceJointe = () => {
     props.formik.setFieldValue("file", undefined);
-  }
+  };
 
-  async function onSubmitForm() {
+  const onSubmitForm = async () => {
     await props.formik.submitForm();
     setFormulaireEstChange(false);
-  }
+  };
 
-  function onClose() {
+  const onClose = () => {
     props.onClose();
     props.formik.resetForm();
-  }
+  };
 
   const fileFieldValue = props.formik.getFieldProps("file").value;
 

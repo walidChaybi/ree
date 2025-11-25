@@ -25,10 +25,10 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
   const [fenetreOuverteState, setFenetreOuverteState] = useState(true);
   const [fenetreExterneRef, setFenetreExterneRef] = useState<IFenetreExterneRef>();
 
-  function closeFenetre() {
+  const closeFenetre = () => {
     setFenetreOuverteState(!fenetreOuverteState);
     onClose(identifiant, index.value);
-  }
+  };
 
   return (
     <>

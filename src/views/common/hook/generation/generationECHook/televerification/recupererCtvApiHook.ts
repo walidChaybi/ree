@@ -6,7 +6,7 @@ interface IRecupererCTVResultat {
   ctv: string;
 }
 
-export function useRecupererCTV(params?: {}): IRecupererCTVResultat | undefined {
+export const useRecupererCTV = (params?: {}): IRecupererCTVResultat | undefined => {
   const [res, setRes] = useState<IRecupererCTVResultat>();
 
   useEffect(() => {
@@ -26,4 +26,4 @@ export function useRecupererCTV(params?: {}): IRecupererCTVResultat | undefined 
   }, [params]);
 
   return res;
-}
+};

@@ -20,7 +20,7 @@ export interface ICreationActionMiseAjourStatutHookParams {
   callback?: () => void;
 }
 
-export function useCreationActionMiseAjourStatut(params?: ICreationActionMiseAjourStatutHookParams) {
+export const useCreationActionMiseAjourStatut = (params?: ICreationActionMiseAjourStatutHookParams) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   const [creationActionEtMiseAjourStatutParams, setCreationActionEtMiseAjourStatutParams] =
     useState<ICreationActionEtMiseAjourStatutParams>();
@@ -46,4 +46,4 @@ export function useCreationActionMiseAjourStatut(params?: ICreationActionMiseAjo
       params.callback?.();
     }
   }, [idAction, params]);
-}
+};

@@ -12,7 +12,7 @@ interface IGetAlertesActeApiHookResultat {
   alertes: IAlerte[];
 }
 
-export function useGetAlertesActeApiHook(parameters?: IGetAlertesActeApiHookParameters) {
+export const useGetAlertesActeApiHook = (parameters?: IGetAlertesActeApiHookParameters) => {
   const [resultat, setResultat] = useState<IGetAlertesActeApiHookResultat>();
   useEffect(() => {
     if (parameters?.idActe && parameters?.isChecked) {
@@ -32,4 +32,4 @@ export function useGetAlertesActeApiHook(parameters?: IGetAlertesActeApiHookPara
     }
   }, [parameters]);
   return resultat;
-}
+};

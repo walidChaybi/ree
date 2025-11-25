@@ -62,7 +62,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
 
   // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-  function onClickOnLine(id: string, data: ILigneTableauSuiviDossier[], idxGlobal: number) {
+  const onClickOnLine = (id: string, data: ILigneTableauSuiviDossier[], idxGlobal: number) => {
     const ligneSelectionnee = data[idxGlobal];
     if (!ligneSelectionnee.evenement) {
       const titulaire = props.requete.titulaires?.find(titulaireCourant => titulaireCourant.id === data[idxGlobal].id);
@@ -114,7 +114,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
         );
       }
     }
-  }
+  };
 
   const onClose = () => {
     setIsModalOuverte(false);
@@ -179,7 +179,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
 
 export default TableauSuiviDossier;
 
-function getLigneClassName(data: ILigneTableauSuiviDossier): string {
+const getLigneClassName = (data: ILigneTableauSuiviDossier): string => {
   if (!data.cliquable) return "ligneProjetActeDesactive";
   return data.prenoms ? "lignePersonne" : "ligneProjetActe";
-}
+};

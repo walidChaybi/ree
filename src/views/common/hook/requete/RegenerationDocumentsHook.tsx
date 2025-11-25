@@ -18,7 +18,7 @@ export interface IRegenerationDocumentsParams {
   valeursCourrierParDefaut: SaisieCourrier;
 }
 
-export function useRegenerationDocumentsHook(params?: IRegenerationDocumentsParams) {
+export const useRegenerationDocumentsHook = (params?: IRegenerationDocumentsParams) => {
   const [generationECParams, setGenerationECParams] = useState<IGenerationECParams>();
 
   const [documentsARegenerer, setDocumentsARegenerer] = useState<IDocumentReponse[]>();
@@ -60,31 +60,31 @@ export function useRegenerationDocumentsHook(params?: IRegenerationDocumentsPara
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatGenerationEC, resultatGenerationCourrier]);
-}
+};
 
-function genereECOuCourrier(
+const genereECOuCourrier = (
   document: IDocumentReponse,
   setGenerationECParams: any,
   params: IRegenerationDocumentsParams,
   setGenerationCourrierParams: any
-) {
+) => {
   if (DocumentReponse.estExtraitCopie(document)) {
     genereEC(setGenerationECParams, document, params);
   } else {
     genereCourrier(setGenerationCourrierParams, document, params);
   }
-}
+};
 
-function ajouteCourrierSiDemande(params: IRegenerationDocumentsParams, docsARegenerer: IDocumentReponse[]) {
+const ajouteCourrierSiDemande = (params: IRegenerationDocumentsParams, docsARegenerer: IDocumentReponse[]) => {
   if (params.regenererCourrier) {
     const courrier = RequeteDelivrance.getCourrier(params.requete);
     if (courrier) {
       docsARegenerer.push(courrier);
     }
   }
-}
+};
 
-function genereCourrier(setGenerationCourrierParams: any, document: IDocumentReponse, params: IRegenerationDocumentsParams) {
+const genereCourrier = (setGenerationCourrierParams: any, document: IDocumentReponse, params: IRegenerationDocumentsParams) => {
   setGenerationCourrierParams({
     mettreAJourStatut: false,
     requete: params.requete,
@@ -98,9 +98,9 @@ function genereCourrier(setGenerationCourrierParams: any, document: IDocumentRep
     saisieCourrier: params.valeursCourrierParDefaut,
     acte: params.acte
   });
-}
+};
 
-function genereEC(setGenerationECParams: any, document: IDocumentReponse, params: IRegenerationDocumentsParams) {
+const genereEC = (setGenerationECParams: any, document: IDocumentReponse, params: IRegenerationDocumentsParams) => {
   setGenerationECParams({
     idActe: document.idActe,
     acte: params.acte,
@@ -110,13 +110,13 @@ function genereEC(setGenerationECParams: any, document: IDocumentReponse, params
     pasDAction: documentDejaCree(params.requete.documentsReponses, params.requete.choixDelivrance),
     choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(document.typeDocument)
   });
-}
+};
 
-function getValidation(document: IDocumentReponse, problemePlurilingue: boolean) {
+const getValidation = (document: IDocumentReponse, problemePlurilingue: boolean) => {
   if (document.typeDocument === DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE) && problemePlurilingue) {
     return EValidation.E;
   } else if (DocumentDelivrance.estExtraitAvecOuSansFilliation(document.typeDocument) && document.validation === EValidation.E) {
     return EValidation.N;
   }
   return document.validation ?? EValidation.N;
-}
+};

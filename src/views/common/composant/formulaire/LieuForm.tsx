@@ -20,6 +20,35 @@ interface ILieuFormProps {
 type LieuFormProps = ILieuFormProps & FormikComponentProps;
 
 const LieuForm: React.FC<LieuFormProps> = props => {
+  const getFormulaireLieuEtranger = (): JSX.Element => {
+    return (
+      <>
+        {props.elements.ville}
+        {props.elements.region}
+        {props.elements.pays}
+      </>
+    );
+  };
+
+  const getFormulaireLieuFrance = (): JSX.Element => {
+    return (
+      <>
+        {props.elements.ville}
+        {props.afficherArrondissement && props.elements.arrondissement}
+        {props.afficherDepartement && props.elements.departement}
+      </>
+    );
+  };
+
+  const getValeur = (champ: JSX.Element): string => {
+    return props.formik.getFieldProps(champ?.props.name).value;
+  };
+
+  const reinitialiserErreurs = () => {
+    for (const champ of Object.values(props.elements)) {
+      props.formik.setFieldError(champ.props.name, undefined);
+    }
+  };
   const valeurLieu = getValeur(props.elements.lieu);
 
   const [lieu, setLieu] = useState<EtrangerFrance>();
@@ -46,36 +75,6 @@ const LieuForm: React.FC<LieuFormProps> = props => {
     return formulaireLieu;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lieu, props.afficherArrondissement, props.afficherDepartement]);
-
-  function getFormulaireLieuEtranger(): JSX.Element {
-    return (
-      <>
-        {props.elements.ville}
-        {props.elements.region}
-        {props.elements.pays}
-      </>
-    );
-  }
-
-  function getFormulaireLieuFrance(): JSX.Element {
-    return (
-      <>
-        {props.elements.ville}
-        {props.afficherArrondissement && props.elements.arrondissement}
-        {props.afficherDepartement && props.elements.departement}
-      </>
-    );
-  }
-
-  function getValeur(champ: JSX.Element): string {
-    return props.formik.getFieldProps(champ?.props.name).value;
-  }
-
-  function reinitialiserErreurs() {
-    for (const champ of Object.values(props.elements)) {
-      props.formik.setFieldError(champ.props.name, undefined);
-    }
-  }
 
   return (
     <div className="LieuForm">

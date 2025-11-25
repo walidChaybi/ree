@@ -11,7 +11,7 @@ interface BandeauFicheProps {
 export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
   const data = props.dataBandeau;
 
-  function getAlertes() {
+  const getAlertes = () => {
     const alertes = data.alertes;
     let titleAlertes = "";
     if (alertes != null && alertes.length >= 1) {
@@ -20,7 +20,7 @@ export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
       });
     }
     return titleAlertes;
-  }
+  };
 
   return (
     <>

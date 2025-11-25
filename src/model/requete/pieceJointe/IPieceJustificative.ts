@@ -19,13 +19,13 @@ export const PieceJustificative = {
   }
 };
 
-export function mapPieceJustificative(pj: any) {
+export const mapPieceJustificative = (pj: any) => {
   const piece = mapDocumentSwift(pj);
   piece.typePieceJustificative = TypePieceJustificative.depuisLibelle(pj.type?.libelle ?? "")?.id;
   return piece as IPieceJustificative;
-}
+};
 
-export function mapDocumentSwift(document: any): any {
+export const mapDocumentSwift = (document: any): any => {
   return {
     nom: document.base64File.fileName,
     contenu: document.base64File.base64String,
@@ -35,4 +35,4 @@ export function mapDocumentSwift(document: any): any {
     referenceSwift: document.base64File.identifiantSwift ?? "",
     conteneurSwift: document.base64File.conteneurSwift ?? ""
   };
-}
+};

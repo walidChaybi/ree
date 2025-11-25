@@ -36,6 +36,33 @@ export const ListePiecesJustificativesTranscription: React.FC<ListePiecesJustifi
     }
   };
 
+  const creerGroupesPJsTranscrition = (piecesJustificativesCreationTriees: IPieceJustificativeCreation[]): GroupePJTranscription[] => {
+    const groups: GroupePJTranscription[] = [];
+    piecesJustificativesCreationTriees.forEach(pj => {
+      const group = groups.find(grp => grp.typePieceJustificative === pj.typePieceJustificative);
+      if (group) {
+        group.piecesJustificatives.push(pj);
+      } else {
+        groups.push({
+          typePieceJustificative: pj.typePieceJustificative,
+          piecesJustificatives: [pj]
+        });
+      }
+    });
+
+    return groups;
+  };
+
+  const handleReorga = (oldIndex: number, newIndex: number) => {
+    if (groupesPJsTsranscriptionTries) {
+      const newList = [...groupesPJsTsranscriptionTries];
+      const item = newList[oldIndex];
+      newList.splice(oldIndex, 1);
+      newList.splice(newIndex, 0, item);
+      setGroupesPJsTsranscriptionTries(newList);
+    }
+  };
+
   const mappingIPiecesJustificativesCreationTrieesVersListeItem = (): ListeItem[] => {
     return groupesPJsTsranscriptionTries.map(
       (group: GroupePJTranscription): ListeItem => ({
@@ -98,39 +125,12 @@ export const ListePiecesJustificativesTranscription: React.FC<ListePiecesJustifi
       )}
     </>
   );
-
-  function creerGroupesPJsTranscrition(piecesJustificativesCreationTriees: IPieceJustificativeCreation[]): GroupePJTranscription[] {
-    const groups: GroupePJTranscription[] = [];
-    piecesJustificativesCreationTriees.forEach(pj => {
-      const group = groups.find(grp => grp.typePieceJustificative === pj.typePieceJustificative);
-      if (group) {
-        group.piecesJustificatives.push(pj);
-      } else {
-        groups.push({
-          typePieceJustificative: pj.typePieceJustificative,
-          piecesJustificatives: [pj]
-        });
-      }
-    });
-
-    return groups;
-  }
-
-  function handleReorga(oldIndex: number, newIndex: number) {
-    if (groupesPJsTsranscriptionTries) {
-      const newList = [...groupesPJsTsranscriptionTries];
-      const item = newList[oldIndex];
-      newList.splice(oldIndex, 1);
-      newList.splice(newIndex, 0, item);
-      setGroupesPJsTsranscriptionTries(newList);
-    }
-  }
 };
 
-function majLibellesPiecesJustificatives(
+const majLibellesPiecesJustificatives = (
   groupesPJAMettreAJour: GroupePJTranscription[],
   pjsReference: IPieceJustificativeCreation[]
-): GroupePJTranscription[] {
+): GroupePJTranscription[] => {
   groupesPJAMettreAJour.forEach(groupePJAMettreAjour => {
     groupePJAMettreAjour.piecesJustificatives.forEach(pjAMettreAJour => {
       const pjReference = PieceJustificative.getPieceJustificative(pjsReference, pjAMettreAJour.id) as IPieceJustificativeCreation;
@@ -140,4 +140,4 @@ function majLibellesPiecesJustificatives(
     });
   });
   return groupesPJAMettreAJour;
-}
+};

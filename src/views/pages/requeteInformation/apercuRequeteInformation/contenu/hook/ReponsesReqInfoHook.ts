@@ -3,7 +3,7 @@ import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../../utils/AfficherMessage";
 
-export function useReponsesReqInfoApiHook() {
+export const useReponsesReqInfoApiHook = () => {
   const [reponsesReqInfo, setReponsesReqInfo] = useState<IReponseRequeteInfo[]>([]);
 
   useEffect(() => {
@@ -20,4 +20,4 @@ export function useReponsesReqInfoApiHook() {
   return {
     reponsesReqInfo
   };
-}
+};

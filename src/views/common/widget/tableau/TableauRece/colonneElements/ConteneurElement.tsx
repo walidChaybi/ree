@@ -77,13 +77,13 @@ const ConteneurElement = <TData, TIdentifiant, TEvenement extends React.Syntheti
   );
 };
 
-export function getConteneurAvecElement<TData, TIdentifiant, TEvenement extends React.SyntheticEvent>(
+export const getConteneurAvecElement = <TData, TIdentifiant, TEvenement extends React.SyntheticEvent>(
   conteneurPropsPartielles: IConteneurElementPropsPartielles<TData, TIdentifiant, TEvenement>,
   getIdentifiant: (data: TData) => TIdentifiant,
   filtreAffichageElement: (data: TData) => boolean,
   getElement: (data: TData) => JSX.Element,
   data: TData
-): JSX.Element {
+): JSX.Element => {
   return (
     <ConteneurElement<TData, TIdentifiant, TEvenement>
       {...conteneurPropsPartielles}
@@ -93,4 +93,4 @@ export function getConteneurAvecElement<TData, TIdentifiant, TEvenement extends 
       {filtreAffichageElement(data) ? getElement(data) : <></>}
     </ConteneurElement>
   );
-}
+};

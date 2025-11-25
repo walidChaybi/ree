@@ -6,7 +6,7 @@ import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@views
 import { IdentiteFormDefaultValuesRDCSC } from "../sousFormulaires/identite/IdentiteForm";
 import { saisieAdresse, saisiePJ, saisieRequerant, saisieTitulaire } from "./mappingCommun";
 
-export function mappingRequeteDelivranceVersFormulaireRDCSC(requete: IRequeteDelivrance): SaisieRequeteRDCSC {
+export const mappingRequeteDelivranceVersFormulaireRDCSC = (requete: IRequeteDelivrance): SaisieRequeteRDCSC => {
   const { titulaires, documentDemande, piecesJustificatives } = requete;
 
   const saisie = {
@@ -25,7 +25,7 @@ export function mappingRequeteDelivranceVersFormulaireRDCSC(requete: IRequeteDel
   }
 
   return saisie;
-}
+};
 
 const saisieTitulaireRDCSC = (titulaire?: ITitulaireRequete) => {
   const titulaireForm = saisieTitulaire(titulaire);

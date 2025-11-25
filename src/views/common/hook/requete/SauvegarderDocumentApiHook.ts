@@ -8,7 +8,7 @@ export interface ISauvegarderDocumentsParams {
   requeteId?: string;
 }
 
-export function useSauvegarderDocument(params?: ISauvegarderDocumentsParams) {
+export const useSauvegarderDocument = (params?: ISauvegarderDocumentsParams) => {
   const [uuidDocumentReponse, setUuidDocumentReponse] = useState<string>();
 
   useEffect(() => {
@@ -27,4 +27,4 @@ export function useSauvegarderDocument(params?: ISauvegarderDocumentsParams) {
   }, [params]);
 
   return uuidDocumentReponse;
-}
+};

@@ -51,7 +51,7 @@ export const ResumeReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
   );
 };
 
-function mapPiecesComplementInformation(pieces?: IPieceComplementInformation[]): IPieceJointe[] {
+const mapPiecesComplementInformation = (pieces?: IPieceComplementInformation[]): IPieceJointe[] => {
   return pieces
     ? pieces.map(piece => ({
         id: piece.id,
@@ -60,9 +60,9 @@ function mapPiecesComplementInformation(pieces?: IPieceComplementInformation[]):
         typePiece: TypePieceJointe.PIECE_COMPLEMENT_INFORMATION
       }))
     : [];
-}
+};
 
-function getPanelResumeRequete(detailRequete: IRequeteInformation): SectionPanelProps {
+const getPanelResumeRequete = (detailRequete: IRequeteInformation): SectionPanelProps => {
   const panel = {
     panelAreas: [],
     title: "requeteInformation"
@@ -76,9 +76,9 @@ function getPanelResumeRequete(detailRequete: IRequeteInformation): SectionPanel
   ajouterPanelAreasAuPanel(panel, detailRequete, getCommentaireReq, 1);
 
   return panel;
-}
+};
 
-function getRequete(detailRequete: IRequeteInformation): SectionPartProps[] {
+const getRequete = (detailRequete: IRequeteInformation): SectionPartProps[] => {
   return [
     {
       partContent: {
@@ -86,9 +86,9 @@ function getRequete(detailRequete: IRequeteInformation): SectionPartProps[] {
       }
     }
   ];
-}
+};
 
-function getRequeteInfo(detailRequete: IRequeteInformation): SectionContentProps[] {
+const getRequeteInfo = (detailRequete: IRequeteInformation): SectionContentProps[] => {
   const infosRequete = [] as SectionContentProps[];
 
   ajouterContentPartAuPartUneValeur(infosRequete, `Sous-type`, detailRequete.sousType.libelle);
@@ -116,9 +116,9 @@ function getRequeteInfo(detailRequete: IRequeteInformation): SectionContentProps
   });
 
   return infosRequete;
-}
+};
 
-function getRequerant(detailRequete: IRequeteInformation): SectionPartProps[] {
+const getRequerant = (detailRequete: IRequeteInformation): SectionPartProps[] => {
   return [
     {
       partContent: {
@@ -126,9 +126,9 @@ function getRequerant(detailRequete: IRequeteInformation): SectionPartProps[] {
       }
     }
   ];
-}
+};
 
-function getRequerantInfo(detailRequete: IRequeteInformation): SectionContentProps[] {
+const getRequerantInfo = (detailRequete: IRequeteInformation): SectionContentProps[] => {
   const infosRequerant = [] as SectionContentProps[];
 
   ajouterContentPartAuPartUneValeur(infosRequerant, `Type requérant`, detailRequete.requerant.qualiteRequerant.qualite.libelle);
@@ -145,9 +145,9 @@ function getRequerantInfo(detailRequete: IRequeteInformation): SectionContentPro
   ajouterContentPartAuPartUneValeur(infosRequerant, `Courriel`, detailRequete.requerant.courriel ?? "");
 
   return infosRequerant;
-}
+};
 
-function getTitulaire(detailRequete: IRequeteInformation): SectionPartProps[] {
+const getTitulaire = (detailRequete: IRequeteInformation): SectionPartProps[] => {
   return [
     {
       partContent: {
@@ -155,9 +155,9 @@ function getTitulaire(detailRequete: IRequeteInformation): SectionPartProps[] {
       }
     }
   ];
-}
+};
 
-function getTitulaireInfo(detailRequete: IRequeteInformation): SectionContentProps[] {
+const getTitulaireInfo = (detailRequete: IRequeteInformation): SectionContentProps[] => {
   const infosTitulaire = [] as SectionContentProps[];
 
   if (detailRequete.titulaires && detailRequete.titulaires.length > 0) {
@@ -172,9 +172,9 @@ function getTitulaireInfo(detailRequete: IRequeteInformation): SectionContentPro
   }
 
   return infosTitulaire;
-}
+};
 
-function getCommentaireReq(detailRequete: IRequeteInformation): SectionPartProps[] {
+const getCommentaireReq = (detailRequete: IRequeteInformation): SectionPartProps[] => {
   return [
     {
       partContent: {
@@ -182,12 +182,12 @@ function getCommentaireReq(detailRequete: IRequeteInformation): SectionPartProps
       }
     }
   ];
-}
+};
 
-function getCommentaire(detailRequete: IRequeteInformation): SectionContentProps[] {
+const getCommentaire = (detailRequete: IRequeteInformation): SectionContentProps[] => {
   const commentaire = [] as SectionContentProps[];
 
   ajouterContentPartAuPartUneValeurVide(commentaire, `Commentaire libre de l'usager`, detailRequete.commentaire);
 
   return commentaire;
-}
+};

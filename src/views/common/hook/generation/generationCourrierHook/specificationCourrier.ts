@@ -10,7 +10,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { triListeObjetsSurPropriete } from "@util/Utils";
 
-function ajoutInfosTitulaire(elementsJasper: IElementsJasperCourrier, requete: IRequeteDelivrance, acte?: FicheActe) {
+const ajoutInfosTitulaire = (elementsJasper: IElementsJasperCourrier, requete: IRequeteDelivrance, acte?: FicheActe) => {
   let titulaires = [];
   let analyseMarginale: AnalyseMarginale | undefined;
   if (acte?.id && acte?.analysesMarginales) {
@@ -39,18 +39,18 @@ function ajoutInfosTitulaire(elementsJasper: IElementsJasperCourrier, requete: I
       elementsJasper.prenomsTitulaire2 = getPrenomsTitulaireRequete(titulaires[1].prenoms);
     }
   }
-}
+};
 
-function getPrenomsTitulaireActe(prenomsTitulaire?: string[]): string {
+const getPrenomsTitulaireActe = (prenomsTitulaire?: string[]): string => {
   let prenoms = "";
 
   if (prenomsTitulaire) {
     prenoms = prenomsTitulaire.join(", ");
   }
   return prenoms;
-}
+};
 
-function getPrenomsTitulaireRequete(prenomsTitulaire?: IPrenomOrdonnes[]): string {
+const getPrenomsTitulaireRequete = (prenomsTitulaire?: IPrenomOrdonnes[]): string => {
   let prenoms = "";
 
   if (prenomsTitulaire) {
@@ -60,11 +60,11 @@ function getPrenomsTitulaireRequete(prenomsTitulaire?: IPrenomOrdonnes[]): strin
     prenoms = tableau.join(", ");
   }
   return prenoms;
-}
+};
 
 const LIMITE_ORDRE_EDITION_OPTION = 900;
 
-function ajoutOptions(elementsJasper: IElementsJasperCourrier, optionsChoisies?: OptionsCourrier) {
+const ajoutOptions = (elementsJasper: IElementsJasperCourrier, optionsChoisies?: OptionsCourrier) => {
   if (optionsChoisies && optionsChoisies.length > 0) {
     elementsJasper.options = [];
     elementsJasper.optionsTexteLibre = [];
@@ -77,9 +77,9 @@ function ajoutOptions(elementsJasper: IElementsJasperCourrier, optionsChoisies?:
       }
     });
   }
-}
+};
 
-function optionOuOptionATiret(tabOptions: OptionsJasper[], option: OptionCourrier) {
+const optionOuOptionATiret = (tabOptions: OptionsJasper[], option: OptionCourrier) => {
   if (option.optionATiret) {
     tabOptions.push({
       option_puce: getTexteOption(option)
@@ -89,11 +89,11 @@ function optionOuOptionATiret(tabOptions: OptionsJasper[], option: OptionCourrie
       option: getTexteOption(option)
     });
   }
-}
+};
 
-function getTexteOption(option: OptionCourrier) {
+const getTexteOption = (option: OptionCourrier) => {
   return option.texteOptionCourrierModifie ?? option.texteOptionCourrier;
-}
+};
 
 const TEXTE_VARIABLE_RDD = `Le document d’état civil joint est délivré sur support électronique conformément à l’ordonnance n° 2019-724 du 10 juillet 2019 \
 – chapitre III, article 10 ; il est signé par un officier de l’état civil au moyen d’un procédé de signature électronique sécurisée et \
@@ -114,13 +114,13 @@ const TEXTE_VARIABLE_RDC = `Pour formuler une nouvelle demande, il vous est cons
 
 https://demarches.service-public.gouv.fr/mademarche/delivrance_demat/demarche`;
 
-function ajoutTexteVariable(elementsJasper: IElementsJasperCourrier, sousTypeRequete: SousTypeRequete) {
+const ajoutTexteVariable = (elementsJasper: IElementsJasperCourrier, sousTypeRequete: SousTypeRequete) => {
   if (sousTypeRequete === SousTypeDelivrance.RDD) {
     elementsJasper.texte_variable_RDD = TEXTE_VARIABLE_RDD;
   } else if (sousTypeRequete === SousTypeDelivrance.RDC) {
     elementsJasper.texte_variable_RDC = TEXTE_VARIABLE_RDC;
   }
-}
+};
 
 /////////////////////////////////////////////////////////////////////
 class SpecificationCourrier {

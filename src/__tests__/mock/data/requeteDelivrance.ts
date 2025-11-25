@@ -1,4 +1,5 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IProvenancePlanete } from "@model/requete/IProvenancePlanete";
 import { IProvenanceRece } from "@model/requete/IProvenanceRece";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -439,3 +440,152 @@ export const requeteRDDASigner = {
     raisonStatut: null
   }
 };
+
+export const requeteDelivranceApresMapping = [
+  {
+    attribueA: "",
+    canal: TypeCanal.COURRIER,
+    dateCreation: "25/06/2021",
+    dateDerniereMaj: "",
+    document: "",
+    documentLibelle: undefined,
+    documentsReponses: [
+      {
+        conteneurSwift: "conteneurSwift",
+        contenu: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII=",
+        id: "c4f4c8fb-562c-4b14-96aa-4386814c05d8",
+        mimeType: "image/png",
+        nbPages: 1,
+        nom: "CARN_EC_117",
+        optionsCourrier: [
+          {
+            code: "fc60d127-45c1-4453-916a-e4d107a5d026",
+            idDocumentReponse: "c4f4c8fb-562c-4b14-96aa-4386814c05d8",
+            idOptioncourrier: "4ca2229c-dfaa-44f2-b3b8-55910282f969",
+            numeroOrdreEdition: 1,
+            texte: "- le lieu de l'événement (ville et/ou pays)"
+          }
+        ],
+        orientation: "Portrait",
+        taille: 37236,
+        texteLibreCourrier: {
+          id: "e56bfaf1-8c0e-422f-ba49-58a40039bcbe",
+          texte: "Texte libre Courrier 117"
+        },
+        typeDocument: "b36f9a2c-64fa-42bb-a3f6-adca6fec28f2"
+      }
+    ],
+    idCorbeilleAgent: undefined,
+    idRequete: "0ad85c1f-57cf-45cc-ab66-6a17f31247df",
+    idSagaDila: 8701,
+    idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    idUtilisateurRequerant: undefined,
+    nature: "",
+    nomCompletRequerant: {
+      adresse: {
+        codePostal: "310 GL24",
+        ligne2: "Appartement 258",
+        ligne3: "Batiment Z",
+        ligne4: "61 avenue Foch",
+        ligne5: "lieu dit la martinière",
+        pays: "France",
+        ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont"
+      },
+      courriel: "ldubois@wanadoo.fr",
+      courrielAutreContact: undefined,
+      dateCreation: new Date("1624615266000"),
+      id: "313a3fdf-889c-4da1-8f7f-660805fdb0df",
+      lienRequerant: undefined,
+      nomFamille: "RUIZ",
+      nomUsage: undefined,
+      prenom: "Paul",
+      qualiteRequerant: {
+        autreProfessionnel: undefined,
+        institutionnel: {},
+        mandataireHabilite: {},
+        particulier: undefined,
+        qualite: "",
+        utilisateurRece: undefined
+      },
+      telephone: "",
+      telephoneAutreContact: undefined
+    },
+    numero: "L5UG3Q",
+    numeroTeledossier: "",
+    observations: [],
+    priorite: "",
+    provenance: "",
+    requerant: {
+      adresse: {
+        codePostal: "310 GL24",
+        ligne2: "Appartement 258",
+        ligne3: "Batiment Z",
+        ligne4: "61 avenue Foch",
+        ligne5: "lieu dit la martinière",
+        pays: "France",
+        ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont"
+      },
+      courriel: "ldubois@wanadoo.fr",
+      courrielAutreContact: undefined,
+      dateCreation: new Date("1624615266000"),
+      id: "313a3fdf-889c-4da1-8f7f-660805fdb0df",
+      lienRequerant: undefined,
+      nomFamille: "RUIZ",
+      nomUsage: undefined,
+      prenom: "Paul",
+      qualiteRequerant: {
+        autreProfessionnel: undefined,
+        institutionnel: {},
+        mandataireHabilite: {},
+        particulier: undefined,
+        qualite: "",
+        utilisateurRece: undefined
+      },
+      telephone: "",
+      telephoneAutreContact: undefined
+    },
+    sousType: "Délivrance E/C (c)",
+    statut: undefined,
+    tagPriorisation: undefined,
+    titulaires: [
+      {
+        anneeNaissance: 1990,
+        jourNaissance: 25,
+        moisNaissance: 6,
+        nationalite: Nationalite.ETRANGERE,
+        nom: "",
+        paysNaissance: "Espagne",
+        position: 1,
+        prenoms: [
+          {
+            numeroOrdre: 1,
+            prenom: "Elodie"
+          }
+        ],
+        qualite: "",
+        sexe: Sexe.FEMININ,
+        villeNaissance: "Barcelone"
+      },
+      {
+        anneeNaissance: 1990,
+        jourNaissance: 25,
+        moisNaissance: 6,
+        nationalite: Nationalite.ETRANGERE,
+        nom: "",
+        paysNaissance: "Espagne",
+        position: 2,
+        prenoms: [
+          {
+            numeroOrdre: 1,
+            prenom: "Jack"
+          }
+        ],
+        qualite: "",
+        sexe: Sexe.MASCULIN,
+        villeNaissance: "Barcelone"
+      }
+    ],
+    type: "Délivrance"
+  }
+];

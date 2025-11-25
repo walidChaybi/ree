@@ -15,21 +15,21 @@ export const CelluleEnteteCaseACocher = <TIdentifiant,>({
   handleChange: handleChangeProps,
   ...props
 }: PropsWithChildren<ICelluleEnteteCaseACocher<TIdentifiant>>): React.ReactElement => {
-  function identifiantEstSelectionne(identifiant: TIdentifiant): boolean {
+  const identifiantEstSelectionne = (identifiant: TIdentifiant): boolean => {
     return identifiantsSelectionnesProps.includes(identifiant);
-  }
+  };
 
-  function estDesactive(): boolean {
+  const estDesactive = (): boolean => {
     return identifiantsDeLaPageProps.length === ZERO;
-  }
+  };
 
-  function estCochee(): boolean {
+  const estCochee = (): boolean => {
     return identifiantsDeLaPageProps.every(identifiantEstSelectionne);
-  }
+  };
 
-  function estIndeterminee(): boolean {
+  const estIndeterminee = (): boolean => {
     return identifiantsDeLaPageProps.some(identifiantEstSelectionne) && !estCochee();
-  }
+  };
 
   return (
     <Checkbox

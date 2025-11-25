@@ -9,7 +9,7 @@ export interface RetourSDANFParams {
   message: IEchange;
 }
 
-export function useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook(params?: RetourSDANFParams): IEchange {
+export const useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook = (params?: RetourSDANFParams): IEchange => {
   const [messageSdanf, setMessageSdanf] = useState<IEchange>();
   useEffect(() => {
     if (params) {
@@ -27,4 +27,4 @@ export function useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook(params?: Re
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   return messageSdanf as IEchange;
-}
+};

@@ -12,7 +12,7 @@ interface IDerniereDelivranceRcRcaPacsResultat {
   resultat: boolean;
 }
 
-export function useDerniereDelivranceRcRcaPacsApiHook(params?: IDerniereDelivranceRcRcaPacsParams[]) {
+export const useDerniereDelivranceRcRcaPacsApiHook = (params?: IDerniereDelivranceRcRcaPacsParams[]) => {
   const [resultat, setResultat] = useState<IDerniereDelivranceRcRcaPacsResultat>();
 
   useEffect(() => {
@@ -36,4 +36,4 @@ export function useDerniereDelivranceRcRcaPacsApiHook(params?: IDerniereDelivran
   }, [params]);
 
   return resultat;
-}
+};

@@ -49,11 +49,11 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
 
   const afficherMessageSexe = Sexe.estIndetermine(props.formik.getFieldProps(sexe).value);
 
-  function onChangeDateNaissance(date: IDateComposeForm, type?: ChampDateModifie) {
+  const onChangeDateNaissance = (date: IDateComposeForm, type?: ChampDateModifie) => {
     if (type === ChampDateModifie.JOUR || ChampDateModifie.MOIS) {
       setAfficherMessageNaissance(false);
     }
-  }
+  };
 
   useEffect(() => {
     setAfficherMessageNaissance(props.afficherMessageNaissance);

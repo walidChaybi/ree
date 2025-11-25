@@ -57,11 +57,11 @@ export const OngletRMCPersonne: React.FC<IOngletRMCPersonneProps> = props => {
 
   const sauvegardeRMCApiHookResultat = useSauvegardeRMCApiHook(sauvegardeRMCApiHookParams);
 
-  function onClickBoutonAjouterPersonneOuActeInscription(
+  const onClickBoutonAjouterPersonneOuActeInscription = (
     event: TMouseEventSurHTMLButtonElement,
     ligneTableau: IDataTableauRMCPersonne,
     cle?: string
-  ): void {
+  ): void => {
     const estDejaSelectionne = identifiantEstDejaSelectionne(
       ligneTableau.idPersonneOuActeInscription,
       ligneTableau.estDataPersonne,
@@ -87,40 +87,40 @@ export const OngletRMCPersonne: React.FC<IOngletRMCPersonneProps> = props => {
       }
       !isDirty && setIsDirty(true);
     }
-  }
+  };
 
-  function onClickBoutonRetirerPersonne(event: TMouseEventSurSVGSVGElement, ligneTableau: IDataTableauPersonneSelectionnee): void {
+  const onClickBoutonRetirerPersonne = (event: TMouseEventSurSVGSVGElement, ligneTableau: IDataTableauPersonneSelectionnee): void => {
     if (props.setDataPersonnesSelectionnees) {
       props.setDataPersonnesSelectionnees(
         props.dataPersonnesSelectionnees?.filter(personne => personne.idPersonne !== ligneTableau.idPersonne)
       );
       !isDirty && setIsDirty(true);
     }
-  }
+  };
 
-  function onClickBoutonRetirerActeInscription(ligneTableau: IDataTableauActeInscriptionSelectionne): void {
+  const onClickBoutonRetirerActeInscription = (ligneTableau: IDataTableauActeInscriptionSelectionne): void => {
     props.setDataActesInscriptionsSelectionnes(
       props.dataActesInscriptionsSelectionnes?.filter(
         acteInscription => acteInscription.idActeInscription !== ligneTableau.idActeInscription
       )
     );
     !isDirty && setIsDirty(true);
-  }
+  };
 
-  function handleClickMenuItemRMCPersonneRequete(idTitulaire: string) {
+  const handleClickMenuItemRMCPersonneRequete = (idTitulaire: string) => {
     const titulaire = props.listeTitulaires?.filter(titulaireCourant => titulaireCourant.id === idTitulaire).pop();
     if (titulaire) {
       props.setCriteresRMCAutoPersonne(titulaireRequeteVersRMCAutoTitulaireDto(titulaire));
     }
-  }
+  };
 
-  function sauvegardePersonneEtActeSelectionne() {
+  const sauvegardePersonneEtActeSelectionne = () => {
     setSauvegardeRMCApiHookParams({
       dataPersonnesSelectionnees: props.dataPersonnesSelectionnees || [],
       dataActesInscriptionsSelectionnes: props.dataActesInscriptionsSelectionnes || [],
       idRequete: props.idRequeteParam ?? ""
     });
-  }
+  };
 
   useEffect(() => {
     if (sauvegardeRMCApiHookResultat?.estValide && props.onSavePersonneEtActeInscription) {
@@ -170,23 +170,23 @@ export const OngletRMCPersonne: React.FC<IOngletRMCPersonneProps> = props => {
   );
 };
 
-function identifiantEstDejaSelectionne(
+const identifiantEstDejaSelectionne = (
   identifiant: string,
   estDataPersonne: boolean,
   dataActesInscriptionsSelectionnes: IDataTableauActeInscriptionSelectionne[] = [],
   dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[] = []
-): boolean {
+): boolean => {
   return estDataPersonne
     ? dataPersonnesSelectionnees.some(personne => personne.idPersonne === identifiant)
     : dataActesInscriptionsSelectionnes.some(acteInscription => acteInscription.idActeInscription === identifiant);
-}
+};
 
-function ajouterPersonne(
+const ajouterPersonne = (
   role: RolePersonneSauvegardee,
   ligneTableau: IDataTableauRMCPersonne,
   dataPersonnesSelectionnees: IDataTableauPersonneSelectionnee[] | undefined,
   setDataPersonnesSelectionnees?: React.Dispatch<React.SetStateAction<IDataTableauPersonneSelectionnee[] | undefined>>
-) {
+) => {
   if (setDataPersonnesSelectionnees) {
     setDataPersonnesSelectionnees(
       [
@@ -198,15 +198,15 @@ function ajouterPersonne(
       ].sort(triDataTableauPersonneSelectionneeSurNomPrenom)
     );
   }
-}
+};
 
-function ajouterActeInscription(
+const ajouterActeInscription = (
   cle: string,
   ligneTableau: IDataTableauRMCPersonne,
   dataActesInscriptionsSelectionnes: IDataTableauActeInscriptionSelectionne[] | undefined,
   setDataActesInscriptionsSelectionnes: React.Dispatch<React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>>,
   resultatRMCPersonne: IRMCPersonneResultat[]
-) {
+) => {
   const typePJ: ITypePieceJustificative | null = TypePieceJustificative.depuisId(cle);
   setDataActesInscriptionsSelectionnes([
     ...(dataActesInscriptionsSelectionnes || []),
@@ -215,4 +215,4 @@ function ajouterActeInscription(
       typePJ: typePJ?.libelle ?? ""
     }
   ]);
-}
+};

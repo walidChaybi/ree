@@ -36,7 +36,7 @@ export interface IPhrasesJasperCertificatSituation {
   phrasesPiecesJointes?: string;
 }
 
-export function useGenerationCertificatSituationHook(params?: IGenerationCertificatSituationParams | null) {
+export const useGenerationCertificatSituationHook = (params?: IGenerationCertificatSituationParams | null) => {
   const [resultGenerationCertificatSituation, setResultGenerationCertificatSituation] = useState<IResultGenerationUnDocument>();
 
   const [certificatSituationComposition, setCertificatSituationComposition] = useState<ICertificatSituationComposition>();
@@ -111,16 +111,16 @@ export function useGenerationCertificatSituationHook(params?: IGenerationCertifi
   }, [uuidDocumentReponse]);
 
   return resultGenerationCertificatSituation;
-}
+};
 
-function construitCertificatSituation(
+const construitCertificatSituation = (
   phrasesLiees: string | undefined,
   requete: IRequeteTableauDelivrance,
   setCertificatSituationComposition: any,
   setResultGenerationCertificatSituation: any,
   phrasesPiecesJointes: string | undefined,
   decrets: IDecret[]
-) {
+) => {
   if (phrasesLiees && requete?.document) {
     const titre = getTitre(requete.document ? requete.document : "");
     const decretsCertificat = getDecrets(requete.document, decrets);
@@ -130,26 +130,26 @@ function construitCertificatSituation(
   } else {
     setResultGenerationCertificatSituation(RESULTAT_VIDE);
   }
-}
+};
 
-function getTitre(idDocumentDemande: string): string {
+const getTitre = (idDocumentDemande: string): string => {
   return specificationTitre.getTitre(idDocumentDemande);
-}
+};
 
-function getDecrets(idDocumentDemande: string, decrets: IDecret[]): IDecret[] {
+const getDecrets = (idDocumentDemande: string, decrets: IDecret[]): IDecret[] => {
   return specificationDecret.getDecret(idDocumentDemande, decrets);
-}
+};
 
-function creerCertificatSituationComposition(
+const creerCertificatSituationComposition = (
   titre: string,
   decrets: IDecret[],
   phrasesLiees: string,
   phrasesPiecesJointes?: string,
   requete?: IRequeteTableauDelivrance
-): ICertificatSituationComposition {
+): ICertificatSituationComposition => {
   let titulaire: ITitulaireRequeteTableau | undefined;
   if (requete?.titulaires) {
     titulaire = requete.titulaires[0];
   }
   return CertificatSituationComposition.creerCertificatSituation(titre, decrets, phrasesLiees, requete, phrasesPiecesJointes, titulaire);
-}
+};

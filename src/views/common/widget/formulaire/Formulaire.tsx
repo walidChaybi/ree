@@ -28,14 +28,14 @@ export const Formulaire = <T,>({
     <div className={className ? `${className} Formulaire` : "Formulaire"}>{titre ? <Fieldset titre={titre}>{form}</Fieldset> : form}</div>
   );
 };
-function getForm<T>(
+const getForm = <T extends unknown>(
   onSubmit: (values: T & FormikValues, formikHelpers?: FormikHelpers<T & FormikValues>) => void,
   formDefaultValues: any,
   formValidationSchema: any,
   children: any,
   className?: string,
   refFormulaire?: React.MutableRefObject<FormikProps<T & FormikValues> | null>
-) {
+) => {
   return (
     <Formik
       onSubmit={onSubmit}
@@ -51,4 +51,4 @@ function getForm<T>(
       <Form className={className}>{children}</Form>
     </Formik>
   );
-}
+};

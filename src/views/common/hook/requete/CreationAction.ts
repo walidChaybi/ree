@@ -12,7 +12,7 @@ export interface CreationActionHookParams {
   callback?: () => void;
 }
 
-export function useCreationAction(params: CreationActionHookParams | undefined) {
+export const useCreationAction = (params: CreationActionHookParams | undefined) => {
   const navigation = useNavigation();
   const [creationActionParams, setCreationActionParams] = useState<ICreationActionParams | undefined>();
 
@@ -38,4 +38,4 @@ export function useCreationAction(params: CreationActionHookParams | undefined) 
       }
     }
   }, [idAction, params, navigation]);
-}
+};

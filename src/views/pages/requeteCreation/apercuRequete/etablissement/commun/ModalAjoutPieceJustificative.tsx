@@ -40,12 +40,12 @@ export const ModaleAjoutPieceJustificativeRequeteCreation: React.FC<ModalAjoutPi
 
   useAjoutPieceJustificativeToRequete(paramsApi);
 
-  function onAjoutPieceJustificative(values: ModalPieceJustificativeProps) {
+  const onAjoutPieceJustificative = (values: ModalPieceJustificativeProps) => {
     setParamsApi({
       categoriePJ: values.categoriePJ,
       file: values.file
     });
-  }
+  };
 
   const formik = useFormik({ initialValues: {}, onSubmit: () => {} });
 

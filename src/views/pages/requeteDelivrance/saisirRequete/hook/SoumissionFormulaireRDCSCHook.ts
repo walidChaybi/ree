@@ -106,7 +106,7 @@ export const useSoumissionFormulaireRDCSCHook = (
   };
 };
 
-function champManquantTitulaire(values: SaisieRequeteRDCSC, titulaires: IdentiteSubFormProps[]) {
+const champManquantTitulaire = (values: SaisieRequeteRDCSC, titulaires: IdentiteSubFormProps[]) => {
   const villeNaissance = values.titulaires.titulaire1.naissance.villeEvenement;
   const paysNaissance = values.titulaires.titulaire1.naissance.paysEvenement;
   const anneeNaissance = values.titulaires.titulaire1.naissance.dateEvenement.annee;
@@ -121,4 +121,4 @@ function champManquantTitulaire(values: SaisieRequeteRDCSC, titulaires: Identite
       titulaires.length === DEUX &&
       (villeNaissance2 === "" || paysNaissance2 === "" || anneeNaissance2 === ""))
   );
-}
+};

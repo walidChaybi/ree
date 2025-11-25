@@ -94,7 +94,7 @@ const getStatutLibellePourRequete = (requete: TRequete, utilisateurs: Utilisateu
   return getStatutLibelle(requete, responsable ?? "");
 };
 
-function getStatutLibelle(requete: TRequete, responsable: string) {
+const getStatutLibelle = (requete: TRequete, responsable: string) => {
   let libelle;
   switch (requete.statutCourant.statut) {
     case StatutRequete.TRAITE_A_DELIVRER_DEMAT:
@@ -123,8 +123,8 @@ function getStatutLibelle(requete: TRequete, responsable: string) {
   }
 
   return libelle || getStatutLibelleSuite(requete, responsable);
-}
-function getStatutLibelleSuite(requete: TRequete, responsable: string) {
+};
+const getStatutLibelleSuite = (requete: TRequete, responsable: string) => {
   let libelle;
   switch (requete.statutCourant.statut) {
     case StatutRequete.TRANSFEREE:
@@ -164,7 +164,7 @@ function getStatutLibelleSuite(requete: TRequete, responsable: string) {
   }
 
   return libelle;
-}
+};
 
 const getClassNames = (statut: StatutRequete): string => {
   const result = ["Entete"];

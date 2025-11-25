@@ -24,9 +24,9 @@ export const BandeauAlertesActe: React.FC<BandeauAlertesActeProps> = ({
   afficherBouton,
   disableScrollLock
 }) => {
-  function afficherBoutonSelonFeatureFlag() {
+  const afficherBoutonSelonFeatureFlag = () => {
     return afficherBouton && gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES);
-  }
+  };
 
   return (
     <div className="BandeauAlertesActe">

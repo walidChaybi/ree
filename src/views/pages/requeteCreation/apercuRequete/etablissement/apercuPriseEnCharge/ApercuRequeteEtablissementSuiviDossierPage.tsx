@@ -46,12 +46,12 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<ApercuRequeteE
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
 
-  function rechargerRequete() {
+  const rechargerRequete = () => {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
       estConsultationHistoriqueAction: true
     });
-  }
+  };
 
   const {
     dataActesInscriptionsSelectionnes,
@@ -67,9 +67,9 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<ApercuRequeteE
     }
   }, [detailRequeteState]);
 
-  function onRenommePieceJustificativeSuiviDossier(idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) {
+  const onRenommePieceJustificativeSuiviDossier = (idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) => {
     onRenommePieceJustificativeEtablissement(requete, setRequete, idPieceJustificative, nouveauLibelle, idDocumentPJ);
-  }
+  };
 
   const liste: ItemListe[] = [
     {

@@ -7,16 +7,16 @@ import { SectionPartProps } from "@widget/section/SectionPart";
 import { LienFiche } from "../../../LienFiche";
 import { InscriptionsLiees } from "./InscriptionsLiees";
 
-export function getInscriptionRepertoireCivil(rcrca: FicheRcRca): SectionPartProps {
+export const getInscriptionRepertoireCivil = (rcrca: FicheRcRca): SectionPartProps => {
   return {
     partContent: {
       contents: rcrca.categorie === "RCA" ? getInteresseRca(rcrca) : getInteresseRc(rcrca),
       title: rcrca.categorie === "RCA" ? "Inscription au répertoire civil annexe" : "Inscription au répertoire civil"
     }
   };
-}
+};
 
-function getInteresseRc(rcrca: FicheRcRca): SectionContentProps[] {
+const getInteresseRc = (rcrca: FicheRcRca): SectionContentProps[] => {
   return [
     {
       libelle: "Nature",
@@ -49,9 +49,9 @@ function getInteresseRc(rcrca: FicheRcRca): SectionContentProps[] {
       value: rcrca.duree?.dateFinDeMesure ? DateUtils.getDateString(DateUtils.getDateFromTimestamp(rcrca.duree.dateFinDeMesure)) : ""
     }
   ];
-}
+};
 
-function getInteresseRca(rcrca: FicheRcRca): SectionContentProps[] {
+const getInteresseRca = (rcrca: FicheRcRca): SectionContentProps[] => {
   return [
     {
       libelle: "Nature",
@@ -67,9 +67,9 @@ function getInteresseRca(rcrca: FicheRcRca): SectionContentProps[] {
       value: rcrca.dateInscription ? DateUtils.getDateString(rcrca.dateInscription) : ""
     }
   ];
-}
+};
 
-function getTypeInscription(rcrca: FicheRcRca): JSX.Element {
+const getTypeInscription = (rcrca: FicheRcRca): JSX.Element => {
   return (
     <span>
       {rcrca.typeInscription}
@@ -88,4 +88,4 @@ function getTypeInscription(rcrca: FicheRcRca): JSX.Element {
       ))}
     </span>
   );
-}
+};

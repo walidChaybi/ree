@@ -5,29 +5,14 @@ import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn
 class HeaderTableauSuiviDossier extends EnumWithComplete {
   public static readonly QUALITE = new HeaderTableauRMCPersonne("qualite", "");
   public static readonly NOM = new HeaderTableauRMCPersonne("nom", "Nom");
-  public static readonly PRENOMS = new HeaderTableauRMCPersonne(
-    "prenoms",
-    "Prénoms"
-  );
-  public static readonly DECRET = new HeaderTableauRMCPersonne(
-    "decret",
-    "Décret"
-  );
-  public static readonly EVENEMENT = new HeaderTableauRMCPersonne(
-    "evenement",
-    "Evénement"
-  );
-  public static readonly DATE_EVENEMENT = new HeaderTableauRMCPersonne(
-    "dateEvenement",
-    "Date évenement"
-  );
-  public static readonly AVANCEMENT = new HeaderTableauRMCPersonne(
-    "avancement",
-    "Avancement"
-  );
+  public static readonly PRENOMS = new HeaderTableauRMCPersonne("prenoms", "Prénoms");
+  public static readonly DECRET = new HeaderTableauRMCPersonne("decret", "Décret");
+  public static readonly EVENEMENT = new HeaderTableauRMCPersonne("evenement", "Evénement");
+  public static readonly DATE_EVENEMENT = new HeaderTableauRMCPersonne("dateEvenement", "Date évenement");
+  public static readonly AVANCEMENT = new HeaderTableauRMCPersonne("avancement", "Avancement");
 }
 
-export function getColonnesTableauSuiviDossier(): TableauTypeColumn[] {
+export const getColonnesTableauSuiviDossier = (): TableauTypeColumn[] => {
   return [
     new TableauTypeColumn({
       keys: [HeaderTableauSuiviDossier.QUALITE.nom],
@@ -58,4 +43,4 @@ export function getColonnesTableauSuiviDossier(): TableauTypeColumn[] {
       title: HeaderTableauSuiviDossier.AVANCEMENT.libelle
     })
   ];
-}
+};

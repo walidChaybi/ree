@@ -1,6 +1,5 @@
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { getLibelle } from "@util/Utils";
-import { NOM_NAISSANCE, NOM_USAGE } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 import { IGNORER_TABULATION, NB_CARACT_MAX_SAISIE, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
@@ -8,6 +7,7 @@ import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { CaracteresAutorises } from "../../../../../ressources/Regex";
+import { NOM_NAISSANCE, NOM_USAGE } from "../ConstantesNomsForm";
 import "./scss/NomsForm.scss";
 
 // Valeurs par défaut des champs
@@ -45,7 +45,7 @@ const NomsForm: React.FC<NomsFormProps> = props => {
     }
   }, [props.requete, props.titulaire]);
 
-  function getBoutonAjouter(): JSX.Element {
+  const getBoutonAjouter = (): JSX.Element => {
     return (
       <button
         type="button"
@@ -56,9 +56,9 @@ const NomsForm: React.FC<NomsFormProps> = props => {
         {getLibelle("Ajouter un nom d'usage")}
       </button>
     );
-  }
+  };
 
-  function getBoutonSupprimer(): JSX.Element {
+  const getBoutonSupprimer = (): JSX.Element => {
     return (
       <button
         tabIndex={IGNORER_TABULATION}
@@ -70,7 +70,7 @@ const NomsForm: React.FC<NomsFormProps> = props => {
         {getLibelle("Supprimer le nom d'usage")}
       </button>
     );
-  }
+  };
 
   return (
     <>

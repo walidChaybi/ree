@@ -35,16 +35,7 @@ export const SeulementNavigateur: React.FC<React.PropsWithChildren<SeulementNavi
   const navigateurCourant = DetectionNavigateur.getNomNavigateur();
   const estNavigateurAutorise = navigateurs.find(navigateur => navigateur === navigateurCourant);
 
-  return estNavigateurAutorise ? (
-    <>{children}</>
-  ) : (
-    <>
-      <p>{getMessageNavigateursSupportes(navigateurs)}</p>
-      <span>{"Veuillez lancez l'applicatoin RECE via le menu Windows"}</span>
-    </>
-  );
-
-  function getMessageNavigateursSupportes(navigateursNames: Navigateur[]) {
+  const getMessageNavigateursSupportes = (navigateursNames: Navigateur[]) => {
     let message = "Navigateur non autorisé ";
     if (navigateursNames.length > 1) {
       message += `(seuls ${navigateursNames.join(", ")} sont supportés)`;
@@ -53,5 +44,14 @@ export const SeulementNavigateur: React.FC<React.PropsWithChildren<SeulementNavi
     }
 
     return message;
-  }
+  };
+
+  return estNavigateurAutorise ? (
+    <>{children}</>
+  ) : (
+    <>
+      <p>{getMessageNavigateursSupportes(navigateurs)}</p>
+      <span>{"Veuillez lancez l'applicatoin RECE via le menu Windows"}</span>
+    </>
+  );
 };

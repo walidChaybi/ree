@@ -10,11 +10,11 @@ export interface IActeApiHookParams {
   remplaceIdentiteTitulaireParIdentiteTitulaireAM?: boolean;
 }
 
-export function useInformationsActeApiHook({
+export const useInformationsActeApiHook = ({
   idActe,
   recupereImagesEtTexte,
   remplaceIdentiteTitulaireParIdentiteTitulaireAM
-}: IActeApiHookParams): FicheActe | null {
+}: IActeApiHookParams): FicheActe | null => {
   const [acte, setActe] = useState<FicheActe | null>(null);
 
   const { appelApi: recupererActe } = useFetchApi(CONFIG_GET_RESUME_ACTE);
@@ -36,4 +36,4 @@ export function useInformationsActeApiHook({
   }, [idActe, recupereImagesEtTexte, remplaceIdentiteTitulaireParIdentiteTitulaireAM]);
 
   return acte;
-}
+};

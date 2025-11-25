@@ -54,18 +54,18 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
     rechargerRequete();
   }, [idRequeteParam]);
 
-  function rechargerRequete() {
+  const rechargerRequete = () => {
     if (idRequeteParam) {
       setDetailRequeteParams({
         idRequete: idRequeteParam,
         estConsultationHistoriqueAction: true
       });
     }
-  }
+  };
 
-  function onRenommePieceJustificativeActeRegistre(idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) {
+  const onRenommePieceJustificativeActeRegistre = (idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) => {
     onRenommePieceJustificativeEtablissement(requete, setRequete, idPieceJustificative, nouveauLibelle, idDocumentPJ);
-  }
+  };
 
   const listeOngletsGauche: ItemListe[] = [
     {

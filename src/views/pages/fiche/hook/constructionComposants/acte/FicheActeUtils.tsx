@@ -11,7 +11,7 @@ import { getFichesPersonneActe } from "../personne/FichePersonne";
 import { getEvenement } from "./EvenementActeUtils";
 import { getTitulairesAM } from "./TitulairesActeUtils";
 
-export function getPanelsActe(acte: FicheActe, utilisateurConnecte: UtilisateurConnecte): IAccordionReceSection {
+export const getPanelsActe = (acte: FicheActe, utilisateurConnecte: UtilisateurConnecte): IAccordionReceSection => {
   const idTypeRegistre = acte?.registre?.type?.id;
   const paramsAffichage = getParamsAffichageFicheActe(idTypeRegistre, acte.visibiliteArchiviste, utilisateurConnecte);
   const fichesPersonne: SectionPanelProps[] = getFichesPersonneActe(acte?.personnes, paramsAffichage);
@@ -37,9 +37,9 @@ export function getPanelsActe(acte: FicheActe, utilisateurConnecte: UtilisateurC
     ],
     panelParDefaut: paramsAffichage.visuActe === "disabled" ? 1 : 0
   };
-}
+};
 
-function getPanelAreasActeImage(acte: FicheActe, params: IParamsAffichage): SectionPanelAreaProps[] {
+const getPanelAreasActeImage = (acte: FicheActe, params: IParamsAffichage): SectionPanelAreaProps[] => {
   if (params.visuActe === "classique" || params.visuActe === "filigrane") {
     return [
       {
@@ -58,7 +58,7 @@ function getPanelAreasActeImage(acte: FicheActe, params: IParamsAffichage): Sect
   } else {
     return [{ value: undefined }];
   }
-}
+};
 
 export interface IParamsAffichage {
   visuBoutonAlertes: boolean;
@@ -66,11 +66,11 @@ export interface IParamsAffichage {
   personnes: "visible" | "disabled" | "none";
 }
 
-export function getParamsAffichageFicheActe(
+export const getParamsAffichageFicheActe = (
   idTypeRegistre: string | undefined,
   typeVisibiliteArchiviste: keyof typeof ETypeVisibiliteArchiviste,
   utilisateurConnecte: UtilisateurConnecte
-): IParamsAffichage {
+): IParamsAffichage => {
   const params: IParamsAffichage = {
     visuBoutonAlertes: false,
     visuActe: "disabled",
@@ -107,4 +107,4 @@ export function getParamsAffichageFicheActe(
   }
 
   return params;
-}
+};

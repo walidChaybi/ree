@@ -68,7 +68,7 @@ export const useDetailRequeteApiHook = ({ idRequete, estConsultationHistoriqueAc
   };
 };
 
-export function useAvecRejeuDetailRequeteApiHook(params?: IDetailRequeteParams) {
+export const useAvecRejeuDetailRequeteApiHook = (params?: IDetailRequeteParams) => {
   const [detailRequeteState, setDetailRequeteState] = useState<TRequete | undefined>();
 
   const { utilisateurs } = useContext(RECEContextData);
@@ -80,14 +80,14 @@ export function useAvecRejeuDetailRequeteApiHook(params?: IDetailRequeteParams) 
   return {
     detailRequeteState
   };
-}
+};
 
-async function fetchDetailRequete(
+const fetchDetailRequete = async (
   setDetailRequeteState: any,
   estConsultationHistoriqueAction = false,
   utilisateurs?: Utilisateur[],
   idRequete?: string
-) {
+) => {
   try {
     if (idRequete) {
       const result = await getDetailRequete(idRequete, estConsultationHistoriqueAction);
@@ -116,9 +116,9 @@ async function fetchDetailRequete(
       fermetureAuto: true
     });
   }
-}
+};
 
-export function mappingRequeteDelivrance(data: any, utilisateurs?: Utilisateur[]): IRequeteDelivrance {
+export const mappingRequeteDelivrance = (data: any, utilisateurs?: Utilisateur[]): IRequeteDelivrance => {
   return {
     // Partie Requête
     id: data.id,
@@ -151,9 +151,9 @@ export function mappingRequeteDelivrance(data: any, utilisateurs?: Utilisateur[]
     // Documents réponse avec contenu vide
     documentsReponses: data?.documentsReponses
   };
-}
+};
 
-function mapUnePieceJustificative(piece?: any): IPieceJustificative {
+const mapUnePieceJustificative = (piece?: any): IPieceJustificative => {
   return {
     id: piece.id || undefined,
     nom: piece.nom || undefined,
@@ -165,13 +165,13 @@ function mapUnePieceJustificative(piece?: any): IPieceJustificative {
     contenu: piece.contenu || undefined,
     typePieceJustificative: TypePieceJustificative?.depuisId(piece.typePieceJustificative) // pj.typePieceJustificative est un UUID car il vient du back,
   };
-}
+};
 
-function mapPiecesJustificatives(pieces?: any): IPieceJustificative[] {
+const mapPiecesJustificatives = (pieces?: any): IPieceJustificative[] => {
   return pieces?.map((pj: any) => mapUnePieceJustificative(pj));
-}
+};
 
-function getObservations(observations: any, utilisateurs?: Utilisateur[]): IObservation[] {
+const getObservations = (observations: any, utilisateurs?: Utilisateur[]): IObservation[] => {
   const observationsRequete: IObservation[] = [];
   observations.forEach((a: any) => {
     const observation = a as IObservation;
@@ -180,9 +180,9 @@ function getObservations(observations: any, utilisateurs?: Utilisateur[]): IObse
     observationsRequete.push(observation);
   });
   return observationsRequete;
-}
+};
 
-function getTitulaires(titulaires: any): ITitulaireRequete[] {
+const getTitulaires = (titulaires: any): ITitulaireRequete[] => {
   const titulairesRequetes: ITitulaireRequete[] = [];
   titulaires.forEach((t: any) => {
     const titulaire = t as ITitulaireRequete;
@@ -191,16 +191,16 @@ function getTitulaires(titulaires: any): ITitulaireRequete[] {
     titulairesRequetes.push(titulaire);
   });
   return titulairesRequetes;
-}
-function getStatutCourant(statut: any): IStatutCourant {
+};
+const getStatutCourant = (statut: any): IStatutCourant => {
   return {
     statut: StatutRequete.getEnumFor(statut.statutRequete),
     dateEffet: statut.dateEffet,
     raisonStatut: statut.raisonStatut
   };
-}
+};
 
-function getMandant(mandant: any): IMandant {
+const getMandant = (mandant: any): IMandant => {
   return {
     id: mandant.id,
     type: mandant.typeMandant,
@@ -210,18 +210,18 @@ function getMandant(mandant: any): IMandant {
     typeLien: mandant.lienMandant,
     natureLien: mandant.natureLien
   };
-}
+};
 
-function getProvenance(data: any): IProvenanceRequete {
+const getProvenance = (data: any): IProvenanceRequete => {
   return {
     provenance: Provenance.getEnumFor(data.provenance),
     provenancePlanete: data.provenancePlanete,
     provenanceRece: data.provenanceRece,
     provenanceServicePublic: data.provenanceServicePublic
   };
-}
+};
 
-function getEvenement(evenement: any): IEvenementRequete {
+const getEvenement = (evenement: any): IEvenementRequete => {
   return {
     id: evenement.id,
     natureActe: NatureActeRequete.getEnumFor(evenement.natureActe),
@@ -231,9 +231,9 @@ function getEvenement(evenement: any): IEvenementRequete {
     ville: evenement.ville,
     pays: evenement.pays
   };
-}
+};
 
-function mappingRequete(data: any, utilisateurs?: Utilisateur[]) {
+const mappingRequete = (data: any, utilisateurs?: Utilisateur[]) => {
   return {
     // Partie Requête
     id: data.id,
@@ -250,9 +250,9 @@ function mappingRequete(data: any, utilisateurs?: Utilisateur[]) {
     actions: ActionRequete.depuisDtos(data.actions),
     numeroRequeteOrigine: data.numeroRequeteOrigine
   };
-}
+};
 
-function mappingRequeteInformation(data: any, utilisateurs?: Utilisateur[]): IRequeteInformation {
+const mappingRequeteInformation = (data: any, utilisateurs?: Utilisateur[]): IRequeteInformation => {
   return {
     ...mappingRequete(data, utilisateurs),
     //Partie Requête Delivrance
@@ -271,9 +271,9 @@ function mappingRequeteInformation(data: any, utilisateurs?: Utilisateur[]): IRe
     piecesComplementInformation: data.piecesComplementInformation,
     besoinUsager: BesoinUsager.getEnumFor(data.besoinUsager)
   };
-}
+};
 
-function mapUnePieceJustificativeCreation(piece?: any): IPieceJustificativeCreation {
+const mapUnePieceJustificativeCreation = (piece?: any): IPieceJustificativeCreation => {
   return {
     ...mapUnePieceJustificative(piece),
     idFichierNatali: piece.idFichierNatali || undefined,
@@ -288,17 +288,17 @@ function mapUnePieceJustificativeCreation(piece?: any): IPieceJustificativeCreat
     documentPj: mapUnDocumentPJ(piece.documentPj || undefined),
     nouveauLibelleFichierPJ: piece.nouveauLibelleFichierPJ || undefined
   };
-}
+};
 
-function mapPiecesJustificativesCreation(pieces?: any): IPieceJustificativeCreation[] {
+const mapPiecesJustificativesCreation = (pieces?: any): IPieceJustificativeCreation[] => {
   const piecesJustificatives: IPieceJustificativeCreation[] = pieces ? pieces?.map((pj: any) => mapUnePieceJustificativeCreation(pj)) : [];
 
   PieceJustificativeCreation.setOrdre(piecesJustificatives);
 
   return PieceJustificativeCreation.tri(piecesJustificatives);
-}
+};
 
-function mapEchangesRetourSDANF(echangesServeur?: any): IEchange[] {
+const mapEchangesRetourSDANF = (echangesServeur?: any): IEchange[] => {
   const echanges: IEchange[] = [];
 
   echangesServeur?.forEach((echange: any) => {
@@ -306,31 +306,31 @@ function mapEchangesRetourSDANF(echangesServeur?: any): IEchange[] {
   });
 
   return echanges;
-}
+};
 
-export function mapEchangeRetourSDANF(echangeServeur?: any): IEchange {
+export const mapEchangeRetourSDANF = (echangeServeur?: any): IEchange => {
   const { dateMessage, ...reste } = echangeServeur;
 
   return {
     date: DateUtils.getFormatDateFromTimestamp(dateMessage),
     ...reste
   };
-}
+};
 
-function mapUnDocumentPJ(document?: any): IDocumentPJ | undefined {
+const mapUnDocumentPJ = (document?: any): IDocumentPJ | undefined => {
   return document
     ? {
         ...document,
         categorie: CategorieDocument.creationCategorieDocument(document.categorie, document.libelle)
       }
     : undefined;
-}
+};
 
-function mapDocumentPJ(documents?: any): IDocumentPJ[] {
+const mapDocumentPJ = (documents?: any): IDocumentPJ[] => {
   return DocumentPJ.trie(documents?.map((document: any): IDocumentPJ => mapUnDocumentPJ(document) as IDocumentPJ));
-}
+};
 
-export function mappingRequeteCreation(data: any, utilisateurs?: Utilisateur[]): IRequeteCreation {
+export const mappingRequeteCreation = (data: any, utilisateurs?: Utilisateur[]): IRequeteCreation => {
   const requete = mappingRequete(data, utilisateurs);
 
   const natureActeTranscrit = data.natureActeTranscrit;
@@ -361,9 +361,9 @@ export function mappingRequeteCreation(data: any, utilisateurs?: Utilisateur[]):
     personnesSauvegardees: mapPersonnesSauvegardees(data.personnesSauvegardees || undefined, estRequeteMariage),
     actions: ActionRequete.depuisDtos(data.actions)
   };
-}
+};
 
-function mapTitulairesCreation(titulaires: any[]): ITitulaireRequeteCreation[] {
+const mapTitulairesCreation = (titulaires: any[]): ITitulaireRequeteCreation[] => {
   return titulaires.map(titulaire => ({
     ...titulaire,
     qualite: QualiteFamille.getEnumFor(titulaire.qualite),
@@ -374,9 +374,9 @@ function mapTitulairesCreation(titulaires: any[]): ITitulaireRequeteCreation[] {
     },
     suiviDossiers: mapSuiviDossiers(titulaire.suiviDossiers || undefined)
   }));
-}
+};
 
-function mapPersonnesSauvegardees(data?: any[], estRequeteMariage = false): IPersonneSauvegardee[] {
+const mapPersonnesSauvegardees = (data?: any[], estRequeteMariage = false): IPersonneSauvegardee[] => {
   const personnesSauvegardees: IPersonneSauvegardee[] = [];
   data?.forEach(dataCourant => {
     const role = RolePersonneSauvegardee.getEnumForEnFonctionNatureActeRequete(dataCourant.role, estRequeteMariage);
@@ -388,9 +388,9 @@ function mapPersonnesSauvegardees(data?: any[], estRequeteMariage = false): IPer
     }
   });
   return personnesSauvegardees;
-}
+};
 
-function mapSuiviDossiers(suiviDossiers?: any[]): ISuiviDossier[] | undefined {
+const mapSuiviDossiers = (suiviDossiers?: any[]): ISuiviDossier[] | undefined => {
   return suiviDossiers?.map(suiviDossier => ({
     idSuiviDossier: suiviDossier.id,
     idActe: suiviDossier.idActe || undefined,
@@ -403,4 +403,4 @@ function mapSuiviDossiers(suiviDossiers?: any[]): ISuiviDossier[] | undefined {
     avancement: AvancementProjetActe.getEnumFor(suiviDossier.avancement || undefined),
     unionActuelle: UnionActuelle.getEnumFor(suiviDossier.unionActuelle || undefined)
   }));
-}
+};

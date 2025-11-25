@@ -14,7 +14,7 @@ export const TableauStatut: React.FC<TableauStatutProps> = ({ statutsFiche }) =>
 };
 
 /** Construction du tableau des pièces jointes */
-function getTableauStatut(statuts: StatutFiche[]): JSX.Element {
+const getTableauStatut = (statuts: StatutFiche[]): JSX.Element => {
   const tableauSimpleProps: TableauSimpleProps = {
     entetes: [
       { className: "EnteteStatut", libelle: "Statut" },
@@ -55,18 +55,18 @@ function getTableauStatut(statuts: StatutFiche[]): JSX.Element {
     }))
   };
   return <TableauSimple {...tableauSimpleProps} />;
-}
+};
 
-function getColonneDateStatut(statut: StatutFiche): string | JSX.Element {
+const getColonneDateStatut = (statut: StatutFiche): string | JSX.Element => {
   return DateUtils.getDateString(DateUtils.getDateFromTimestamp(statut.dateStatut));
-}
+};
 
-function getColonneDateEvenement(statut: StatutFiche): string | JSX.Element {
+const getColonneDateEvenement = (statut: StatutFiche): string | JSX.Element => {
   return statut.statutFicheEvenement ? DateUtils.getDateStringFromDateCompose(statut.statutFicheEvenement.date) : "";
-}
+};
 
-function getColonneLieu(statut: StatutFiche): string | JSX.Element {
+const getColonneLieu = (statut: StatutFiche): string | JSX.Element => {
   return statut.statutFicheEvenement
     ? LieuxUtils.getLieu(statut.statutFicheEvenement.ville, statut.statutFicheEvenement.region, statut.statutFicheEvenement.pays)
     : "";
-}
+};

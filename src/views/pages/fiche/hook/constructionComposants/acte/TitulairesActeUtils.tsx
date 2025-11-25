@@ -4,7 +4,7 @@ import { remplaceSNP, remplaceSPC } from "@util/Utils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
 
-export function getTitulairesAM(acte: FicheActe): SectionPartProps[] {
+export const getTitulairesAM = (acte: FicheActe): SectionPartProps[] => {
   const titulaires = acte.getAnalyseMarginaleLaPlusRecente()?.titulaires ?? [];
 
   return titulaires.map((titulaire, index) => ({
@@ -12,9 +12,9 @@ export function getTitulairesAM(acte: FicheActe): SectionPartProps[] {
       contents: getTitulairesInfo(titulaire, index + 1)
     }
   }));
-}
+};
 
-function getTitulairesInfo(titulaire: TitulaireAnalyseMarginale, index: number): SectionContentProps[] {
+const getTitulairesInfo = (titulaire: TitulaireAnalyseMarginale, index: number): SectionContentProps[] => {
   return [
     {
       libelle: `Nom Titulaire ${index}`,
@@ -45,4 +45,4 @@ function getTitulairesInfo(titulaire: TitulaireAnalyseMarginale, index: number):
       value: <span>{""}</span>
     }
   ];
-}
+};

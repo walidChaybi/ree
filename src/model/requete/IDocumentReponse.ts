@@ -1,4 +1,3 @@
-import { DEUX } from "@util/Utils";
 import { EMimeType } from "../../ressources/EMimeType";
 import { Orientation } from "../composition/enum/Orientation";
 import { Mention } from "../etatcivil/acte/mention/Mention";
@@ -101,39 +100,19 @@ export const DocumentReponse = {
     return resulatDocumentsSansDoublons;
   },
 
-  attribuerOrdreDocuments(documents: IDocumentReponse[], choixDelivrance: ChoixDelivrance) {
-    documents.forEach(doc => {
-      const docDelivrance = DocumentDelivrance.depuisId(doc.typeDocument);
-      if (DocumentDelivrance.estCourrierDAccompagnement(docDelivrance)) {
-        doc.ordre = 0;
-      } else if (
-        docDelivrance === DocumentDelivrance.depuisCode(ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(choixDelivrance))
-      ) {
-        doc.ordre = 1;
-      } else {
-        doc.ordre = DEUX;
-      }
-    });
-    return documents;
-  },
-
   estMentionRetiree(document: IDocumentReponse, mention: Mention): boolean {
     return document.mentionsRetirees?.find(mentionRetiree => mentionRetiree.idMention === mention.id) != null;
-  },
-
-  getIdsMentionsRetiree(document: IDocumentReponse): string[] {
-    return document.mentionsRetirees ? document.mentionsRetirees.map(mentionRetiree => mentionRetiree.idMention) : [];
   }
 };
 
-function documentSansCtvExisteDejaAvecCtv(documentSansCtv: IDocumentReponse, documentsAvecCtvs: IDocumentReponse[]): boolean {
+const documentSansCtvExisteDejaAvecCtv = (documentSansCtv: IDocumentReponse, documentsAvecCtvs: IDocumentReponse[]): boolean => {
   return documentsAvecCtvs.find(documentAvecCtv => documentSansCtv.typeDocument === documentAvecCtv.typeDocument) !== undefined;
-}
+};
 
-export function documentDejaCree(documents: IDocumentReponse[], choixDelivrance?: ChoixDelivrance) {
+export const documentDejaCree = (documents: IDocumentReponse[], choixDelivrance?: ChoixDelivrance) => {
   return documents.some(
     el =>
       DocumentDelivrance.depuisCode(ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(choixDelivrance)) ===
       DocumentDelivrance.depuisId(el.typeDocument)
   );
-}
+};

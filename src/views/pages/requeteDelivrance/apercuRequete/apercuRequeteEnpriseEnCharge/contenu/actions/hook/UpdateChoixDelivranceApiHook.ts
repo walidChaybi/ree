@@ -13,7 +13,7 @@ interface IUpdateChoixDelivranceResultat {
   idRequete?: string;
 }
 
-export function useUpdateChoixDelivrance(params?: UpdateChoixDelivranceProps): IUpdateChoixDelivranceResultat | undefined {
+export const useUpdateChoixDelivrance = (params?: UpdateChoixDelivranceProps): IUpdateChoixDelivranceResultat | undefined => {
   const [updateChoixDelivranceResultat, setUpdateChoixDelivranceResultat] = useState<IUpdateChoixDelivranceResultat>();
 
   useEffect(() => {
@@ -35,4 +35,4 @@ export function useUpdateChoixDelivrance(params?: UpdateChoixDelivranceProps): I
     }
   }, [params]);
   return updateChoixDelivranceResultat;
-}
+};

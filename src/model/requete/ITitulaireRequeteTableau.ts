@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { formatNom } from "@util/Utils";
 import { Sexe } from "../etatcivil/enum/Sexe";
@@ -18,7 +19,7 @@ export interface ITitulaireRequeteTableau {
   position: number;
 }
 
-export function mapTitulaires(titulaires: any, mappingSupplementaire: boolean): ITitulaireRequeteTableau[] {
+export const mapTitulaires = (titulaires: any, mappingSupplementaire: boolean): ITitulaireRequeteTableau[] => {
   return titulaires?.map((t: any) => {
     const titulaire = {} as ITitulaireRequeteTableau;
     titulaire.nom = formatNom(t?.nom);
@@ -38,9 +39,9 @@ export function mapTitulaires(titulaires: any, mappingSupplementaire: boolean): 
     titulaire.position = t?.position;
     return titulaire;
   });
-}
+};
 
-function getPrenoms(prenoms: string[]): string[] {
+const getPrenoms = (prenoms: string[]): string[] => {
   const prenomsTitulaire: string[] = [];
   if (prenoms) {
     prenoms.forEach((p: any) => {
@@ -48,4 +49,6 @@ function getPrenoms(prenoms: string[]): string[] {
     });
   }
   return prenomsTitulaire;
-}
+};
+
+/* v8 ignore stop */

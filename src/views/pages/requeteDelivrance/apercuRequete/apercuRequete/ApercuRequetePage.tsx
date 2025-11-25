@@ -95,6 +95,6 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({ idRequeteA
   );
 };
 
-function afficherBoutonFinConsultation(statut: StatutRequete, idUtilisateur: string, utilisateurConnecte: UtilisateurConnecte) {
+const afficherBoutonFinConsultation = (statut: StatutRequete, idUtilisateur: string, utilisateurConnecte: UtilisateurConnecte) => {
   return statut === StatutRequete.TRAITE_REPONDU && utilisateurConnecte.id === idUtilisateur;
-}
+};

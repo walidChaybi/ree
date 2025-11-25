@@ -7,7 +7,7 @@ interface TabPanelProps {
   value: any;
 }
 
-export function TabPanel(props: TabPanelProps) {
+export const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
   const paddingBox = 3;
 
@@ -23,4 +23,4 @@ export function TabPanel(props: TabPanelProps) {
       {value === index && <Box p={paddingBox}>{children}</Box>}
     </div>
   );
-}
+};

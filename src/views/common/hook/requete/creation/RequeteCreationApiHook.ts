@@ -13,18 +13,18 @@ import { useContext, useEffect, useState } from "react";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
-export function useRequeteCreationApiHook(
+export const useRequeteCreationApiHook = (
   typeRequete: TypeAppelRequete,
   parametresLienRequete?: IQueryParametersPourRequetes,
   setParametresLienRequete?: React.Dispatch<React.SetStateAction<IQueryParametersPourRequetes | undefined>>
-) {
+) => {
   const { utilisateurs, services } = useContext(RECEContextData);
   const [dataState, setDataState] = useState<IRequeteTableauCreation[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
   const [filtresReq, setFiltresReq] = useState<IFiltresServiceRequeteCreation>({} as IFiltresServiceRequeteCreation);
 
   useEffect(() => {
-    async function fetchMesRequetes() {
+    const fetchMesRequetes = async () => {
       try {
         if (parametresLienRequete) {
           const listeStatuts = parametresLienRequete.statuts?.join(",");
@@ -41,11 +41,11 @@ export function useRequeteCreationApiHook(
           erreurs: estTableauErreurApi(erreurs) ? erreurs : []
         });
       }
-    }
+    };
     fetchMesRequetes();
   }, [parametresLienRequete, typeRequete, filtresReq]);
 
-  function onSubmit(values: IFiltreServiceRequeteCreationFormValues) {
+  const onSubmit = (values: IFiltreServiceRequeteCreationFormValues) => {
     setFiltresReq({ ...values });
     if (setParametresLienRequete && parametresLienRequete) {
       setParametresLienRequete({
@@ -53,22 +53,22 @@ export function useRequeteCreationApiHook(
         range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
       });
     }
-  }
+  };
 
   return {
     dataState,
     paramsTableau,
     onSubmit
   };
-}
+};
 
-function mappingRequetesTableauCreation(
+const mappingRequetesTableauCreation = (
   resultatsRecherche: any,
   mappingSupplementaire: boolean,
   utilisateurs: Utilisateur[],
   services: IService[]
-): IRequeteTableauCreation[] {
+): IRequeteTableauCreation[] => {
   return resultatsRecherche?.map((requete: any) => {
     return mappingUneRequeteTableauCreation(requete, mappingSupplementaire, utilisateurs, services);
   });
-}
+};

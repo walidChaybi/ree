@@ -12,16 +12,16 @@ interface AccordionTranscriptionRequerantProps {
 }
 
 export const AccordionTranscriptionRequerant: React.FC<AccordionTranscriptionRequerantProps> = props => {
-  function formatCoordonneesRequerant(requerant?: IRequerant): string | undefined {
+  const formatCoordonneesRequerant = (requerant?: IRequerant): string | undefined => {
     let identiteFormate = "";
     if (requerant) {
       identiteFormate += Requerant.getNomPrenom(requerant);
       identiteFormate += formatAdresseRequerant(requerant.adresse);
     }
     return identiteFormate;
-  }
+  };
 
-  function formatAdresseRequerant(adresseRequerant?: IAdresseRequerant): string | undefined {
+  const formatAdresseRequerant = (adresseRequerant?: IAdresseRequerant): string | undefined => {
     let lignesFormates = "";
 
     if (adresseRequerant?.ligne2) {
@@ -53,7 +53,7 @@ export const AccordionTranscriptionRequerant: React.FC<AccordionTranscriptionReq
     }
 
     return lignesFormates;
-  }
+  };
 
   return (
     <div className="AccordionTranscriptionRequerant">

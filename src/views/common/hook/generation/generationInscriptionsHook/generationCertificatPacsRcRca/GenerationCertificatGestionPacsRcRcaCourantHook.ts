@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { TFiche } from "../../../../../pages/fiche/FicheUtils";
 import { IResultGenerationInscriptions } from "../../generationUtils";
 
-export function useGestionCertificatCourant(
+export const useGestionCertificatCourant = (
   setListePacsRcRcaATraiter: React.Dispatch<React.SetStateAction<TResultatRMCInscription[] | undefined>>,
   setResultGenerationCertificat: React.Dispatch<React.SetStateAction<IResultGenerationInscriptions | undefined>>,
   listePacsRcRcaATraiter?: TResultatRMCInscription[],
@@ -12,7 +12,7 @@ export function useGestionCertificatCourant(
   listePacsRcRca?: TResultatRMCInscription[],
   uuidDocumentsGeneres?: string[],
   fichePacsRcRcaTraiter?: TFiche[]
-) {
+) => {
   const [pacsRcRcaCourant, setPacsRcRcaCourant] = useState<TResultatRMCInscription>();
 
   //0.1- Renvoie du résultat vide si pas de PACS sinon alimentation de la liste 'listePACSATraiter' qui sera utilisée dans le code
@@ -44,4 +44,4 @@ export function useGestionCertificatCourant(
   }, [listePacsRcRcaATraiter]);
 
   return { pacsRcRcaCourant };
-}
+};

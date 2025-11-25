@@ -13,19 +13,19 @@ interface AccordionTranscriptionParentsProps {
 export const AccordionTranscriptionParents: React.FC<AccordionTranscriptionParentsProps> = props => {
   const estPresentUnParent = props.parents && props.parents?.length < DEUX ? "contenuAccordionUnSeulElement" : "";
 
-  function getTitreAccordionParents(): string {
+  const getTitreAccordionParents = (): string => {
     return `${resume.parent}${props.parents && props.parents?.length > UN ? "s" : ""}`;
-  }
+  };
 
-  function getDateLieuMariage(titulaire?: ITitulaireRequeteCreation): string | undefined {
+  const getDateLieuMariage = (titulaire?: ITitulaireRequeteCreation): string | undefined => {
     const evenementReconnaissance = TitulaireRequeteCreation.getEvenementUnionTypeMariage(titulaire);
 
     return EvenementUnion.getDateEtLieuFormate(evenementReconnaissance);
-  }
+  };
 
-  function formatNationalites(nationalites: string[]): string | undefined {
+  const formatNationalites = (nationalites: string[]): string | undefined => {
     return nationalites ? nationalites.join(", ") : undefined;
-  }
+  };
 
   return (
     <div className="AccordionTranscriptionParents">

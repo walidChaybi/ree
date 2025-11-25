@@ -2,7 +2,7 @@ import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import { ResumeRequeteCreationTranscriptionNaissanceMineureMajeure } from "./composants/ResumeReqCreationTranscriptionNaissanceMineureMajeure";
 
-export function getComposantResumeRequeteEnFonctionNatureActe(requete?: IRequeteCreation): JSX.Element {
+export const getComposantResumeRequeteEnFonctionNatureActe = (requete?: IRequeteCreation): JSX.Element => {
   const natureActe = requete?.natureActeTranscrit;
 
   const estNaissanceMineureOuMajeure =
@@ -14,8 +14,8 @@ export function getComposantResumeRequeteEnFonctionNatureActe(requete?: IRequete
     // TODO Rajouter resumes requete autre (DECES, ENFANT SANS VIE....)
     return <></>;
   }
-}
+};
 
-function getComposantResumeRequeteEnfantMineureMajeure(requete?: IRequeteCreation): JSX.Element {
+const getComposantResumeRequeteEnfantMineureMajeure = (requete?: IRequeteCreation): JSX.Element => {
   return <ResumeRequeteCreationTranscriptionNaissanceMineureMajeure requete={requete} />;
-}
+};

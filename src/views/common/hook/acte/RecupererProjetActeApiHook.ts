@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 import { mappingProjetActe } from "../../mapping/mappingProjetActe";
 
-export function useRecupererProjetActeApiHook(idActe?: string): IProjetActe | undefined {
+export const useRecupererProjetActeApiHook = (idActe?: string): IProjetActe | undefined => {
   const [resultat, setResultat] = useState<IProjetActe>();
   useEffect(() => {
     if (idActe) {
@@ -22,4 +22,4 @@ export function useRecupererProjetActeApiHook(idActe?: string): IProjetActe | un
   }, [idActe]);
 
   return resultat;
-}
+};

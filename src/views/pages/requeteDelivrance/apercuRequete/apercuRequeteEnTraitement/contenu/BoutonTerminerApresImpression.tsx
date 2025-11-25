@@ -45,14 +45,14 @@ export const BoutonTerminerApresImpression: React.FC<BoutonTerminerApresImpressi
 
   const afficherBouton = requeteCourrier && estAValiderOuASigner;
 
-  function estActif() {
+  const estActif = () => {
     const mAppartient = props.requete.idUtilisateur === utilisateurConnecte?.id;
     return (
       mAppartient &&
       utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER }) &&
       DocumentReponse.verifierDocumentsValides(props.requete.documentsReponses)
     );
-  }
+  };
 
   return (
     <>

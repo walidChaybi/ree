@@ -14,7 +14,7 @@ import {
   getParagrapheFin
 } from "./specificationCommunes";
 
-function getParagrapheDecisionRecue(infosRCA: FicheRcRca) {
+const getParagrapheDecisionRecue = (infosRCA: FicheRcRca) => {
   let decisionRecue = "";
 
   if (infosRCA.decision) {
@@ -48,9 +48,9 @@ function getParagrapheDecisionRecue(infosRCA: FicheRcRca) {
     }
   }
   return decisionRecue;
-}
+};
 
-function getDecisionONACInscription(infosRCA: FicheRcRca, dateDecision: string) {
+const getDecisionONACInscription = (infosRCA: FicheRcRca, dateDecision: string) => {
   let decisionRecue = "";
   const titreOnac = infosRCA.decision?.autorite.titreOnac;
 
@@ -61,7 +61,7 @@ function getDecisionONACInscription(infosRCA: FicheRcRca, dateDecision: string) 
   decisionRecue += `de l'Office national des anciens combattants et victimes de guerre en date du ${dateDecision} `;
   decisionRecue += `concernant la mention ${infosRCA.nature.libelle} attribuée à :`;
   return decisionRecue;
-}
+};
 
 /////////////////////////////////////////////////////////////////////
 class SpecificationRCA {

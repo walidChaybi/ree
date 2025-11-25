@@ -10,7 +10,7 @@ export interface AddAlerteActeApiHookParameters {
   complementDescription: string;
 }
 
-export function useAddAlerteActeApiHook(parameters?: AddAlerteActeApiHookParameters) {
+export const useAddAlerteActeApiHook = (parameters?: AddAlerteActeApiHookParameters) => {
   const [alerte, setAlerte] = useState<IAlerte>();
   useEffect(() => {
     if (parameters) {
@@ -28,4 +28,4 @@ export function useAddAlerteActeApiHook(parameters?: AddAlerteActeApiHookParamet
     }
   }, [parameters]);
   return alerte;
-}
+};

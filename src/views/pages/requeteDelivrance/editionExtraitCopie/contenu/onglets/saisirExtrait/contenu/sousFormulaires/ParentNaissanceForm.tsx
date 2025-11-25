@@ -82,11 +82,11 @@ export const ParentNaissanceForm: React.FC<ParentNaissanceFormProps> = props => 
   );
 };
 
-function getNbPrenomsAffiche(nbPrenoms: number, mapPrenomAffiche: Map<string, number>, nom: string): number {
+const getNbPrenomsAffiche = (nbPrenoms: number, mapPrenomAffiche: Map<string, number>, nom: string): number => {
   let nbPrenomAffiche = mapPrenomAffiche.get(nom);
   if (nbPrenomAffiche == null) {
     nbPrenomAffiche = Math.max(nbPrenoms, 1);
     mapPrenomAffiche.set(nom, nbPrenomAffiche);
   }
   return nbPrenomAffiche > nbPrenoms ? nbPrenomAffiche : nbPrenoms;
-}
+};

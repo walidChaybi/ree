@@ -19,9 +19,9 @@ const AcquisitionForm: React.FC<AcquisitionFormProps> = props => {
   const [afficherDateDecret, setAfficherDateDecret] = useState<boolean>(props.estAvancementASigner);
   const nature = props.formik.getFieldProps(withNamespace(props.nom, NATURE)).value;
 
-  function onClickAfficherDecret() {
+  const onClickAfficherDecret = () => {
     setAfficherDateDecret(true);
-  }
+  };
 
   return (
     <Item titre={"Acquisition"}>

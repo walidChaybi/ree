@@ -43,16 +43,16 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
   const [etatFenetres, setEtatFenetres] = useState<IFenetreFicheActeInscription[]>([]);
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  function getBoutonMenuElement(data: IDataTableauRMCPersonne): JSX.Element {
+  const getBoutonMenuElement = (data: IDataTableauRMCPersonne): JSX.Element => {
     return (
       <CelluleBoutonMenu<IDataTableauRMCPersonne, string>
         {...(data.estDataPersonne ? boutonMenuAjouterPersonneProps : boutonMenuAjouterActeInscriptionProps)}
         className="colonne-bouton-menu"
       />
     );
-  }
+  };
 
-  function afficheBoutonAjouterPersonneOuActeInscription(data: IDataTableauRMCPersonne): boolean {
+  const afficheBoutonAjouterPersonneOuActeInscription = (data: IDataTableauRMCPersonne): boolean => {
     let afficheBouton = false;
     let identifiants: string[] = [];
     if (props.typeRedactionActe === ETypeRedactionActe.TRANSCRIT) {
@@ -64,7 +64,7 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
       afficheBouton = !props.identifiantsActesInscriptionsSelectionnes.includes(getIdentifiantPersonneOuActeInscription(data));
     }
     return afficheBouton;
-  }
+  };
 
   const colonneBoutonAjouterPersonneOuActeInscriptionParams: IColonneBoutonMenuParams<IDataTableauRMCPersonne, string> = {
     filtreAffichageElement: afficheBoutonAjouterPersonneOuActeInscription,

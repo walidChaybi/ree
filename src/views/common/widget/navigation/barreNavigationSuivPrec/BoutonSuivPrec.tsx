@@ -31,17 +31,17 @@ export const BoutonSuivPrec: React.FC<BoutonSuivPrecProps> = ({ direction, index
   );
 };
 
-function isDisabled(direction: "left" | "right", index: number, max: number): boolean {
+const isDisabled = (direction: "left" | "right", index: number, max: number): boolean => {
   if (direction === "right") {
     return index >= max - 1;
   }
   return index <= 0;
-}
+};
 
-function changeIndexRequete(index: number, max: number, direction: "left" | "right", setIndexRequete: (newIdx: number) => void) {
+const changeIndexRequete = (index: number, max: number, direction: "left" | "right", setIndexRequete: (newIdx: number) => void) => {
   if (direction === "left") {
     setIndexRequete(Math.max(0, index - 1));
   } else {
     setIndexRequete(Math.min(max - 1, index + 1));
   }
-}
+};

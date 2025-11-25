@@ -72,12 +72,12 @@ export const RequetesServicePage: React.FC<IMesRequetesServicePageProps> = ({ se
     resultatsTableauARafraichir
   );
 
-  function goToLink(link: string) {
+  const goToLink = (link: string) => {
     const queryParametersPourRequetes = goToLinkRequete(link, "requetes-service");
     if (queryParametersPourRequetes) {
       setParametresLienRequete(queryParametersPourRequetes);
     }
-  }
+  };
   useEffect(() => {
     estTableauARafraichir && setEstTableauARafraichir(false);
   }, [estTableauARafraichir]);
@@ -93,7 +93,7 @@ export const RequetesServicePage: React.FC<IMesRequetesServicePageProps> = ({ se
     });
   }, []);
 
-  function onClickOnLine(_: string, data: IRequeteTableauDelivrance[], idx: number) {
+  const onClickOnLine = (_: string, data: IRequeteTableauDelivrance[], idx: number) => {
     setOperationEnCours(true);
     const requeteSelect = data[idx];
     miseAjourOuRedirection(
@@ -105,7 +105,7 @@ export const RequetesServicePage: React.FC<IMesRequetesServicePageProps> = ({ se
       LiensRECE.genererLien(INFO_PAGE_REQUETES_DELIVRANCE_SERVICE.url),
       utilisateurConnecte
     );
-  }
+  };
 
   const getIconeAssigneeA = (idRequete: string, sousType: string, idUtilisateur: string) => (
     <>
@@ -127,13 +127,13 @@ export const RequetesServicePage: React.FC<IMesRequetesServicePageProps> = ({ se
     </>
   );
 
-  function onSubmitFiltreServiceRequeteDelivrance(values: IFiltreServiceRequeteDelivranceFormValues) {
+  const onSubmitFiltreServiceRequeteDelivrance = (values: IFiltreServiceRequeteDelivranceFormValues) => {
     if (!parametresLienRequete) {
       setParametresLienRequete(defaultParamsRequetes);
     }
     onSubmitFiltres(values);
     setEstTableauARafraichir(true);
-  }
+  };
 
   return (
     <>
@@ -167,11 +167,11 @@ export const RequetesServicePage: React.FC<IMesRequetesServicePageProps> = ({ se
   );
 };
 
-function gestionFeatureFlagAssigneeA(sousType: string) {
+const gestionFeatureFlagAssigneeA = (sousType: string) => {
   return (
     (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES) &&
       (SousTypeDelivrance.RDC.libelleCourt === sousType || SousTypeDelivrance.RDD.libelleCourt === sousType)) ||
     (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) &&
       (SousTypeDelivrance.RDCSC.libelleCourt === sousType || SousTypeDelivrance.RDCSD.libelleCourt === sousType))
   );
-}
+};

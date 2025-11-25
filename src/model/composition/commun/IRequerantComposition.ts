@@ -1,4 +1,3 @@
-import { getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { IRequerant, Requerant } from "../../requete/IRequerant";
 import { TypeCanal } from "../../requete/enum/TypeCanal";
@@ -22,13 +21,11 @@ interface ICompositionAdresseRequerant {
   ligne7: string;
 }
 
-function isNotEmpty(str: any) {
+const isNotEmpty = (str: any) => {
   return str && str.length !== 0;
-}
+};
 
-function isAdresseToutesLignes(
-  obj: IRequerantComposition
-): obj is IRequerantComposition {
+const isAdresseToutesLignes = (obj: IRequerantComposition): obj is IRequerantComposition => {
   return (
     isNotEmpty(obj.identite_requerant.ligne2) &&
     isNotEmpty(obj.adresse_requerant.ligne2) &&
@@ -36,26 +33,20 @@ function isAdresseToutesLignes(
     isNotEmpty(obj.adresse_requerant.ligne5) &&
     isNotEmpty(obj.adresse_requerant.ligne7)
   );
-}
+};
 
 export const RequerantComposition = {
-  ajoutInfosRequerant(
-    obj: IRequerantComposition,
-    canal?: TypeCanal,
-    requerant?: IRequerant
-  ) {
+  ajoutInfosRequerant(obj: IRequerantComposition, canal?: TypeCanal, requerant?: IRequerant) {
     if (requerant) {
       obj.identite_requerant = Requerant.composerIdentite(requerant);
 
       if (canal === TypeCanal.COURRIER && requerant.adresse) {
         obj.adresse_requerant = {
-          ligne2: getValeurOuVide(requerant.adresse.ligne2),
-          ligne3: getValeurOuVide(requerant.adresse.ligne3),
-          ligne4: getValeurOuVide(requerant.adresse.ligne4),
-          ligne5: getValeurOuVide(requerant.adresse.ligne5),
-          ligne6: `${getValeurOuVide(
-            requerant.adresse.codePostal
-          )} ${getValeurOuVide(requerant.adresse.ville)}`,
+          ligne2: requerant.adresse.ligne2,
+          ligne3: requerant.adresse.ligne3,
+          ligne4: requerant.adresse.ligne4,
+          ligne5: requerant.adresse.ligne5,
+          ligne6: `${requerant.adresse.codePostal} ${requerant.adresse.ville}`,
           ligne7: LieuxUtils.affichagePaysCourrier(requerant.adresse.pays)
         };
 

@@ -11,10 +11,10 @@ import { DeleteAlerteActeApiHookParameters } from "../../views/common/hook/alert
 import { IDerniereDelivranceRcRcaPacsParams } from "../../views/common/hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import { HttpMethod } from "../ApiManager";
 
-async function getApiManager() {
+const getApiManager = async () => {
   const { ApiManager } = await import("../ApiManager");
   return ApiManager.getInstance("rece-etatcivil-api", "v1");
-}
+};
 
 const URL_ACTE = "/acte";
 export const URL_MENTION = "/mentions";
@@ -32,7 +32,7 @@ const URL_COMPOSER_DOCUMENT_FINAL = "/composer-document-final";
 const URL_REGISTRE_PAPIER_PROJET_ACTE = "/registre-papier";
 const URL_INTEGRER_ACTE_SIGNE = "/integrer-acte-signe";
 
-export function getActesInscriptionsSauvegardes(actesInscriptionsSauvegardes: IActeInscriptionSauvegardeDto[]): Promise<any> {
+export const getActesInscriptionsSauvegardes = (actesInscriptionsSauvegardes: IActeInscriptionSauvegardeDto[]): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -40,24 +40,24 @@ export function getActesInscriptionsSauvegardes(actesInscriptionsSauvegardes: IA
       data: actesInscriptionsSauvegardes
     })
   );
-}
+};
 
 /**
  * Recuperation d'un projet d'acte'
  */
-export function getProjetActe(idActe: string): Promise<any> {
+export const getProjetActe = (idActe: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
       uri: `${URL_PROJET_ACTE}/${idActe}`
     })
   );
-}
+};
 
 /**
  * Envoi d'un projet d'acte pour enregistrement'
  */
-export function postProjetActe(acte: IProjetActe): Promise<any> {
+export const postProjetActe = (acte: IProjetActe): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -65,12 +65,12 @@ export function postProjetActe(acte: IProjetActe): Promise<any> {
       data: acte
     })
   );
-}
+};
 
 /**
  * Envoi d'un projet d'acte pour modification'
  */
-export function patchProjetActe(acte: IProjetActe): Promise<any> {
+export const patchProjetActe = (acte: IProjetActe): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -78,12 +78,12 @@ export function patchProjetActe(acte: IProjetActe): Promise<any> {
       data: acte
     })
   );
-}
+};
 
 /**
  * Composition d'un projet d'acte final à signer.
  */
-export function composerDocumentFinal(idActe: string, issuerCertificat: string, entiteCertificat: string): Promise<any> {
+export const composerDocumentFinal = (idActe: string, issuerCertificat: string, entiteCertificat: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -96,17 +96,17 @@ export function composerDocumentFinal(idActe: string, issuerCertificat: string, 
       }
     })
   );
-}
+};
 
 /**
  * Enregistrer l'acte final signé.
  */
-export function integrerActeSigne(
+export const integrerActeSigne = (
   idActe: string,
   document: string,
   infosCarteSignature: IInfosCarteSignature,
   modeAuthentification: TModeAuthentification
-): Promise<any> {
+): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -118,21 +118,21 @@ export function integrerActeSigne(
       }
     })
   );
-}
+};
 
 /**
  * Récupérer le registre papier qui sera associé à un projet d'acte.
  */
-export function getRegistrePapierParIdProjetActe(idActe: string): Promise<any> {
+export const getRegistrePapierParIdProjetActe = (idActe: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
       uri: `${URL_PROJET_ACTE}/${idActe}${URL_REGISTRE_PAPIER_PROJET_ACTE}`
     })
   );
-}
+};
 
-export async function getMentions(idActe: string, statutMention?: EStatutMention): Promise<any> {
+export const getMentions = async (idActe: string, statutMention?: EStatutMention): Promise<any> => {
   const queryParams = statutMention !== undefined ? { statut: EStatutMention[statutMention] } : undefined;
   return getApiManager().then(api =>
     api.fetch({
@@ -141,9 +141,9 @@ export async function getMentions(idActe: string, statutMention?: EStatutMention
       parameters: queryParams
     })
   );
-}
+};
 
-export async function postMentions(idActe: string, mentions: IMentionMiseAJourDto[]): Promise<any> {
+export const postMentions = (idActe: string, mentions: IMentionMiseAJourDto[]): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -151,9 +151,9 @@ export async function postMentions(idActe: string, mentions: IMentionMiseAJourDt
       data: mentions
     })
   );
-}
+};
 
-export async function postCorpsTexte(idActe: string, corpsExtrait: string, type: keyof typeof ETypeExtrait): Promise<any> {
+export const postCorpsTexte = async (idActe: string, corpsExtrait: string, type: keyof typeof ETypeExtrait): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -162,18 +162,18 @@ export async function postCorpsTexte(idActe: string, corpsExtrait: string, type:
       data: { corpsExtrait }
     })
   );
-}
+};
 
-export function getAlertesActe(idActe: string): Promise<any> {
+export const getAlertesActe = (idActe: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
       uri: `${URL_ACTE}/${idActe}${URL_ALERTES_ACTE}`
     })
   );
-}
+};
 
-export function addAlerteActe(parameters: AddAlerteActeApiHookParameters): Promise<any> {
+export const addAlerteActe = (parameters: AddAlerteActeApiHookParameters): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -185,18 +185,18 @@ export function addAlerteActe(parameters: AddAlerteActeApiHookParameters): Promi
       }
     })
   );
-}
+};
 
-export function deleteAlerteActe(parameters: DeleteAlerteActeApiHookParameters): Promise<any> {
+export const deleteAlerteActe = (parameters: DeleteAlerteActeApiHookParameters): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.DELETE,
       uri: `${URL_ACTE}${URL_ALERTE_ACTE}/${parameters?.idAlerteActe}`
     })
   );
-}
+};
 
-export function updateDateDerniereDelivranceRcRcaPacs(body: IDerniereDelivranceRcRcaPacsParams[]): Promise<any> {
+export const updateDateDerniereDelivranceRcRcaPacs = (body: IDerniereDelivranceRcRcaPacsParams[]): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -204,9 +204,9 @@ export function updateDateDerniereDelivranceRcRcaPacs(body: IDerniereDelivranceR
       data: body
     })
   );
-}
+};
 
-export function majEtatCivilSuiteSaisieExtrait(idActe: string, extraitSaisiAEnvoyer: IExtraitSaisiAEnvoyer) {
+export const majEtatCivilSuiteSaisieExtrait = (idActe: string, extraitSaisiAEnvoyer: IExtraitSaisiAEnvoyer) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -214,9 +214,9 @@ export function majEtatCivilSuiteSaisieExtrait(idActe: string, extraitSaisiAEnvo
       data: extraitSaisiAEnvoyer
     })
   );
-}
+};
 
-export function getTitulaireAnalyseMarginalByIdActe(identifiantsActes: string[]): Promise<any> {
+export const getTitulaireAnalyseMarginalByIdActe = (identifiantsActes: string[]): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -224,13 +224,13 @@ export function getTitulaireAnalyseMarginalByIdActe(identifiantsActes: string[])
       data: identifiantsActes
     })
   );
-}
+};
 
-export function getBulletinIdentificationByIdActe(idActe: string): Promise<any> {
+export const getBulletinIdentificationByIdActe = (idActe: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
       uri: `${URL_ACTE}${URL_BULLETIN_IDENTIFICATION}/${idActe}`
     })
   );
-}
+};

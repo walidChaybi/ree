@@ -14,10 +14,10 @@ interface ICreationRequeteDelivranceRDCSCResultat {
   refus?: boolean;
 }
 
-export function useCreationRequeteDelivranceRDCSC(
+export const useCreationRequeteDelivranceRDCSC = (
   requeteRDCSC?: CreationRequeteRDCSC,
   nbTitulaires?: number
-): ICreationRequeteDelivranceRDCSCResultat | undefined {
+): ICreationRequeteDelivranceRDCSCResultat | undefined => {
   const [resultat, setResultat] = useState<ICreationRequeteDelivranceRDCSCResultat | undefined>();
 
   const { utilisateurs } = useContext(RECEContextData);
@@ -45,4 +45,4 @@ export function useCreationRequeteDelivranceRDCSC(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requeteRDCSC]);
   return resultat;
-}
+};

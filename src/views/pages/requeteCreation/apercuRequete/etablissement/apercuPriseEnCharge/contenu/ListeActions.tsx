@@ -1,6 +1,6 @@
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IEchange } from "@model/requete/IEchange";
-import { estSuperieurA500Caracteres, getLibelle } from "@util/Utils";
+import { estSuperieurA500Caracteres } from "@util/Utils";
 import {
   RetourSDANFParams,
   useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook
@@ -27,6 +27,15 @@ export const ListeActionsRetourSDANF: React.FC<ListeActionsRetourSDANFProps> = p
   const [buttonValidateDisabled, setButtonValidateDisabled] = useState(true);
   const [messageSDANF, setMessageSDANF] = useState("");
   const [messageErreur, setMessageErreur] = useState("");
+
+  const estPasStatutPriseEnChargeOuMAppartientPasOuModeConsultation = (): boolean | undefined => {
+    return (
+      StatutRequete.getEnumFor(props.statusRequete) !== StatutRequete.PRISE_EN_CHARGE ||
+      props.idRequeteCorbeilleAgent !== utilisateurConnecte?.id ||
+      props.modeConsultation
+    );
+  };
+
   const [disabledActions, setDisabledActions] = useState(estPasStatutPriseEnChargeOuMAppartientPasOuModeConsultation());
 
   const ACTE_IRRECEVABLE = 0;
@@ -64,17 +73,9 @@ export const ListeActionsRetourSDANF: React.FC<ListeActionsRetourSDANFProps> = p
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messageRetourSDANFAPI]);
 
-  function estPasStatutPriseEnChargeOuMAppartientPasOuModeConsultation(): boolean | undefined {
-    return (
-      StatutRequete.getEnumFor(props.statusRequete) !== StatutRequete.PRISE_EN_CHARGE ||
-      props.idRequeteCorbeilleAgent !== utilisateurConnecte?.id ||
-      props.modeConsultation
-    );
-  }
-
   const handleChangeText = (e: any) => {
     if (estSuperieurA500Caracteres(e.target.value)) {
-      return setMessageErreur(getLibelle("500 caractères maximum"));
+      return setMessageErreur("500 caractères maximum");
     }
 
     setMessageErreur("");
@@ -92,13 +93,13 @@ export const ListeActionsRetourSDANF: React.FC<ListeActionsRetourSDANFProps> = p
   const handleReponseActionRetourSDANF = (indexMenu: number) => {
     switch (indexMenu) {
       case ACTE_IRRECEVABLE:
-        setTitle(getLibelle("Acte irrecevable"));
+        setTitle("Acte irrecevable");
         break;
       case ELEMENT_MANQUANT:
-        setTitle(getLibelle("Élément manquant"));
+        setTitle("Élément manquant");
         break;
       case SUSPICION_DE_FRAUDE:
-        setTitle(getLibelle("Suspicion de fraude / nouvel élément"));
+        setTitle("Suspicion de fraude / nouvel élément");
         break;
       default:
         break;
@@ -124,7 +125,7 @@ export const ListeActionsRetourSDANF: React.FC<ListeActionsRetourSDANFProps> = p
   return (
     <div className="ListeActionsRetourSDANF">
       <GroupeBouton
-        titre={getLibelle("Actions")}
+        titre={"Actions"}
         listeActions={listeActions}
         onSelect={handleReponseActionRetourSDANF}
         disabled={disabledActions}
@@ -138,11 +139,11 @@ export const ListeActionsRetourSDANF: React.FC<ListeActionsRetourSDANFProps> = p
         messageErreur={messageErreur}
         boutons={[
           {
-            label: getLibelle("Annuler"),
+            label: "Annuler",
             action: () => fermerPopin()
           },
           {
-            label: getLibelle("Valider"),
+            label: "Valider",
             isDisabled: true,
             disabled: buttonValidateDisabled,
             action: () => envoyerMessageRetourSDANF()

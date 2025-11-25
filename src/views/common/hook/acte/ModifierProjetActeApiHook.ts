@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 import { mappingProjetActe } from "../../mapping/mappingProjetActe";
 
-export function useModifierProjetActeApiHook(acte?: IProjetActe): IProjetActe | undefined {
+export const useModifierProjetActeApiHook = (acte?: IProjetActe): IProjetActe | undefined => {
   const [resultat, setResultat] = useState<IProjetActe>();
   useEffect(() => {
     if (acte) {
@@ -20,4 +20,4 @@ export function useModifierProjetActeApiHook(acte?: IProjetActe): IProjetActe | 
     }
   }, [acte]);
   return resultat;
-}
+};

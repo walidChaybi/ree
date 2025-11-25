@@ -10,15 +10,15 @@ export const messageErreurDateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire =
 
 export const messageErreurFiltreDateCreationInformatiqueSaisiSeul = "Ce filtre ne peut être utilisé seul";
 
-export function prenomSaisiSansNom(rMCSaisie: IRMCActeInscription | IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
+export const prenomSaisiSansNom = (rMCSaisie: IRMCActeInscription | IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean => {
   return estRenseigne(rMCSaisie.titulaire?.prenom) && estNonRenseigne(rMCSaisie.titulaire?.nom);
-}
+};
 
-export function dateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire(
+export const dateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire = (
   rMCSaisie: IRMCActeInscription | IRMCRequeteForm<keyof typeof ETypeRequete | "">
-): boolean {
+): boolean => {
   return (
     seulementUneProprieteRenseignee("dateNaissance", rMCSaisie.titulaire) ||
     seulementUneProprieteRenseignee("paysNaissance", rMCSaisie.titulaire)
   );
-}
+};

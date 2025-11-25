@@ -135,7 +135,7 @@ export const filtrerListeActionsParSousTypes = (requete: IRequeteDelivrance, lis
   });
 };
 
-export function getIdDocumentReponseAAfficher(requete?: IRequeteDelivrance): string {
+export const getIdDocumentReponseAAfficher = (requete?: IRequeteDelivrance): string => {
   let idDocumentAAfficher = "";
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const requeteDelivrance = requete;
@@ -149,4 +149,4 @@ export function getIdDocumentReponseAAfficher(requete?: IRequeteDelivrance): str
     }
   }
   return idDocumentAAfficher;
-}
+};

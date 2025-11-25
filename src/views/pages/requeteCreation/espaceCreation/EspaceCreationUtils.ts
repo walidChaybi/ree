@@ -7,12 +7,12 @@ import { NavigationApercuReqCreationParams } from "../../../common/hook/navigati
 import { ICreationActionMiseAjourStatutEtRedirectionParams } from "../../../common/hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { setParamsUseApercuCreation } from "../commun/requeteCreationUtils";
 
-export function getOnClickSurLigneTableauEspaceCreation(
+export const getOnClickSurLigneTableauEspaceCreation = (
   setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>,
   setParamsMiseAJour: React.Dispatch<React.SetStateAction<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>>,
   setParamsCreation: React.Dispatch<React.SetStateAction<NavigationApercuReqCreationParams | undefined>>,
   utilisateurConnecte: UtilisateurConnecte
-) {
+) => {
   return (idRequete: string, data: IRequeteTableauCreation[], idx: number) => {
     setOperationEnCours(true);
     const requeteSelect = data[idx];
@@ -33,4 +33,4 @@ export function getOnClickSurLigneTableauEspaceCreation(
       );
     }
   };
-}
+};

@@ -12,10 +12,10 @@ enum HeaderTableauRequetesServiceCreation {
   AttribueA = "attribueA"
 }
 
-export function getColonnesTableauRequetesServiceCreation<TData, TIdentifiant>(
+export const getColonnesTableauRequetesServiceCreation = <TData, TIdentifiant>(
   colonneCaseACocherAttribueAParams: IColonneCaseACocherParams<TData, TIdentifiant>,
   conteneurCaseACocherAttribueAProps?: IConteneurElementPropsPartielles<TData, TIdentifiant, TChangeEventSurHTMLInputElement>
-) {
+) => {
   return [
     ...colonnesTableauMesRequetesCreation.slice(ZERO, SIX),
     new TableauTypeColumn({
@@ -26,4 +26,4 @@ export function getColonnesTableauRequetesServiceCreation<TData, TIdentifiant>(
     getColonneCasesACocher(colonneCaseACocherAttribueAParams, { size: "small" }, conteneurCaseACocherAttribueAProps),
     ...colonnesTableauMesRequetesCreation.slice(SIX)
   ];
-}
+};

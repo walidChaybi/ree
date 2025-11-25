@@ -53,14 +53,14 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
   );
 };
 
-function mapSousTypeDelivrance(sousTypeDelivrance: SousTypeDelivrance): Option {
+const mapSousTypeDelivrance = (sousTypeDelivrance: SousTypeDelivrance): Option => {
   return {
     cle: sousTypeDelivrance.nom,
     libelle: sousTypeDelivrance.libelle
   };
-}
+};
 
-function getListeDesRequetesCourrierAsOptions(): Options {
+const getListeDesRequetesCourrierAsOptions = (): Options => {
   let listeRequeteCourrier: Options = [];
 
   if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES)) {
@@ -72,6 +72,6 @@ function getListeDesRequetesCourrierAsOptions(): Options {
   }
 
   return listeRequeteCourrier;
-}
+};
 
 export default WithHabilitation(MenuSaisirRequete, "MenuSaisirRequete");

@@ -26,7 +26,7 @@ export interface IFiltreServiceRequeteCreationDto {
 export type IFiltresServiceRequeteCreation = Omit<IFiltreServiceRequeteCreationFormValues, "numeroRequete">;
 
 /* v8 ignore start */
-export function mappingFiltreServiceCreationVersFiltreDto(filtre: IFiltresServiceRequeteCreation): IFiltreServiceRequeteCreationDto {
+export const mappingFiltreServiceCreationVersFiltreDto = (filtre: IFiltresServiceRequeteCreation): IFiltreServiceRequeteCreationDto => {
   return nettoyerAttributsDto<IFiltreServiceRequeteCreationDto>({
     sousType: filtre.sousType,
     tagPriorisation: filtre.priorisation,
@@ -35,5 +35,5 @@ export function mappingFiltreServiceCreationVersFiltreDto(filtre: IFiltresServic
     statuts: filtre.statut ? [filtre.statut] : StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.CREATION).map(st => st.cle),
     numeroDossierNational: filtre.numeroDossierNational
   });
-}
+};
 /* v8 ignore stop */

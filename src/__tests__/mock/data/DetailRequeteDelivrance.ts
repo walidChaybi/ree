@@ -1635,14 +1635,14 @@ export const requeteAvecDocsPlurilingue = {
   choixDelivrance: "DELIVRER_EC_EXTRAIT_AVEC_FILIATION"
 };
 
-export function getRequeteSansDoc(requete: any) {
+export const getRequeteSansDoc = (requete: any) => {
   const requeteSansDoc = { ...requete };
 
   requeteSansDoc.documentsReponses = [];
   return requeteSansDoc;
-}
+};
 
-export function getRequeteAvecDeuxDocs(requete: any) {
+export const getRequeteAvecDeuxDocs = (requete: any) => {
   const requeteAvecDeuxDoc = { ...requete };
 
   requeteAvecDeuxDoc.documentsReponses = [...requete.documentsReponses];
@@ -1665,7 +1665,7 @@ export function getRequeteAvecDeuxDocs(requete: any) {
   });
 
   return requeteAvecDeuxDoc;
-}
+};
 
 const idFicheActeMariage = "b41079a5-9e8d-478c-b04c-c4c2ac67134b";
 

@@ -2,7 +2,6 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { TypeRequerant } from "@model/requete/enum/TypeRequerant";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
-import { getLibelle } from "@util/Utils";
 import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
@@ -14,7 +13,7 @@ import { ITitulairesState, limitesTitulaires } from "../SaisirRDCSCPage";
 import IdentitesForm from "../sousFormulaires/identite/IdentitesForm";
 import RequerantForm from "../sousFormulaires/requerant/RequerantForm";
 
-export function getDocumentDemandeForm(onChangeMaxTitulaires: (nb: number, formik: FormikProps<FormikValues>) => void): JSX.Element {
+export const getDocumentDemandeForm = (onChangeMaxTitulaires: (nb: number, formik: FormikProps<FormikValues>) => void): JSX.Element => {
   return (
     <div
       className="DocumentInput"
@@ -22,7 +21,7 @@ export function getDocumentDemandeForm(onChangeMaxTitulaires: (nb: number, formi
     >
       <SelectField
         name={DOCUMENT}
-        label={getLibelle("Document demandé")}
+        label={"Document demandé"}
         options={DocumentDelivrance.getAllCertificatSituationDemandeEtAttestationAsOptions()}
         onChange={(e: any, formik?: FormikProps<FormikValues>) => {
           if (formik) {
@@ -34,7 +33,7 @@ export function getDocumentDemandeForm(onChangeMaxTitulaires: (nb: number, formi
       />
     </div>
   );
-}
+};
 
 export const getTitulairesForm = (
   titulairesState: ITitulairesState,
@@ -54,10 +53,10 @@ export const getTitulairesForm = (
   );
 };
 
-export function getRequerantForm(nbTitulaires: number, requete?: TRequete): JSX.Element {
+export const getRequerantForm = (nbTitulaires: number, requete?: TRequete): JSX.Element => {
   const requerantFromProps = {
     nom: REQUERANT,
-    titre: getLibelle("Identité du requérant"),
+    titre: "Identité du requérant",
     options: TypeRequerant.getAllEnumsAsOptions({
       exclusions: nbTitulaires < limitesTitulaires.MAX ? [TypeRequerant.TITULAIRE2] : undefined
     }),
@@ -69,12 +68,12 @@ export function getRequerantForm(nbTitulaires: number, requete?: TRequete): JSX.
       {...requerantFromProps}
     />
   );
-}
+};
 
-export function getAdresseForm(): JSX.Element {
+export const getAdresseForm = (): JSX.Element => {
   const adresseFormProps = {
     nom: ADRESSE,
-    titre: getLibelle("Adresse postale du requérant")
+    titre: "Adresse postale du requérant"
   } as SubFormProps;
   return (
     <AdresseForm
@@ -82,43 +81,43 @@ export function getAdresseForm(): JSX.Element {
       {...adresseFormProps}
     />
   );
-}
+};
 
-export function getPiecesJointesForm(): JSX.Element {
+export const getPiecesJointesForm = (): JSX.Element => {
   return (
     <PiecesJointesForm
       key={PIECES_JOINTES}
       nom={PIECES_JOINTES}
       typeRequete={TypeRequete.DELIVRANCE}
-      titre={getLibelle("Pièces justificatives")}
+      titre={"Pièces justificatives"}
     />
   );
-}
+};
 
-export function getBoutonsPopin(
+export const getBoutonsPopin = (
   prendreEnCharge: (refus: boolean) => void,
   setDonneesNaissanceIncomplete: React.Dispatch<React.SetStateAction<boolean>>
-) {
+) => {
   return [
     {
-      label: getLibelle("oui"),
+      label: "oui",
       action: () => {
         prendreEnCharge(true);
         setDonneesNaissanceIncomplete(false);
       }
     },
     {
-      label: getLibelle("non"),
+      label: "non",
       action: () => {
         prendreEnCharge(false);
         setDonneesNaissanceIncomplete(false);
       }
     },
     {
-      label: getLibelle("annuler"),
+      label: "annuler",
       action: () => {
         setDonneesNaissanceIncomplete(false);
       }
     }
   ];
-}
+};

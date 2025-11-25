@@ -4,12 +4,12 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
-export function useSauvegarderCourrierCreerActionMajStatutRequete(
+export const useSauvegarderCourrierCreerActionMajStatutRequete = (
   statutRequete: StatutRequete,
   libelleAction?: string,
   requete?: ISauvegardeCourrier | undefined,
   requeteId?: string
-) {
+) => {
   const [uuidDocumentsReponse, setUuidDocumentsReponse] = useState<string | undefined>();
   useEffect(
     () => {
@@ -31,4 +31,4 @@ export function useSauvegarderCourrierCreerActionMajStatutRequete(
   );
 
   return uuidDocumentsReponse;
-}
+};

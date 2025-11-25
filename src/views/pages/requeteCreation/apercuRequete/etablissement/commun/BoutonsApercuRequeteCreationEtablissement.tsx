@@ -40,27 +40,27 @@ export const BoutonsApercuRequeteCreationEtablissement: React.FC<BoutonsApercuRe
 
   const estBoutonSignatureDesactive = !props.estRegistreOuvert || props.estFormulaireModifie;
 
-  function ouvrePopinSignature() {
+  const ouvrePopinSignature = () => {
     if (props.setEstOuvertPopinSignature) {
       props.setEstOuvertPopinSignature(true);
     }
-  }
+  };
 
-  function getMessageErreur(): string {
+  const getMessageErreur = (): string => {
     if (!props.estRegistreOuvert) {
       return ERREUR_REGISTRE_NON_OUVERT;
     } else if (props.estFormulaireModifie) {
       return ERREUR_DONNEES_MODIFIEES_FORMULAIRE;
     }
     return "";
-  }
+  };
 
-  function renderBlocInformatif() {
+  const renderBlocInformatif = () => {
     if (estProjetActeASigner && estBoutonSignatureDesactive) {
       return <BlocInformatif texte={getMessageErreur()}></BlocInformatif>;
     }
     return undefined;
-  }
+  };
 
   return (
     <div className="BoutonsApercu">
