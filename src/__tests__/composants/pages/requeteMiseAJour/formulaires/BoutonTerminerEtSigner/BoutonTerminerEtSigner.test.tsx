@@ -4,50 +4,87 @@ import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { render, screen } from "@testing-library/react";
 import { act } from "react";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import BoutonTerminerEtSigner from "../../../../../../composants/pages/requetesMiseAJour/formulaires/BoutonTerminerEtSigner";
-import { EditionMiseAJourContext, IEditionMiseAJourContext } from "../../../../../../contexts/EditionMiseAJourContextProvider";
+import { EditionMiseAJourContext } from "../../../../../../contexts/EditionMiseAJourContextProvider";
 
-const ID_ACTE = "1010";
+const ID_ACTE = "369";
+
 const mockUtilisateurSansDroit = MockUtilisateurBuilder.utilisateurConnecte().generer();
 
-const utilisateurAvecDroitSigner = MockUtilisateurBuilder.utilisateurConnecte()
-  .avecAttributs({ id: "7a091a3b-6835-4824-94fb-527d68926d55" })
+const utilisateurAvecDroitSigner: UtilisateurConnecte = MockUtilisateurBuilder.utilisateurConnecte()
   .avecDroits([Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE])
   .generer();
 
-const renderSnapshot = async (mockUtilisateur: UtilisateurConnecte, saisieMentionEnCours: boolean): Promise<ChildNode | null> => {
-  const { container } = await act(async () =>
-    render(
-      <div>
-        <MockRECEContextProvider utilisateurConnecte={mockUtilisateur}>
-          <EditionMiseAJourContext.Valeurs.Provider value={{ idActe: ID_ACTE, miseAJourEffectuee: true } as IEditionMiseAJourContext}>
-            <BoutonTerminerEtSigner saisieMentionEnCours={saisieMentionEnCours} />
-          </EditionMiseAJourContext.Valeurs.Provider>
-        </MockRECEContextProvider>
-      </div>
-    )
-  );
+const valeursEditionParDefaut = {
+  idActe: ID_ACTE,
+  idRequete: "REQ-369",
+  miseAJourEffectuee: true
+} as any;
 
-  return container.firstChild;
+const actionsEdition = {
+  setEstActeSigne: vi.fn(),
+  desactiverBlocker: vi.fn(),
+  changerOnglet: vi.fn()
+} as any;
+
+const renderBouton = async ({
+  utilisateur,
+  saisieMentionEnCours = false,
+  miseAJourEffectuee = true
+}: {
+  utilisateur: UtilisateurConnecte;
+  saisieMentionEnCours?: boolean;
+  miseAJourEffectuee?: boolean;
+}) => {
+  await act(async () => {
+    render(
+      <MockRECEContextProvider utilisateurConnecte={utilisateur}>
+        <EditionMiseAJourContext.Valeurs.Provider value={{ ...valeursEditionParDefaut, miseAJourEffectuee }}>
+          <EditionMiseAJourContext.Actions.Provider value={actionsEdition}>
+            <BoutonTerminerEtSigner
+              saisieMentionEnCours={saisieMentionEnCours}
+              acte={null}
+            />
+          </EditionMiseAJourContext.Actions.Provider>
+        </EditionMiseAJourContext.Valeurs.Provider>
+      </MockRECEContextProvider>
+    );
+  });
 };
 
 describe("BoutonTerminerEtSigner", () => {
   test("n'affiche pas le bouton si l'utilisateur n'a pas les droits", async () => {
-    const snapshot = await renderSnapshot(mockUtilisateurSansDroit, false);
-    expect(snapshot).toMatchSnapshot();
+    await renderBouton({ utilisateur: mockUtilisateurSansDroit });
+
+    expect(screen.queryByRole("button", { name: /terminer et signer/i })).toBeNull();
   });
 
   test("affiche le bouton si l'utilisateur a les droits", async () => {
-    const snapshot = await renderSnapshot(utilisateurAvecDroitSigner, false);
-    expect(snapshot).toMatchSnapshot();
+    await renderBouton({ utilisateur: utilisateurAvecDroitSigner });
 
     const bouton = screen.getByRole("button", { name: /terminer et signer/i });
     expect(bouton).toBeDefined();
+    expect((bouton as HTMLButtonElement).disabled).toBe(false);
   });
 
-  test("désactive le bouton quand saisie en cours ou mise à jour non effectuée", async () => {
-    const snapshot = await renderSnapshot(utilisateurAvecDroitSigner, true);
-    expect(snapshot).toMatchSnapshot();
+  test("désactive le bouton quand une saisie de mention est en cours", async () => {
+    await renderBouton({
+      utilisateur: utilisateurAvecDroitSigner,
+      saisieMentionEnCours: true
+    });
+
+    const bouton = screen.getByRole("button", { name: /terminer et signer/i });
+    expect((bouton as HTMLButtonElement).disabled).toBe(true);
+  });
+
+  test("désactive le bouton quand la mise à jour n'est pas effectuée", async () => {
+    await renderBouton({
+      utilisateur: utilisateurAvecDroitSigner,
+      miseAJourEffectuee: false
+    });
+
+    const bouton = screen.getByRole("button", { name: /terminer et signer/i });
+    expect((bouton as HTMLButtonElement).disabled).toBe(true);
   });
 });

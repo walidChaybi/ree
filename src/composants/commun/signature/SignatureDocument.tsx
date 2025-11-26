@@ -1,4 +1,6 @@
+import { CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_DOUBLE_NUMERIQUE } from "@api/configurations/etatCivil/acte/PatchComposerDocumentFinalDoubleNumeriqueConfigApi";
 import { CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES } from "@api/configurations/etatCivil/acte/PatchComposerDocumentMentionsUlterieuresConfigApi";
+import { CONFIG_PATCH_INTEGRER_ACTE_DOUBLE_NUMERIQUE } from "@api/configurations/etatCivil/acte/PatchIntegrerActeDoubleNumeriqueConfigApi";
 import { CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER } from "@api/configurations/etatCivil/acte/PatchIntegrerDocumentMentionSigneConfigApi";
 import { CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE_ETABLI } from "@api/configurations/etatCivil/projetActe/PatchComposerDocumentFinalProjetActeEtabliConfigApi";
 import { CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE_TRANSCRIT } from "@api/configurations/etatCivil/projetActe/PatchComposerDocumentFinalProjetActeTranscritConfigApi";
@@ -11,7 +13,7 @@ import { TErreurApi } from "@model/api/Api";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import Signature, { CODE_PIN_INVALIDE, IInformationsCarte } from "../../../utils/Signature";
@@ -27,7 +29,7 @@ type TStatutSignature =
   | "enregistrement-document"
   | "termine";
 
-type TTypeSignature = "MISE_A_JOUR" | "ETABLI" | "TRANSCRIT";
+type TTypeSignature = "MISE_A_JOUR" | "ETABLI" | "TRANSCRIT" | "DOUBLE_NUMERIQUE";
 
 interface IDonneesSignature {
   statut: TStatutSignature;
@@ -46,6 +48,11 @@ interface ISignatureCommunProps {
 }
 
 interface ISignatureMiseAJourProps extends ISignatureCommunProps {
+  typeSignature: TTypeSignature;
+  idSuivi?: never;
+}
+
+interface ISignatureDoubleNumeriqueProps extends ISignatureCommunProps {
   typeSignature: TTypeSignature;
   idSuivi?: never;
 }
@@ -77,37 +84,34 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
   "enregistrement-document": { niveau: 100, message: "Enregistrement du document signé..." }
 };
 
-/* NOSONAR */ const SignatureDocument: React.FC<ISignatureMiseAJourProps | ISignatureEtablissementProps | ISignatureTranscriptionProps> = ({
-  idActe,
-  idRequete,
-  apresSignature,
-  typeSignature,
-  idSuivi = null
-}) => {
+/* NOSONAR */ const SignatureDocument: React.FC<
+  ISignatureMiseAJourProps | ISignatureEtablissementProps | ISignatureTranscriptionProps | ISignatureDoubleNumeriqueProps
+> = ({ idActe, idRequete, apresSignature, typeSignature, idSuivi = null }) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const signature = useMemo(
-    () => ({
-      estMiseAJour: typeSignature === "MISE_A_JOUR",
-      messageInformation: (() => {
-        switch (typeSignature) {
-          case "MISE_A_JOUR":
-            return TypePopinSignature.getTextePopinSignatureMentions() ?? "";
-          case "ETABLI":
-            return TypePopinSignature.getTextePopinSignatureActe() ?? "";
-          case "TRANSCRIT":
-            return TypePopinSignature.getTextePopinSignatureActeTranscrit() ?? "";
-          default:
-            return "";
-        }
-      })()
-    }),
-    [typeSignature]
-  );
+  const signature = {
+    estMiseAJour: typeSignature === "MISE_A_JOUR" || typeSignature === "DOUBLE_NUMERIQUE",
+    messageInformation: (() => {
+      switch (typeSignature) {
+        case "MISE_A_JOUR":
+        case "DOUBLE_NUMERIQUE":
+          return TypePopinSignature.getTextePopinSignatureMentions() ?? "";
+        case "ETABLI":
+          return TypePopinSignature.getTextePopinSignatureActe() ?? "";
+        case "TRANSCRIT":
+          return TypePopinSignature.getTextePopinSignatureActeTranscrit() ?? "";
+        default:
+          return "";
+      }
+    })()
+  };
 
   const { appelApi: appelComposerMentions } = useFetchApi(CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES);
   const { appelApi: appelIntegrerMentions } = useFetchApi(CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER);
   const { appelApi: appelModifierStatutRequeteMiseAJour } = useFetchApi(CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR, true);
+
+  const { appelApi: patchComposerDoubleNumerique } = useFetchApi(CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_DOUBLE_NUMERIQUE);
+  const { appelApi: patchIntegrerActeDoubleNumerique } = useFetchApi(CONFIG_PATCH_INTEGRER_ACTE_DOUBLE_NUMERIQUE);
 
   const { appelApi: appelComposerProjetActeEtabli } = useFetchApi(CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE_ETABLI);
   const { appelApi: appelIntegrerProjetActeEtabli } = useFetchApi(CONFIG_PATCH_INTEGRER_DOCUMENT_FINAL_PROJET_ACTE_ETABLI);
@@ -123,6 +127,11 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
     MISE_A_JOUR: {
       composer: appelComposerMentions,
       enregistrer: appelIntegrerMentions,
+      modifierStatut: appelModifierStatutRequeteMiseAJour
+    },
+    DOUBLE_NUMERIQUE: {
+      composer: patchComposerDoubleNumerique,
+      enregistrer: patchIntegrerActeDoubleNumerique,
       modifierStatut: appelModifierStatutRequeteMiseAJour
     },
     ETABLI: {
@@ -278,11 +287,11 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
 
         switch (typeSignature) {
           case "MISE_A_JOUR":
+          case "DOUBLE_NUMERIQUE":
             appelModifierStatutRequeteMiseAJour({
               parametres: { path: { idRequete: idRequete, statut: StatutRequete.TRAITEE_MIS_A_JOUR.nom } },
               ...apresModificationStatut
             });
-
             return;
 
           case "ETABLI":
@@ -298,7 +307,6 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
                 statut: "termine"
               }));
             }
-
             return;
 
           case "TRANSCRIT":
@@ -309,7 +317,6 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
                 apresSignature(true);
               }
             });
-
             return;
 
           default:
@@ -410,7 +417,7 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
       );
 
     case "termine": {
-      const estTypeSignatureMajOuEtabli = ["ETABLI", "MISE_A_JOUR"].includes(typeSignature);
+      const estTypeSignatureMajOuEtabli = ["ETABLI", "MISE_A_JOUR", "DOUBLE_NUMERIQUE"].includes(typeSignature);
       return (
         <div className="text-center">
           {donneesSignature.erreur && (

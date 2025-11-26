@@ -5,7 +5,6 @@ import { describe, expect, test, vi } from "vitest";
 import AnalyseMarginaleFormulaire from "../../../../../../composants/pages/requetesMiseAJour/formulaires/mentions/AnalyseMarginaleFormulaire/AnalyseMarginaleFormulaire";
 
 const setDonneesAnalyseMarginale = vi.fn();
-const setAnalyseMarginaleModifiee = vi.fn();
 
 const renderSnapshot = async (valeursInitiales: any): Promise<ChildNode | null> => {
   const { container } = await act(async () =>
@@ -13,7 +12,6 @@ const renderSnapshot = async (valeursInitiales: any): Promise<ChildNode | null> 
       <div>
         <AnalyseMarginaleFormulaire
           setDonneesAnalyseMarginale={setDonneesAnalyseMarginale}
-          setAnalyseMarginaleModifiee={setAnalyseMarginaleModifiee}
           motif="motif de test"
           valeursInitiales={valeursInitiales}
         />
@@ -62,7 +60,6 @@ describe("Tests du formulaire AnalyseMarginaleFormulaire", () => {
     await userEvent.click(boutonModifier);
 
     expect(setDonneesAnalyseMarginale).toHaveBeenCalled();
-    expect(setAnalyseMarginaleModifiee).toHaveBeenCalled();
 
     const valeursEnvoyee = setDonneesAnalyseMarginale.mock.calls[0][0];
 

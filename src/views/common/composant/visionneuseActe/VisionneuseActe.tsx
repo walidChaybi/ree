@@ -1,7 +1,7 @@
 import { compositionApi } from "@api/appels/compositionApi";
 import { CONFIG_GET_CORPS_ACTE_IMAGE } from "@api/configurations/etatCivil/acte/GetCorpsActeImage";
 import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_REPRIS } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeReprisConfigApi";
-import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteConfigApi";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
 import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import React, { useEffect, useState } from "react";
@@ -27,7 +27,7 @@ const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeActe, es
   const [donneesPourCompositionActeTexte, setDonneesPourCompositionActeTexte] = useState<string | null>(null);
 
   const { appelApi: recupererCorpsActeImage } = useFetchApi(CONFIG_GET_CORPS_ACTE_IMAGE);
-  const { appelApi: recupererDonneesCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE);
+  const { appelApi: recupererDonneesCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR);
   const { appelApi: recupererDonneesPourCompositionActeRepris } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_REPRIS);
 
   useEffect(() => {

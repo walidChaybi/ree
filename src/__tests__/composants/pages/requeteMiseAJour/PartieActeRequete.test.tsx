@@ -1,4 +1,4 @@
-import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteConfigApi";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -46,7 +46,7 @@ describe("PartieActeRequete", () => {
     );
 
     MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE,
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
       { path: { idActe } },
       {
         data: `{

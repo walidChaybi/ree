@@ -1,8 +1,8 @@
 import { CONFIG_POST_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PostRequeteMiseAJourApiConfig";
+import { verifierDroitsMiseAJourActe } from "@composants/pages/requetesMiseAJour/droitsMiseAJourUtils";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
-import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { EOptionMiseAJourActe, OptionMiseAJourActe } from "@model/etatcivil/enum/OptionMiseAJourActe";
 import { TitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
@@ -58,20 +58,6 @@ export interface IDataFicheProps {
   categorie: ETypeFiche;
 }
 
-export const estActeEligibleFormuleDIntegration = ({
-  origine,
-  referenceActe,
-  referenceRegistreSansNumeroDActe,
-  type
-}: FicheActe): boolean => {
-  const estOrigineScecDocs = origine === "SCEC_DOCS";
-  const referenceActePresente = Boolean(referenceActe?.trim());
-  const referenceRegistreSansNumeroDActeAbsente = !referenceRegistreSansNumeroDActe?.trim();
-  const estTypeTexte = type === ETypeActe.TEXTE;
-
-  return estOrigineScecDocs && referenceActePresente && referenceRegistreSansNumeroDActeAbsente && estTypeTexte;
-};
-
 export const FichePage: React.FC<IFichePageProps> = ({
   datasFiches,
   numeroRequete,
@@ -111,35 +97,15 @@ export const FichePage: React.FC<IFichePageProps> = ({
   const { bandeauFiche, panelsFiche, alertes, visuBoutonAlertes } = setFiche(utilisateurConnecte, ficheCourante, fiche);
 
   const droitsMiseAJour = useMemo(() => {
-    const droitMentions = utilisateurConnecte.estHabilitePour({ leDroit: Droit.METTRE_A_JOUR_ACTE });
-    const droitAnalyseMarginale = utilisateurConnecte.estHabilitePour({ leDroit: Droit.MODIFIER_ANALYSE_MARGINALE });
-
-    if (!fiche) {
+    if (!fiche || !(fiche instanceof FicheActe) || ficheCourante?.categorie !== ETypeFiche.ACTE) {
       return {
         autorise: false,
-        mentions: droitMentions,
-        AnalyseMarginale: droitAnalyseMarginale
+        peutMettreAJourMentions: false,
+        peutMettreAJourAnalyseMarginale: false
       };
     }
 
-    let autorise = false;
-
-    if (ficheCourante?.categorie === ETypeFiche.ACTE && "titulaires" in fiche && fiche.statut !== "BROUILLON") {
-      const estOrigineRece = fiche?.origine === "RECE";
-
-      const peutSignerFormuleIntegration =
-        estActeEligibleFormuleDIntegration(fiche) &&
-        droitMentions &&
-        utilisateurConnecte.estHabilitePour({ leDroit: Droit.MISE_A_JOUR_CREER_DOUBLE_NUMERIQUE });
-
-      autorise = (estOrigineRece && (droitMentions || droitAnalyseMarginale)) || peutSignerFormuleIntegration;
-    }
-
-    return {
-      autorise,
-      mentions: droitMentions,
-      AnalyseMarginale: droitAnalyseMarginale
-    };
+    return verifierDroitsMiseAJourActe(fiche, utilisateurConnecte);
   }, [fiche, ficheCourante, utilisateurConnecte]);
 
   useEffect(() => {
@@ -288,8 +254,8 @@ export const FichePage: React.FC<IFichePageProps> = ({
                   boutonLibelle="Mettre à jour"
                   className="menuMettreAJour"
                   options={OptionMiseAJourActe.commeOptions({
-                    mentions: droitsMiseAJour.mentions,
-                    analyseMarginale: droitsMiseAJour.AnalyseMarginale
+                    mentions: droitsMiseAJour.peutMettreAJourMentions,
+                    analyseMarginale: droitsMiseAJour.peutMettreAJourAnalyseMarginale
                   })}
                   onClickOption={option => setOptionMiseAJour(option as EOptionMiseAJourActe)}
                   anchorOrigin={{ vertical: "bottom", horizontal: "right" }}

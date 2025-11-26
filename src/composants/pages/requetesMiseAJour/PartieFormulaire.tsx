@@ -18,7 +18,6 @@ import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts
 import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../utils/AfficherMessage";
-import { estActeEligibleFormuleDIntegration } from "../../../views/pages/fiche/FichePage";
 import Bouton from "../../commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../commun/chargeurs/PageChargeur";
@@ -26,6 +25,7 @@ import ConteneurAvecBordure from "../../commun/conteneurs/formulaire/ConteneurAv
 import ConteneurModale from "../../commun/conteneurs/modale/ConteneurModale";
 import OngletsBouton from "../../commun/onglets/OngletsBouton";
 import OngletsContenu from "../../commun/onglets/OngletsContenu";
+import { estActeEligibleDoubleNumerique } from "./droitsMiseAJourUtils";
 import BoutonTerminerEtSigner from "./formulaires/BoutonTerminerEtSigner";
 import BoutonValiderEtTerminer from "./formulaires/BoutonValiderEtTerminer";
 import MentionForm, { ITitulaireMention } from "./formulaires/MentionForm";
@@ -84,7 +84,6 @@ const PartieFormulaire: React.FC = () => {
 
   const [afficherModaleAnalyseMarginale, setAfficherModaleAnalyseMarginale] = useState<boolean>(false);
   const [donneesAnalyseMarginale, setDonneesAnalyseMarginale] = useState<IAnalyseMarginaleMiseAJour | null>(null);
-  const [analyseMarginaleModifiee, setAnalyseMarginaleModifiee] = useState<boolean>(false);
   const [mentionsDeLActe, setMentionsDeLActe] = useState<IMentionMiseAJour[]>([]);
   const [mentionsDuTableau, setMentionsDuTableau] = useState<IMentionMiseAJour[]>([]);
   const [mentionEnCoursDeSaisie, setMentionEnCoursDeSaisie] = useState<IMentionEnCours | null>(null);
@@ -101,10 +100,11 @@ const PartieFormulaire: React.FC = () => {
 
   const acteEstEligibleFormuleDIntegrationEtUtilisateurALesDroits = useMemo(() => {
     if (acte !== null) {
-      return (
-        estActeEligibleFormuleDIntegration(acte) &&
-        utilisateurConnecte.estHabilitePour({ tousLesDroits: [Droit.METTRE_A_JOUR_ACTE, Droit.MISE_A_JOUR_CREER_DOUBLE_NUMERIQUE] })
-      );
+      const aLesDroits = utilisateurConnecte.estHabilitePour({
+        tousLesDroits: [Droit.METTRE_A_JOUR_ACTE, Droit.MISE_A_JOUR_CREER_DOUBLE_NUMERIQUE]
+      });
+
+      return estActeEligibleDoubleNumerique(acte) && aLesDroits;
     }
     return false;
   }, [acte, utilisateurConnecte]);
@@ -127,7 +127,7 @@ const PartieFormulaire: React.FC = () => {
   useEffect(() => {
     if (estMiseAJourAvecMentions) {
       let mentions: IMentionMiseAJour[];
-      const analyseMarginaleEstMiseAJour = afficherAnalyseMarginale && analyseMarginaleModifiee && donneesAnalyseMarginale !== null;
+      const analyseMarginaleEstMiseAJour = afficherAnalyseMarginale && donneesAnalyseMarginale !== null;
 
       // Mention saisie dans le formulaire de saisie
       if (mentionEnCoursDeSaisie?.mention) {
@@ -160,7 +160,8 @@ const PartieFormulaire: React.FC = () => {
           body: MiseAJourForm.versDto(
             idActe,
             [
-              ...(formuleDIntegration !== null
+              ...mentions,
+              ...(acteEstEligibleFormuleDIntegrationEtUtilisateurALesDroits && formuleDIntegration !== null
                 ? [
                     {
                       idTypeMention: formuleDIntegration.idTypeMention,
@@ -168,8 +169,7 @@ const PartieFormulaire: React.FC = () => {
                       texte: formuleDIntegration.texteFormule
                     }
                   ]
-                : []),
-              ...mentions
+                : [])
             ],
             donneesAnalyseMarginale,
             analyseMarginaleEstMiseAJour
@@ -339,7 +339,6 @@ const PartieFormulaire: React.FC = () => {
             <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.ANALYSE_MARGINALE}>
               <AnalyseMarginaleFormulaire
                 setDonneesAnalyseMarginale={setDonneesAnalyseMarginale}
-                setAnalyseMarginaleModifiee={setAnalyseMarginaleModifiee}
                 valeursInitiales={valeursInitialesFormulaireAnalyseMarginale}
                 motif={motif}
               />
@@ -348,7 +347,10 @@ const PartieFormulaire: React.FC = () => {
 
           <ConteneurBoutonBasDePage position="droite">
             {estMiseAJourAvecMentions ? (
-              <BoutonTerminerEtSigner saisieMentionEnCours={formulaireMentionEnCoursDeSaisie} />
+              <BoutonTerminerEtSigner
+                saisieMentionEnCours={formulaireMentionEnCoursDeSaisie}
+                acte={acte}
+              />
             ) : (
               <BoutonValiderEtTerminer disabled={!miseAJourEffectuee} />
             )}

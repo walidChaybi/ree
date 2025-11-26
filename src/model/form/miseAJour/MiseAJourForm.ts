@@ -112,7 +112,7 @@ const MiseAJourForm = {
         personneLiee: getPersonneLiee(mention.donneesAideSaisie?.champs),
         estSaisieAssistee: Boolean(Object.keys(mention.donneesAideSaisie?.champs ?? {}).length)
       })),
-      analyseMarginale: analyseMarginaleModifiee ? AnalyseMarginaleForm.versDto(analyseMarginale) : null
+      analyseMarginale: analyseMarginaleModifiee && analyseMarginale ? AnalyseMarginaleForm.versDto(analyseMarginale) : null
     })
 };
 

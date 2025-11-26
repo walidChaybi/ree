@@ -1,4 +1,3 @@
-import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { useFormikContext } from "formik";
 import { useEffect } from "react";
 import Bouton from "../../../../../commun/bouton/Bouton";
@@ -9,28 +8,12 @@ import ConteneurAvecBordure from "../../../../../commun/conteneurs/formulaire/Co
 import { IAnalyseMarginaleMiseAJour } from "../../../PartieFormulaire";
 
 interface IChampsAnalyseMarginaleFormulaireProps {
-  setAnalyseMarginaleModifiee: (estModifiee: boolean) => void;
   motif: string | null;
   nombreDeTitulaires?: number;
 }
 
-const ChampsAnalyseMarginaleFormulaire: React.FC<IChampsAnalyseMarginaleFormulaireProps> = ({
-  setAnalyseMarginaleModifiee,
-  motif,
-  nombreDeTitulaires = 1
-}) => {
-  const { values, initialValues, dirty, resetForm, isValid } = useFormikContext<IAnalyseMarginaleMiseAJour>();
-
-  useEffect(() => {
-    const { motif } = initialValues;
-
-    setAnalyseMarginaleModifiee(
-      ObjetFormulaire.valeursModifiees({
-        valeurs: motif ? values : { ...values, motif: "" },
-        valeursInitiales: motif ? initialValues : { ...initialValues, motif: "" }
-      })
-    );
-  }, [values, initialValues]);
+const ChampsAnalyseMarginaleFormulaire: React.FC<IChampsAnalyseMarginaleFormulaireProps> = ({ motif, nombreDeTitulaires = 1 }) => {
+  const { values, dirty, resetForm, isValid } = useFormikContext<IAnalyseMarginaleMiseAJour>();
 
   useEffect(() => {
     if (motif !== null) {

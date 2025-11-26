@@ -53,6 +53,7 @@ export interface IFicheActeDto {
   corpsTexte?: ICorpsTexte;
   referenceActe: string;
   referenceRegistreSansNumeroDActe?: string;
+  numeroActeElectronique?: string;
 }
 
 export class FicheActe {
@@ -95,7 +96,8 @@ export class FicheActe {
     public readonly evenement: IEvenementDto | null,
     public readonly detailMariage: DetailMariage | null,
     public readonly estReecrit: boolean | null,
-    public readonly corpsTexte: ICorpsTexte | null
+    public readonly corpsTexte: ICorpsTexte | null,
+    public readonly numeroActeElectronique: string | null
   ) {}
 
   public static readonly depuisDto = (ficheActe: IFicheActeDto): FicheActe | null => {
@@ -142,7 +144,8 @@ export class FicheActe {
       ficheActe.evenement ?? null,
       ficheActe.detailMariage ? DetailMariage.depuisDto(ficheActe.detailMariage) : null,
       ficheActe.estReecrit ?? null,
-      ficheActe.corpsTexte ?? null
+      ficheActe.corpsTexte ?? null,
+      ficheActe.numeroActeElectronique ?? null
     );
   };
 

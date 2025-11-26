@@ -1,5 +1,5 @@
 import { compositionApi } from "@api/appels/compositionApi";
-import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteConfigApi";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
 import AffichageDocument from "@composants/commun/affichageDocument/AffichageDocument";
 import OngletsContenu from "@composants/commun/onglets/OngletsContenu";
 import { useContext, useEffect, useState } from "react";
@@ -17,7 +17,7 @@ const OngletActe: React.FC<IOngletActeProps> = ({ estActif }) => {
   const { idActe, estActeSigne } = useContext(EditionMiseAJourContext.Valeurs);
   const [contenuActe, setContenuActe] = useState<string | null>(null);
 
-  const { appelApi: recupererDonneesCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE);
+  const { appelApi: recupererDonneesCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR);
 
   useEffect(() => {
     if (!idActe || (contenuActe !== null && !estActeSigne)) return;

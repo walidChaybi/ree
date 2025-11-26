@@ -7,17 +7,11 @@ import ChampsAnalyseMarginaleFormulaire from "./ChampsAnalyseMarginaleFormulaire
 
 interface IAnalyseMarginaleFormProps {
   setDonneesAnalyseMarginale: (data: IAnalyseMarginaleMiseAJour) => void;
-  setAnalyseMarginaleModifiee: (estModifiee: boolean) => void;
   valeursInitiales: IAnalyseMarginaleMiseAJour | null;
   motif: string | null;
 }
 
-const AnalyseMarginaleFormulaire: React.FC<IAnalyseMarginaleFormProps> = ({
-  setDonneesAnalyseMarginale,
-  setAnalyseMarginaleModifiee,
-  valeursInitiales,
-  motif
-}) => (
+const AnalyseMarginaleFormulaire: React.FC<IAnalyseMarginaleFormProps> = ({ setDonneesAnalyseMarginale, valeursInitiales, motif }) => (
   <>
     {valeursInitiales === null ? (
       <ComposantChargeur />
@@ -33,7 +27,6 @@ const AnalyseMarginaleFormulaire: React.FC<IAnalyseMarginaleFormProps> = ({
       >
         <Form>
           <ChampsAnalyseMarginaleFormulaire
-            setAnalyseMarginaleModifiee={setAnalyseMarginaleModifiee}
             motif={motif}
             nombreDeTitulaires={valeursInitiales.titulaires.length}
           />
