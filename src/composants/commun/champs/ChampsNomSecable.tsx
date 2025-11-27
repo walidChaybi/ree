@@ -1,4 +1,3 @@
-import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { DEUX, UN } from "@util/Utils";
 import { FormikErrors, FormikValues, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
@@ -21,14 +20,17 @@ interface IChampsNomSecableProps {
   afficherInfo?: boolean;
 }
 
-const valeurChamps = (valeurs: FormikValues, chemin: string) =>
-  chemin.split(".").reduce((valeur: string | boolean | FormikValues, partieChemin: string) => {
+const valeurChamps = (valeurs: FormikValues, chemin: string) => {
+  const partiesChemin = chemin.replace(/\[(\d+)\]/g, ".$1").split(".");
+
+  return partiesChemin.reduce((valeur: string | boolean | FormikValues, partie: string) => {
     if (valeur instanceof Object) {
-      return valeur[partieChemin] ?? "";
+      return valeur[partie] ?? "";
     }
 
     return valeur;
   }, valeurs);
+};
 
 const mettreAJourChamps = (
   nomChamps: string,
@@ -51,7 +53,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
   const valeurNomPartie1 = valeurChamps(values, nomPartie1.name) as string;
   const valeurNomPartie2 = valeurChamps(values, nomPartie2.name) as string;
 
-  const estSecable = Boolean(ObjetFormulaire.recupererValeur({ valeurs: values, cleAttribut: secable.name }));
+  const estSecable = Boolean(valeurChamps(values, secable.name));
 
   const tailleNomPartie1 = valeurNomPartie1.split(" ").filter(Boolean).length;
   const tailleNomPartie2 = valeurNomPartie2.split(" ").filter(Boolean).length;

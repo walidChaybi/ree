@@ -429,11 +429,10 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                               class=""
                             >
                               <label
-                                class="flex w-fit text-start cursor-default opacity-60"
+                                class="flex w-fit text-start cursor-pointer"
                               >
                                 <input
-                                  class="cursor-default"
-                                  disabled=""
+                                  class="cursor-pointer accent-bleu-sombre"
                                   name="titulaires[0].nomSecable"
                                   type="checkbox"
                                   value="false"
@@ -641,9 +640,6 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                       value=""
                     />
                   </div>
-                  <div
-                    class="text-start text-sm text-rouge"
-                  />
                 </div>
                 <div
                   class="flex justify-between pt-6"
