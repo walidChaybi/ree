@@ -109,6 +109,31 @@ const PartieFormulaire: React.FC = () => {
     return false;
   }, [acte, utilisateurConnecte]);
 
+  const recupererMentions = (analyseMarginaleEstMiseAJour: boolean): IMentionMiseAJour[] => {
+    // Mention saisie dans le formulaire de saisie
+    if (mentionEnCoursDeSaisie?.mention) {
+      // Mention modifiée
+      if (
+        typeof mentionEnCoursDeSaisie.index === "number" &&
+        mentionsDeLActe[mentionEnCoursDeSaisie.index] !== mentionEnCoursDeSaisie.mention
+      ) {
+        return mentionsDeLActe.map((mention, index) => (index === mentionEnCoursDeSaisie.index ? mentionEnCoursDeSaisie.mention : mention));
+
+        // Mention ajoutée
+      } else {
+        return [...mentionsDeLActe, mentionEnCoursDeSaisie.mention];
+      }
+
+      // Analyse marginale modifiée
+    } else if (analyseMarginaleEstMiseAJour) {
+      return mentionsDeLActe;
+
+      // Ordre des mentions modifié ou mention supprimée
+    } else {
+      return mentionsDuTableau;
+    }
+  };
+
   useEffect(() => {
     if (acteEstEligibleFormuleDIntegrationEtUtilisateurALesDroits && formuleDIntegration === null) {
       getFormuleIntegrationRece({
@@ -126,32 +151,9 @@ const PartieFormulaire: React.FC = () => {
 
   useEffect(() => {
     if (estMiseAJourAvecMentions) {
-      let mentions: IMentionMiseAJour[];
       const analyseMarginaleEstMiseAJour = afficherAnalyseMarginale && donneesAnalyseMarginale !== null;
 
-      // Mention saisie dans le formulaire de saisie
-      if (mentionEnCoursDeSaisie?.mention) {
-        // Mention modifiée
-        if (typeof mentionEnCoursDeSaisie.index === "number") {
-          if (mentionsDeLActe[mentionEnCoursDeSaisie.index] === mentionEnCoursDeSaisie.mention) return;
-
-          mentions = mentionsDeLActe.map((mention, index) =>
-            index === mentionEnCoursDeSaisie.index ? mentionEnCoursDeSaisie.mention : mention
-          );
-
-          // Mention ajoutée
-        } else {
-          mentions = [...mentionsDeLActe, mentionEnCoursDeSaisie.mention];
-        }
-
-        // Analyse marginale modifiée
-      } else if (analyseMarginaleEstMiseAJour) {
-        mentions = mentionsDeLActe;
-
-        // Ordre des mentions modifié ou mention supprimée
-      } else {
-        mentions = mentionsDuTableau;
-      }
+      const mentions = recupererMentions(analyseMarginaleEstMiseAJour);
 
       if (!mentions.length) return;
 
