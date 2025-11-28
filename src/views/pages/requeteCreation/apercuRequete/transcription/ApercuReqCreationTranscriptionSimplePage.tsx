@@ -1,9 +1,9 @@
+import BoutonRetour from "@composants/commun/bouton/BoutonRetour";
 import { Droit } from "@model/agent/enum/Droit";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
-import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";

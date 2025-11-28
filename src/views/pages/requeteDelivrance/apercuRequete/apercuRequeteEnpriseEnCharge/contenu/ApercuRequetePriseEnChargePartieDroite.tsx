@@ -1,4 +1,5 @@
 import { CONFIG_GET_INSCRIPTIONS_RC_DE_LA_PERSONNE } from "@api/configurations/etatCivil/personnes/GetInscriptionsRCDeLaPersonneConfigApi";
+import BoutonRetour from "@composants/commun/bouton/BoutonRetour";
 import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IInscriptionRc, mappingInscriptionsRCDepuisFicheRcDto } from "@model/etatcivil/rcrca/IInscriptionRC";
@@ -9,7 +10,6 @@ import { aplatirTableau } from "@util/Utils";
 import { AlertesActes } from "@views/common/composant/alertesActe/AlertesActes";
 import { IGetAlertesActeApiHookParameters } from "@views/common/hook/alertes/GetAlertesActeApiHook";
 import { IGetTitulairesActeHookParams, useGetTitulairesActeApiHook } from "@views/common/hook/repertoires/TitulairesActeHook";
-import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import React, { useCallback, useEffect, useState } from "react";
 import useFetchApi from "../../../../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../../../../utils/AfficherMessage";

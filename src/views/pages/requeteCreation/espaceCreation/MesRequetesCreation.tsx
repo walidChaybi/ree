@@ -1,4 +1,5 @@
 import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
+import BoutonRetour from "@composants/commun/bouton/BoutonRetour";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import {
   NavigationApercuReqCreationParams,
@@ -9,7 +10,6 @@ import {
   useCreationActionMiseAjourStatutEtRedirectionHook
 } from "@views/common/hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";

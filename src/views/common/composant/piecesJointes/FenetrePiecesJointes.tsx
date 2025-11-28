@@ -36,7 +36,3 @@ export const FenetrePiecesJointes: React.FC<FenetrePieceProps> = props => {
     </FenetreExterne>
   );
 };
-
-const onClose = (props: React.PropsWithChildren<FenetrePieceProps>) => {
-  props.toggleFenetre();
-};
