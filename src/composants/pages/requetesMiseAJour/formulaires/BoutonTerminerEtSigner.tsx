@@ -37,7 +37,7 @@ const BoutonTerminerEtSigner: React.FC<IBoutonTerminerEtSignerProps> = ({ saisie
         {"Terminer et signer"}
       </Bouton>
       {modaleOuverte && (
-        <ConteneurModale fermerModale={() => setModaleOuverte(false)}>
+        <ConteneurModale>
           <div className="border-3 w-[34rem] max-w-full rounded-xl border-solid border-bleu-sombre bg-blanc p-5">
             <h2 className="m-0 mb-4 text-center font-medium text-bleu-sombre">Signature des mentions</h2>
             <SignatureDocument
