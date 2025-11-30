@@ -1,7 +1,0 @@
-commonLabels:
-  composant: apache
-
-resources:
-  - rece-ui-apache.yaml
-  - deploy.yaml
-  - service.yaml
