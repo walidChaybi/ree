@@ -1,180 +1,182 @@
-import { compositionApi } from "@api/appels/compositionApi";
-import {
-  CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-  IDonneesCompositionActe
-} from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
+import { CONFIG_POST_COMPOSITION_ACTE_IMAGE_DOUBLE_NUMERIQUE } from "@api/configurations/composition/PostCompositionActeImageDoubleNumeriqueConfigApi";
+import { CONFIG_POST_COMPOSITION_ACTE_TEXTE } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
 import { CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF } from "@api/configurations/etatCivil/acte/GetImagesActeFormatTiffConfigApi";
-import AffichageDocument from "@composants/commun/affichageDocument/AffichageDocument";
-import OngletsContenu from "@composants/commun/onglets/OngletsContenu";
-import { IImage } from "@model/etatcivil/acte/imageActe/IImage";
-import React, { useContext, useEffect, useState } from "react";
-import { FiEye, FiFileText, FiType } from "react-icons/fi";
-import { EditionMiseAJourContext } from "../../../../contexts/EditionMiseAJourContextProvider";
-import useFetchApi from "../../../../hooks/api/FetchApiHook";
-import { EMimeType } from "../../../../ressources/EMimeType";
-import AfficherMessage from "../../../../utils/AfficherMessage";
-import { nettoyerTexteSelectionne } from "../../../../utils/SelectionTexteUtils";
+import OngletActeMisAJour from "@composants/pages/requetesMiseAJour/onglets/OngletActeMisAJour";
+import { MockApi } from "@mock/appelsApi/MockApi";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { imageTiffVideBase64 } from "@mock/data/ImageTiff";
+import { pdfVideBase64 } from "@mock/data/pdfVideBase64";
+import { fireEvent, render, waitFor } from "@testing-library/react";
+import { afterEach, describe, expect, test, vi } from "vitest";
+import {
+  EditionMiseAJourContext,
+  IEditionMiseAJourContext,
+  IEditionMiseAJourContextActions
+} from "../../../../../contexts/EditionMiseAJourContextProvider";
 
-interface IPropsOngletActeMisAJour {
-  estActif: boolean;
-}
+const donneesCompositionAvecTexte = JSON.stringify({
+  texte_corps_acte: "Corps de l'acte pour affichage texte",
+  reference_acte: "REF-RECE",
+  reference_registre_papier: "REF-REG",
+  mentions: "Mentions"
+});
 
-type ModeAffichage = "pdf" | "texte";
+const donneesCompositionSansTexte = JSON.stringify({
+  reference_acte: "REF-RECE",
+  reference_registre_papier: "REF-REG",
+  mentions: "Mentions"
+});
 
-const OngletActeMisAJour: React.FC<IPropsOngletActeMisAJour> = ({ estActif }) => {
-  const { idActe, composerActeMisAJour, estEligibleDoubleNumerique, estActeSigne, typeActe } = useContext(
-    EditionMiseAJourContext.Valeurs
-  );
-  const { setComposerActeMisAJour, extraireTexte } = useContext(EditionMiseAJourContext.Actions);
+const imagesTiffMock = [{ contenu: imageTiffVideBase64, noPage: 1 }];
 
-  const [contenuPdf, setContenuPdf] = useState<string | null>(null);
-  const [donneesTextuelles, setDonneesTextuelles] = useState<IDonneesCompositionActe | null>(null);
-  const [modeAffichage, setModeAffichage] = useState<ModeAffichage>("pdf");
+const corpsDoubleNumeriqueAttendu = {
+  corpsImage: [imageTiffVideBase64],
+  referenceRece: "REF-RECE",
+  referenceRegistre: "REF-REG",
+  mentions: "Mentions"
+};
 
-  const { appelApi: recupererDonneesComposition } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR);
-  const { appelApi: recupererImagesTiff } = useFetchApi(CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF);
-
-  const composerActeImageDoubleNumerique = () => {
-    recupererImagesTiff({
-      parametres: { path: { idActe } },
-      apresSucces: (images: IImage[]) => {
-        recupererDonneesComposition({
-          parametres: { path: { idActe } },
-          apresSucces: reponse => {
-            const donnees: IDonneesCompositionActe = JSON.parse(reponse);
-
-            const corpsImage = images.toSorted((a, b) => a.noPage - b.noPage).map(image => image.contenu);
-
-            compositionApi
-              .getCompositionActeImageDoubleNumerique({
-                corpsImage,
-                referenceRece: donnees.reference_acte ?? "",
-                referenceRegistre: donnees.reference_registre_papier ?? "",
-                mentions: donnees.mentions ?? ""
-              })
-              .then(reponse => {
-                setContenuPdf(reponse.body.data.contenu ?? "");
-                setComposerActeMisAJour(false);
-              })
-              .catch(() => {
-                AfficherMessage.erreur("Impossible de générer le document PDF");
-              });
-          },
-          apresErreur: erreurs => AfficherMessage.erreur("Impossible de récupérer les données de l'acte", { erreurs })
-        });
-      },
-      apresErreur: erreurs => AfficherMessage.erreur("Impossible de récupérer les images de l'acte", { erreurs })
-    });
-  };
-
-  const composerActeTexte = () => {
-    recupererDonneesComposition({
-      parametres: { path: { idActe } },
-      apresSucces: reponse => {
-        const donnees: IDonneesCompositionActe = JSON.parse(reponse);
-
-        compositionApi
-          .getCompositionActeTexte(donnees)
-          .then(reponse => {
-            setContenuPdf(reponse.body.data.contenu ?? "");
-            setComposerActeMisAJour(false);
-          })
-          .catch(() => {
-            AfficherMessage.erreur("Impossible de générer le document PDF");
-          });
-
-        setDonneesTextuelles(donnees);
-      },
-      apresErreur: erreurs => AfficherMessage.erreur("Impossible de récupérer les données de l'acte", { erreurs })
-    });
-  };
-
-  useEffect(() => {
-    if (!composerActeMisAJour) return;
-
-    if (typeActe === "IMAGE" && estEligibleDoubleNumerique) {
-      composerActeImageDoubleNumerique();
-    } else {
-      composerActeTexte();
-    }
-  }, [composerActeMisAJour, idActe]);
-
-  const gererSelectionTexte = () => {
-    if (modeAffichage !== "texte" || !extraireTexte) return;
-
-    const selection = window.getSelection();
-    const texteSelectionne = selection?.toString();
-
-    if (!texteSelectionne) return;
-
-    const texteNettoye = nettoyerTexteSelectionne(texteSelectionne);
-    if (texteNettoye.length > 0) {
-      extraireTexte(texteNettoye);
-      selection?.removeAllRanges();
-    }
-  };
-
-  return (
-    <OngletsContenu estActif={estActif}>
-      <div className="flex h-[calc(100vh-16rem)] flex-col">
-        {estEligibleDoubleNumerique && !estActeSigne && (
-          <div className="flex items-center justify-end">
-            <button
-              onClick={() => setModeAffichage("pdf")}
-              className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-                modeAffichage === "pdf" ? "bg-bleu-sombre text-white" : "bg-gris-clair text-gris-sombre hover:bg-gray-200"
-              }`}
-              aria-label="Afficher en PDF"
-            >
-              <FiEye className="h-4 w-4" />
-              PDF
-            </button>
-
-            <button
-              onClick={() => setModeAffichage("texte")}
-              className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-                modeAffichage === "texte" ? "bg-bleu-sombre text-white" : "bg-gris-clair text-gris-sombre hover:bg-gray-200"
-              }`}
-              aria-label="Afficher en texte"
-            >
-              <FiType className="h-4 w-4" />
-              Texte
-            </button>
-          </div>
-        )}
-
-        <div className="flex-1 overflow-hidden bg-gray-50">
-          {modeAffichage === "pdf" || !estEligibleDoubleNumerique || estActeSigne ? (
-            <AffichageDocument
-              contenuBase64={contenuPdf}
-              typeZoom={90}
-              typeMime={EMimeType.APPLI_PDF}
-            />
-          ) : (
-            <div className="h-full w-full overflow-y-auto py-8">
-              <div
-                className="mx-auto min-h-[842px] w-[630px] bg-white px-12 py-16 shadow-lg"
-                onMouseUp={gererSelectionTexte}
-              >
-                {donneesTextuelles?.texte_corps_acte ? (
-                  <pre className="w-full whitespace-pre-wrap text-justify font-mono text-sm leading-relaxed text-gray-900">
-                    {donneesTextuelles.texte_corps_acte}
-                  </pre>
-                ) : (
-                  <div className="flex h-full items-center justify-center">
-                    <div className="text-center text-gray-400">
-                      <FiFileText className="mx-auto mb-3 h-12 w-12" />
-                      <p className="text-sm">Aucune donnée textuelle disponible</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </OngletsContenu>
+const mockPostCompositionActeTexte = (donneesJson: string) => {
+  MockApi.deployer(
+    CONFIG_POST_COMPOSITION_ACTE_TEXTE,
+    { body: JSON.parse(donneesJson) },
+    { data: { contenu: pdfVideBase64, nbPages: 1 } }
   );
 };
 
-export default OngletActeMisAJour;
+const setComposerActeMisAJour = vi.fn();
+
+const valeursEditionParDefaut: Partial<IEditionMiseAJourContext> = {
+  idActe: "acte-123",
+  composerActeMisAJour: false,
+  estEligibleDoubleNumerique: false,
+  estActeSigne: false,
+  typeActe: "TEXTE"
+};
+
+const actionsEdition: Partial<IEditionMiseAJourContextActions> = {
+  setComposerActeMisAJour,
+  extraireTexte: vi.fn()
+};
+
+describe("OngletActeMisAJour", () => {
+  const renderAvecContext = (surchargesContexte: Partial<IEditionMiseAJourContext> = {}, estActif = true) => {
+    return render(
+      <MockRECEContextProvider>
+        <EditionMiseAJourContext.Valeurs.Provider value={{ ...valeursEditionParDefaut, ...surchargesContexte } as IEditionMiseAJourContext}>
+          <EditionMiseAJourContext.Actions.Provider value={actionsEdition as IEditionMiseAJourContextActions}>
+            <OngletActeMisAJour estActif={estActif} />
+          </EditionMiseAJourContext.Actions.Provider>
+        </EditionMiseAJourContext.Valeurs.Provider>
+      </MockRECEContextProvider>
+    );
+  };
+
+  afterEach(() => {
+    MockApi.stopMock();
+    vi.clearAllMocks();
+  });
+
+  test("DOIT afficher 'Aucun document à afficher' QUAND aucune composition n'est demandée", () => {
+    const { getByText } = renderAvecContext({ composerActeMisAJour: false });
+    expect(getByText("Aucun document à afficher")).toBeDefined();
+  });
+
+  test("DOIT afficher le PDF QUAND la composition texte est demandée pour un acte de type TEXTE", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionSansTexte }
+    );
+    mockPostCompositionActeTexte(donneesCompositionSansTexte);
+
+    const { getByTitle } = renderAvecContext({ composerActeMisAJour: true, typeActe: "TEXTE" });
+
+    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
+    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
+  });
+
+  test("DOIT composer via le texte QUAND l'acte est de type IMAGE mais non éligible au double numérique", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionSansTexte }
+    );
+    mockPostCompositionActeTexte(donneesCompositionSansTexte);
+
+    const { getByTitle } = renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "IMAGE",
+      estEligibleDoubleNumerique: false
+    });
+
+    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
+    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
+  });
+
+  test("DOIT composer via images TIFF et double numérique QUAND l'acte est IMAGE et éligible au double numérique", async () => {
+    MockApi.deployer(CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF, { path: { idActe: "acte-123" } }, { data: imagesTiffMock });
+
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionSansTexte }
+    );
+
+    MockApi.deployer(
+      CONFIG_POST_COMPOSITION_ACTE_IMAGE_DOUBLE_NUMERIQUE,
+      { body: corpsDoubleNumeriqueAttendu },
+      { data: { contenu: pdfVideBase64, nbPages: 1 } }
+    );
+
+    const { getByTitle } = renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "IMAGE",
+      estEligibleDoubleNumerique: true
+    });
+
+    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
+    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
+  });
+
+  test("DOIT proposer le mode texte QUAND double numérique et acte non signé", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionAvecTexte }
+    );
+    mockPostCompositionActeTexte(donneesCompositionAvecTexte);
+
+    const { getByLabelText, getByText } = renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "TEXTE",
+      estEligibleDoubleNumerique: true
+    });
+
+    await waitFor(() => expect(getByLabelText("Afficher en texte")).toBeDefined());
+
+    fireEvent.click(getByLabelText("Afficher en texte"));
+
+    await waitFor(() => expect(getByText("Corps de l'acte pour affichage texte")).toBeDefined());
+  });
+
+  test("NE DOIT pas afficher le sélecteur PDF/Texte QUAND l'acte est signé", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionAvecTexte }
+    );
+    mockPostCompositionActeTexte(donneesCompositionAvecTexte);
+
+    const { queryByLabelText, getByTitle } = renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "TEXTE",
+      estEligibleDoubleNumerique: true,
+      estActeSigne: true
+    });
+
+    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
+    expect(queryByLabelText("Afficher en texte")).toBeNull();
+  });
+});
