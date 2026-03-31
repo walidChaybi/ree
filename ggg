@@ -1,182 +1,283 @@
-import { CONFIG_POST_COMPOSITION_ACTE_IMAGE_DOUBLE_NUMERIQUE } from "@api/configurations/composition/PostCompositionActeImageDoubleNumeriqueConfigApi";
-import { CONFIG_POST_COMPOSITION_ACTE_TEXTE } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
-import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
-import { CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF } from "@api/configurations/etatCivil/acte/GetImagesActeFormatTiffConfigApi";
-import OngletActeMisAJour from "@composants/pages/requetesMiseAJour/onglets/OngletActeMisAJour";
+import { CONFIG_PATCH_RECTIFICATIONS_INFOS_ACTE } from "@api/configurations/etatCivil/acte/PatchRectificationsInfosActeConfigApi";
+import VerificationDonnees from "@composants/pages/requetesMiseAJour/formulaires/VerificationDonnees/VerificationDonnees";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { imageTiffVideBase64 } from "@mock/data/ImageTiff";
-import { pdfVideBase64 } from "@mock/data/pdfVideBase64";
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
+import { Droit } from "@model/agent/enum/Droit";
+import { PrenomsForm } from "@model/form/commun/PrenomsForm";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import {
+  ECleOngletsMiseAJour,
   EditionMiseAJourContext,
-  IEditionMiseAJourContext,
-  IEditionMiseAJourContextActions
-} from "../../../../../contexts/EditionMiseAJourContextProvider";
+  IEditionMiseAJourContext
+} from "../../../../../../contexts/EditionMiseAJourContextProvider";
 
-const donneesCompositionAvecTexte = JSON.stringify({
-  texte_corps_acte: "Corps de l'acte pour affichage texte",
-  reference_acte: "REF-RECE",
-  reference_registre_papier: "REF-REG",
-  mentions: "Mentions"
+vi.mock("../../../../../hooks/requetesMiseAJour/VerificationFormulaireHook", () => ({
+  useVerificationFormulaire: () => ({
+    champActif: null,
+    derniereAction: null,
+    gererFocusChamp: vi.fn()
+  })
+}));
+
+vi.mock("@model/form/miseAJour/MiseAJourModificationForm", async () => {
+  const actual = await vi.importActual("@model/form/miseAJour/MiseAJourModificationForm");
+  return {
+    ...actual,
+    MiseAJourModificationForm: {
+      valeursInitiales: vi.fn((acte, verificationEffectuee) => {
+        return {
+          typeActe: acte.nature,
+          verificationEffectuee: verificationEffectuee || false,
+          naissance: {
+            evenement: {
+              date: { jour: "01", mois: "01", annee: "2000", heure: "10", minute: "30" },
+              lieuNaissance: { lieuReprise: "Paris", pays: "France" }
+            },
+            titulaire: {
+              nom: "DUPONT",
+              prenoms: PrenomsForm.valeursInitiales(),
+              sexe: "MASCULIN"
+            },
+            parent1: {
+              nom: "MARTIN",
+              prenoms: PrenomsForm.valeursInitiales(),
+              sexe: "MASCULIN",
+              dateNaissance: { jour: "01", mois: "01", annee: "1970" },
+              age: "30",
+              lieuNaissance: { lieuReprise: "Lyon", pays: "France" },
+              profession: "Ingénieur"
+            },
+            parent2: {
+              nom: "BERNARD",
+              prenoms: PrenomsForm.valeursInitiales(),
+              sexe: "FEMININ",
+              dateNaissance: { jour: "01", mois: "01", annee: "1972" },
+              age: "28",
+              lieuNaissance: { lieuReprise: "Marseille", pays: "France" },
+              profession: "Médecin"
+            }
+          },
+          mariage: {
+            evenement: {
+              date: { jour: "01", mois: "01", annee: "2020", heure: "14", minute: "00" },
+              lieuNaissance: { lieuReprise: "Paris", pays: "France" }
+            },
+            epoux1: {
+              nom: "DUPONT",
+              prenoms: PrenomsForm.valeursInitiales(),
+              dateNaissance: { jour: "01", mois: "01", annee: "1990" },
+              age: "30",
+              lieuNaissance: { lieuReprise: "Paris", pays: "France" },
+              profession: "Ingénieur",
+              pere: { nom: "DUPONT", prenoms: PrenomsForm.valeursInitiales() },
+              mere: { nom: "MARTIN", prenoms: PrenomsForm.valeursInitiales() },
+              adoptePar: ""
+            },
+            epoux2: {
+              nom: "BERNARD",
+              prenoms: PrenomsForm.valeursInitiales(),
+              dateNaissance: { jour: "01", mois: "01", annee: "1992" },
+              age: "28",
+              lieuNaissance: { lieuReprise: "Lyon", pays: "France" },
+              profession: "Médecin",
+              pere: { nom: "BERNARD", prenoms: PrenomsForm.valeursInitiales() },
+              mere: { nom: "DURAND", prenoms: PrenomsForm.valeursInitiales() },
+              adoptePar: ""
+            },
+            contratMariage: { existenceContrat: "OUI", enonciations: "Séparation de biens" },
+            informationsComplementaires: { dateCreation: "2024-01-01" },
+            verificationEffectuee: false
+          },
+          deces: {
+            evenement: {
+              date: { jour: "01", mois: "01", annee: "2023" },
+              lieuNaissance: { lieuReprise: "Paris" }
+            },
+            defunt: {
+              nom: "DUPONT",
+              prenoms: PrenomsForm.valeursInitiales(),
+              dateNaissance: { jour: "01", mois: "01", annee: "1950" },
+              lieuNaissance: { lieuReprise: "Paris" },
+              profession: "Retraité",
+              pere: { nom: "DUPONT", prenoms: PrenomsForm.valeursInitiales() },
+              mere: { nom: "MARTIN", prenoms: PrenomsForm.valeursInitiales() }
+            },
+            dernierConjoint: { nom: "", prenoms: "" },
+            mentions: []
+          }
+        };
+      }),
+      versDtoPatchNaissance: vi.fn(() => ({ nature: "NAISSANCE", rectifications: {} })),
+      versDtoPatchMariage: vi.fn(() => ({ nature: "MARIAGE", rectifications: {} })),
+      versDtoPatchDeces: vi.fn(() => ({ nature: "DECES", rectifications: {} }))
+    }
+  };
 });
 
-const donneesCompositionSansTexte = JSON.stringify({
-  reference_acte: "REF-RECE",
-  reference_registre_papier: "REF-REG",
-  mentions: "Mentions"
-});
+describe("VerificationDonnees", () => {
+  const mockSetVerificationDonneesEffectuee = vi.fn();
+  const mockChangerOnglet = vi.fn();
+  const mockSetEstActeSigne = vi.fn();
+  const mockDesactiverBlocker = vi.fn();
 
-const imagesTiffMock = [{ contenu: imageTiffVideBase64, noPage: 1 }];
+  const defaultProps = {
+    miseAJourEffectuee: true,
+    verificationDonneesEffectuee: false,
+    setVerificationDonneesEffectuee: mockSetVerificationDonneesEffectuee,
+    saisieMentionEnCours: false,
+    verificationObligatoire: true
+  };
 
-const corpsDoubleNumeriqueAttendu = {
-  corpsImage: [imageTiffVideBase64],
-  referenceRece: "REF-RECE",
-  referenceRegistre: "REF-REG",
-  mentions: "Mentions"
-};
-
-const mockPostCompositionActeTexte = (donneesJson: string) => {
-  MockApi.deployer(
-    CONFIG_POST_COMPOSITION_ACTE_TEXTE,
-    { body: JSON.parse(donneesJson) },
-    { data: { contenu: pdfVideBase64, nbPages: 1 } }
-  );
-};
-
-const setComposerActeMisAJour = vi.fn();
-
-const valeursEditionParDefaut: Partial<IEditionMiseAJourContext> = {
-  idActe: "acte-123",
-  composerActeMisAJour: false,
-  estEligibleDoubleNumerique: false,
-  estActeSigne: false,
-  typeActe: "TEXTE"
-};
-
-const actionsEdition: Partial<IEditionMiseAJourContextActions> = {
-  setComposerActeMisAJour,
-  extraireTexte: vi.fn()
-};
-
-describe("OngletActeMisAJour", () => {
-  const renderAvecContext = (surchargesContexte: Partial<IEditionMiseAJourContext> = {}, estActif = true) => {
-    return render(
-      <MockRECEContextProvider>
-        <EditionMiseAJourContext.Valeurs.Provider value={{ ...valeursEditionParDefaut, ...surchargesContexte } as IEditionMiseAJourContext}>
-          <EditionMiseAJourContext.Actions.Provider value={actionsEdition as IEditionMiseAJourContextActions}>
-            <OngletActeMisAJour estActif={estActif} />
+  const renderComp = (acte: any, propsOverride = {}, droits: Droit[] = [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]) =>
+    render(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroits(droits).generer()}>
+        <EditionMiseAJourContext.Valeurs.Provider
+          value={
+            {
+              idActe: "1010",
+              idRequete: "req-001",
+              miseAJourEffectuee: true,
+              estMiseAJourAvecMentions: true,
+              ongletsActifs: { actes: ECleOngletsMiseAJour.ACTE, formulaires: ECleOngletsMiseAJour.VERIFICATION_DONNEES }
+            } as IEditionMiseAJourContext
+          }
+        >
+          <EditionMiseAJourContext.Actions.Provider
+            value={{
+              changerOnglet: mockChangerOnglet,
+              setEstActeSigne: mockSetEstActeSigne,
+              desactiverBlocker: mockDesactiverBlocker,
+              activerOngletActeMisAJour: vi.fn(),
+              setComposerActeMisAJour: vi.fn()
+            }}
+          >
+            <VerificationDonnees
+              acte={acte}
+              {...defaultProps}
+              {...propsOverride}
+            />
           </EditionMiseAJourContext.Actions.Provider>
         </EditionMiseAJourContext.Valeurs.Provider>
       </MockRECEContextProvider>
     );
-  };
 
   afterEach(() => {
     MockApi.stopMock();
     vi.clearAllMocks();
   });
 
-  test("DOIT afficher 'Aucun document à afficher' QUAND aucune composition n'est demandée", () => {
-    const { getByText } = renderAvecContext({ composerActeMisAJour: false });
-    expect(getByText("Aucun document à afficher")).toBeDefined();
+  test("affiche les champs NAISSANCE", () => {
+    const { container } = renderComp(new MockFicheActeBuilder().deNature("NAISSANCE").generer());
+    expect(container).toMatchSnapshot();
   });
 
-  test("DOIT afficher le PDF QUAND la composition texte est demandée pour un acte de type TEXTE", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionSansTexte }
-    );
-    mockPostCompositionActeTexte(donneesCompositionSansTexte);
-
-    const { getByTitle } = renderAvecContext({ composerActeMisAJour: true, typeActe: "TEXTE" });
-
-    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
-    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
+  test("affiche les champs MARIAGE", () => {
+    const { container } = renderComp(new MockFicheActeBuilder().deNature("MARIAGE").generer());
+    expect(container).toMatchSnapshot();
   });
 
-  test("DOIT composer via le texte QUAND l'acte est de type IMAGE mais non éligible au double numérique", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionSansTexte }
-    );
-    mockPostCompositionActeTexte(donneesCompositionSansTexte);
+  test("affiche les champs DECES", () => {
+    const { container } = renderComp(new MockFicheActeBuilder().deNature("DECES").generer());
+    expect(container).toMatchSnapshot();
+  });
 
-    const { getByTitle } = renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "IMAGE",
-      estEligibleDoubleNumerique: false
+  test("nature inconnue - ne rend aucun champ specifique", () => {
+    const { container } = renderComp(new MockFicheActeBuilder().deNature("INCONNUE" as any).generer());
+    expect(container).toMatchSnapshot();
+  });
+
+  test("bouton desactive quand saisieMentionEnCours=true", () => {
+    renderComp(new MockFicheActeBuilder().deNature("NAISSANCE").generer(), { saisieMentionEnCours: true });
+    expect(screen.getByRole("button", { name: /Terminer et signer/i })).toHaveProperty("disabled", true);
+  });
+
+  test("bouton desactive quand miseAJourEffectuee=false", () => {
+    renderComp(new MockFicheActeBuilder().deNature("NAISSANCE").generer(), { miseAJourEffectuee: false });
+    expect(screen.getByRole("button", { name: /Terminer et signer/i })).toHaveProperty("disabled", true);
+  });
+
+  test("bouton desactive quand verificationObligatoire=true et verificationDonneesEffectuee=false", () => {
+    renderComp(new MockFicheActeBuilder().deNature("NAISSANCE").generer(), {
+      verificationObligatoire: true,
+      verificationDonneesEffectuee: false
     });
-
-    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
-    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
+    expect(screen.getByRole("button", { name: /Terminer et signer/i })).toHaveProperty("disabled", true);
   });
 
-  test("DOIT composer via images TIFF et double numérique QUAND l'acte est IMAGE et éligible au double numérique", async () => {
-    MockApi.deployer(CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF, { path: { idActe: "acte-123" } }, { data: imagesTiffMock });
-
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionSansTexte }
-    );
-
-    MockApi.deployer(
-      CONFIG_POST_COMPOSITION_ACTE_IMAGE_DOUBLE_NUMERIQUE,
-      { body: corpsDoubleNumeriqueAttendu },
-      { data: { contenu: pdfVideBase64, nbPages: 1 } }
-    );
-
-    const { getByTitle } = renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "IMAGE",
-      estEligibleDoubleNumerique: true
-    });
-
-    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
-    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
+  test("bouton active quand toutes les conditions sont remplies", () => {
+    renderComp(new MockFicheActeBuilder().deNature("NAISSANCE").generer(), { verificationDonneesEffectuee: true });
+    expect(screen.getByRole("button", { name: /Terminer et signer/i })).toHaveProperty("disabled", false);
   });
 
-  test("DOIT proposer le mode texte QUAND double numérique et acte non signé", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionAvecTexte }
-    );
-    mockPostCompositionActeTexte(donneesCompositionAvecTexte);
-
-    const { getByLabelText, getByText } = renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "TEXTE",
-      estEligibleDoubleNumerique: true
-    });
-
-    await waitFor(() => expect(getByLabelText("Afficher en texte")).toBeDefined());
-
-    fireEvent.click(getByLabelText("Afficher en texte"));
-
-    await waitFor(() => expect(getByText("Corps de l'acte pour affichage texte")).toBeDefined());
+  test("bouton masque sans droit SIGNER_MENTION", () => {
+    renderComp(new MockFicheActeBuilder().deNature("NAISSANCE").generer(), {}, [Droit.METTRE_A_JOUR_ACTE]);
+    expect(screen.queryByRole("button", { name: /Terminer et signer/i })).toBeNull();
   });
 
-  test("NE DOIT pas afficher le sélecteur PDF/Texte QUAND l'acte est signé", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionAvecTexte }
-    );
-    mockPostCompositionActeTexte(donneesCompositionAvecTexte);
+  test("bouton masque sans droit METTRE_A_JOUR_ACTE", () => {
+    renderComp(new MockFicheActeBuilder().deNature("NAISSANCE").generer(), {}, [Droit.SIGNER_MENTION]);
+    expect(screen.queryByRole("button", { name: /Terminer et signer/i })).toBeNull();
+  });
 
-    const { queryByLabelText, getByTitle } = renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "TEXTE",
-      estEligibleDoubleNumerique: true,
-      estActeSigne: true
+  test("soumission pour NAISSANCE double numerique ouvre la modale sans envoyer le PATCH immédiatement", async () => {
+    renderComp(new MockFicheActeBuilder().deType("TEXTE").deNature("NAISSANCE").generer(), { verificationDonneesEffectuee: true });
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /Terminer et signer/i }));
     });
+    await waitFor(() => {
+      expect(screen.getByText("Signature des mentions")).toBeDefined();
+    });
+    // La rectification PATCH est différée dans avantSignature — aucun appel API à ce stade
+    expect(MockApi.getMock().history.patch.length).toBe(0);
+  });
 
-    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
-    expect(queryByLabelText("Afficher en texte")).toBeNull();
+  test("soumission pour MARIAGE double numerique ouvre la modale sans envoyer le PATCH immédiatement", async () => {
+    renderComp(new MockFicheActeBuilder().deType("TEXTE").deNature("MARIAGE").generer(), { verificationDonneesEffectuee: true });
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /Terminer et signer/i }));
+    });
+    await waitFor(() => {
+      expect(screen.getByText("Signature des mentions")).toBeDefined();
+    });
+    expect(MockApi.getMock().history.patch.length).toBe(0);
+  });
+
+  test("soumission pour DECES double numerique ouvre la modale sans envoyer le PATCH immédiatement", async () => {
+    renderComp(new MockFicheActeBuilder().deType("TEXTE").deNature("DECES").generer(), { verificationDonneesEffectuee: true });
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /Terminer et signer/i }));
+    });
+    await waitFor(() => {
+      expect(screen.getByText("Signature des mentions")).toBeDefined();
+    });
+    expect(MockApi.getMock().history.patch.length).toBe(0);
+  });
+
+  test("nature inconnue double numerique ne ouvre pas modale", async () => {
+    const acte = new MockFicheActeBuilder().deType("TEXTE").deNature("INCONNUE").generer();
+    renderComp(acte, { verificationDonneesEffectuee: true });
+    const btn = screen.queryByRole("button", { name: /Terminer et signer/i });
+    if (btn) {
+      await act(async () => {
+        fireEvent.click(btn);
+      });
+      await waitFor(() => {
+        expect(screen.queryByText("Signature des mentions")).toBeNull();
+      });
+    }
+  });
+
+  test("snapshot avec miseAJourEffectuee=false", () => {
+    const { container } = renderComp(new MockFicheActeBuilder().deNature("NAISSANCE").generer(), { miseAJourEffectuee: false });
+    expect(container).toMatchSnapshot();
+  });
+
+  test("snapshot avec verificationDonneesEffectuee=true", () => {
+    const { container } = renderComp(new MockFicheActeBuilder().deNature("NAISSANCE").generer(), { verificationDonneesEffectuee: true });
+    expect(container).toMatchSnapshot();
   });
 });
