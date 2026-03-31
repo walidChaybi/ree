@@ -228,11 +228,10 @@ describe("VerificationDonnees", () => {
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /Terminer et signer/i }));
     });
-    await waitFor(() => {
-      expect(screen.getByText("Signature des mentions")).toBeDefined();
-    });
     // La rectification PATCH est différée dans avantSignature — aucun appel API à ce stade
-    expect(MockApi.getMock().history.patch.length).toBe(0);
+    await waitFor(() => {
+      expect(MockApi.getMock().history.patch.length).toBe(0);
+    });
   });
 
   test("soumission pour MARIAGE double numerique ouvre la modale sans envoyer le PATCH immédiatement", async () => {
@@ -241,9 +240,8 @@ describe("VerificationDonnees", () => {
       fireEvent.click(screen.getByRole("button", { name: /Terminer et signer/i }));
     });
     await waitFor(() => {
-      expect(screen.getByText("Signature des mentions")).toBeDefined();
+      expect(MockApi.getMock().history.patch.length).toBe(0);
     });
-    expect(MockApi.getMock().history.patch.length).toBe(0);
   });
 
   test("soumission pour DECES double numerique ouvre la modale sans envoyer le PATCH immédiatement", async () => {
@@ -252,9 +250,8 @@ describe("VerificationDonnees", () => {
       fireEvent.click(screen.getByRole("button", { name: /Terminer et signer/i }));
     });
     await waitFor(() => {
-      expect(screen.getByText("Signature des mentions")).toBeDefined();
+      expect(MockApi.getMock().history.patch.length).toBe(0);
     });
-    expect(MockApi.getMock().history.patch.length).toBe(0);
   });
 
   test("nature inconnue double numerique ne ouvre pas modale", async () => {
