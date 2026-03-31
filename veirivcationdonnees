@@ -57,13 +57,13 @@ const VerificationDonnees: React.FC<IVerificationDonneesProps> = ({
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const typeSignature = estActeEligibleDoubleNumerique(acte) ? "DOUBLE_NUMERIQUE" : "MISE_A_JOUR";
+  const typeSignature = acte ? (estActeEligibleDoubleNumerique(acte) ? "DOUBLE_NUMERIQUE" : "MISE_A_JOUR") : "MISE_A_JOUR";
   const estDoubleNumerique = typeSignature === "DOUBLE_NUMERIQUE";
 
   const payloadRectificationRef = useRef<Partial<IFicheActeDto> | null>(null);
 
   const valeursInitiales = useMemo(
-    () => MiseAJourModificationForm.valeursInitiales(acte, verificationDonneesEffectuee),
+    () => acte ? MiseAJourModificationForm.valeursInitiales(acte, verificationDonneesEffectuee) : ({} as IVerificationDonneesForm),
     [acte, verificationDonneesEffectuee]
   );
 
@@ -85,6 +85,7 @@ const VerificationDonnees: React.FC<IVerificationDonneesProps> = ({
   };
 
   const construirePayload = (values: IVerificationDonneesForm): Partial<IFicheActeDto> | null => {
+    if (!acte) return null;
     switch (acte.nature) {
       case "NAISSANCE":
         return MiseAJourModificationForm.versDtoPatchNaissance(values.naissance as IVerificationDonneesNaissanceForm, acte);
@@ -115,6 +116,8 @@ const VerificationDonnees: React.FC<IVerificationDonneesProps> = ({
       });
     });
   }, [envoyerRectifications]);
+
+  if (!acte) return null;
 
   const gererSoumission = (values: IVerificationDonneesForm) => {
     if (estDoubleNumerique) {
