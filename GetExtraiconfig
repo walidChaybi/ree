@@ -1,0 +1,16 @@
+import { ETATCIVIL_API } from "@api/ApiDisponibles";
+import { TConfigurationApi } from "@model/api/Api";
+
+interface IExtraitActeImageDto {
+  texte: string;
+}
+
+const URI = "/acteimage/extrait-acte-image/:idActe";
+
+export const CONFIG_GET_EXTRAIT_ACTE_IMAGE: TConfigurationApi<typeof URI, undefined, undefined, IExtraitActeImageDto> = {
+  api: ETATCIVIL_API,
+  methode: "GET",
+  uri: URI
+};
+
+export type { IExtraitActeImageDto };
