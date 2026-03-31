@@ -1,0 +1,223 @@
+import { CONFIG_PATCH_RECTIFICATIONS_INFOS_ACTE } from "@api/configurations/etatCivil/acte/PatchRectificationsInfosActeConfigApi";
+import Bouton from "@composants/commun/bouton/Bouton";
+import { ConteneurBoutonBasDePage } from "@composants/commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
+import { Droit } from "@model/agent/enum/Droit";
+import { FicheActe, IFicheActeDto } from "@model/etatcivil/acte/FicheActe";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
+import {
+  DecesSchemaValidation,
+  IVerificationDonneesDecesForm,
+  IVerificationDonneesForm,
+  IVerificationDonneesMariageForm,
+  IVerificationDonneesNaissanceForm,
+  MariageSchemaValidation,
+  MiseAJourModificationForm,
+  NaissanceSchemaValidation
+} from "@model/form/miseAJour/MiseAJourModificationForm";
+import { Form, Formik } from "formik";
+import React, { useCallback, useContext, useMemo, useRef, useState } from "react";
+import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../../../contexts/EditionMiseAJourContextProvider";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
+import useFetchApi from "../../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
+import SchemaValidation from "../../../../../utils/SchemaValidation";
+import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
+import ScrollVersErreur from "../../../../commun/formulaire/ScrollVersErreur";
+import SignatureDocument from "../../../../commun/signature/SignatureDocument";
+import { estActeEligibleDoubleNumerique } from "../../droitsMiseAJourUtils";
+import FormulaireVerificationDeces from "./FormulaireVerificationDeces";
+import FormulaireVerificationMariage from "./FormulaireVerificationMariage";
+import FormulaireVerificationNaissance from "./FormulaireVerificationNaissance";
+
+interface IVerificationDonneesProps {
+  acte: FicheActe;
+  miseAJourEffectuee: boolean;
+  verificationDonneesEffectuee: boolean;
+  setVerificationDonneesEffectuee: (value: boolean) => void;
+  saisieMentionEnCours: boolean;
+  verificationObligatoire: boolean;
+}
+
+const VerificationDonnees: React.FC<IVerificationDonneesProps> = ({
+  acte,
+  miseAJourEffectuee,
+  verificationDonneesEffectuee,
+  setVerificationDonneesEffectuee,
+  saisieMentionEnCours,
+  verificationObligatoire
+}) => {
+  const { idActe, idRequete } = useContext(EditionMiseAJourContext.Valeurs);
+  const { setEstActeSigne, desactiverBlocker, changerOnglet, activerOngletActeMisAJour, setComposerActeMisAJour } = useContext(
+    EditionMiseAJourContext.Actions
+  );
+
+  const [modaleOuverte, setModaleOuverte] = useState(false);
+
+  const { appelApi: envoyerRectifications } = useFetchApi(CONFIG_PATCH_RECTIFICATIONS_INFOS_ACTE);
+
+  const { utilisateurConnecte } = useContext(RECEContextData);
+
+  const typeSignature = estActeEligibleDoubleNumerique(acte) ? "DOUBLE_NUMERIQUE" : "MISE_A_JOUR";
+  const estDoubleNumerique = typeSignature === "DOUBLE_NUMERIQUE";
+
+  const payloadRectificationRef = useRef<Partial<IFicheActeDto> | null>(null);
+
+  const valeursInitiales = useMemo(
+    () => MiseAJourModificationForm.valeursInitiales(acte, verificationDonneesEffectuee),
+    [acte, verificationDonneesEffectuee]
+  );
+
+  const aDroitSigner = utilisateurConnecte.estHabilitePour({
+    tousLesDroits: [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]
+  });
+
+  const getVerificationSchema = (nature: keyof typeof ENatureActe) => {
+    switch (nature) {
+      case "NAISSANCE":
+        return NaissanceSchemaValidation();
+      case "MARIAGE":
+        return MariageSchemaValidation();
+      case "DECES":
+        return DecesSchemaValidation();
+      default:
+        return SchemaValidation.objet({});
+    }
+  };
+
+  const construirePayload = (values: IVerificationDonneesForm): Partial<IFicheActeDto> | null => {
+    switch (acte.nature) {
+      case "NAISSANCE":
+        return MiseAJourModificationForm.versDtoPatchNaissance(values.naissance as IVerificationDonneesNaissanceForm, acte);
+      case "MARIAGE":
+        return MiseAJourModificationForm.versDtoPatchMariage(values.mariage as IVerificationDonneesMariageForm, acte);
+      case "DECES":
+        return MiseAJourModificationForm.versDtoPatchDeces(values.deces as IVerificationDonneesDecesForm, acte);
+      default:
+        return null;
+    }
+  };
+
+  const avantSignatureDoubleNumerique = useCallback((): Promise<boolean> => {
+    const payload = payloadRectificationRef.current;
+    if (!payload) return Promise.resolve(false);
+
+    return new Promise<boolean>(resolve => {
+      envoyerRectifications({
+        parametres: { body: payload },
+        apresSucces: () => {
+          AfficherMessage.succes("Les données de l'acte ont été mises à jour", { fermetureAuto: true });
+          resolve(true);
+        },
+        apresErreur: erreurs => {
+          AfficherMessage.erreur("Erreur lors de l'envoi des rectifications", { erreurs, fermetureAuto: true });
+          resolve(false);
+        }
+      });
+    });
+  }, [envoyerRectifications]);
+
+  const gererSoumission = (values: IVerificationDonneesForm) => {
+    if (estDoubleNumerique) {
+      const payload = construirePayload(values);
+      if (!payload) {
+        AfficherMessage.erreur("Données du formulaire manquantes", {
+          fermetureAuto: true
+        });
+        return;
+      }
+      payloadRectificationRef.current = payload;
+    }
+    setModaleOuverte(true);
+  };
+
+  return (
+    <>
+      <Formik<IVerificationDonneesForm>
+        initialValues={valeursInitiales}
+        validationSchema={getVerificationSchema(acte.nature)}
+        onSubmit={gererSoumission}
+      >
+        {({ values }) => {
+          if (values.verificationEffectuee !== verificationDonneesEffectuee) {
+            setVerificationDonneesEffectuee(values.verificationEffectuee);
+          }
+
+          return (
+            <Form>
+              {(() => {
+                switch (acte.nature) {
+                  case "NAISSANCE":
+                    return (
+                      <FormulaireVerificationNaissance
+                        miseAJourEffectuee={miseAJourEffectuee}
+                        verificationDonneesEffectuee={verificationDonneesEffectuee}
+                        mentions={acte.mentions}
+                      />
+                    );
+                  case "MARIAGE":
+                    return (
+                      <FormulaireVerificationMariage
+                        miseAJourEffectuee={miseAJourEffectuee}
+                        verificationDonneesEffectuee={verificationDonneesEffectuee}
+                        mentions={acte.mentions}
+                      />
+                    );
+                  case "DECES":
+                    return (
+                      <FormulaireVerificationDeces
+                        miseAJourEffectuee={miseAJourEffectuee}
+                        verificationDonneesEffectuee={verificationDonneesEffectuee}
+                        mentions={acte.mentions}
+                      />
+                    );
+                  default:
+                    return null;
+                }
+              })()}
+
+              {aDroitSigner && (
+                <ConteneurBoutonBasDePage position="droite">
+                  <Bouton
+                    type="submit"
+                    disabled={saisieMentionEnCours || !miseAJourEffectuee || (verificationObligatoire && !verificationDonneesEffectuee)}
+                  >
+                    {"Terminer et signer"}
+                  </Bouton>
+                </ConteneurBoutonBasDePage>
+              )}
+
+              <ScrollVersErreur />
+            </Form>
+          );
+        }}
+      </Formik>
+
+      {modaleOuverte && (
+        <ConteneurModale>
+          <div className="border-3 w-[34rem] max-w-full rounded-xl border-solid border-bleu-sombre bg-blanc p-5">
+            <h2 className="m-0 mb-4 text-center font-medium text-bleu-sombre">Signature des mentions</h2>
+            <SignatureDocument
+              typeSignature={typeSignature}
+              idActe={idActe}
+              idRequete={idRequete}
+              {...(estDoubleNumerique ? { avantSignature: avantSignatureDoubleNumerique } : {})}
+              apresSignature={succes => {
+                setModaleOuverte(false);
+                if (succes) {
+                  activerOngletActeMisAJour();
+                  setComposerActeMisAJour(true);
+                  changerOnglet(ECleOngletsMiseAJour.ACTE_MIS_A_JOUR, null);
+                  setEstActeSigne(true);
+                  AfficherMessage.succes("L'acte a été mis à jour avec succès.", { fermetureAuto: true });
+                  desactiverBlocker();
+                }
+              }}
+            />
+          </div>
+        </ConteneurModale>
+      )}
+    </>
+  );
+};
+
+export default VerificationDonnees;
