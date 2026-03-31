@@ -1,0 +1,63 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router";
+import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts/EditionMiseAJourContextProvider";
+import LiensRECE from "../../../router/LiensRECE";
+import { INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION } from "../../../router/infoPages/InfoPagesEspaceRecherche";
+import Bouton from "../../commun/bouton/Bouton";
+import { ConteneurBoutonBasDePage } from "../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
+import OngletsBouton from "../../commun/onglets/OngletsBouton";
+import OngletActe from "./onglets/OngletActe";
+import OngletActeMisAJour from "./onglets/OngletActeMisAJour";
+import OngletExtraitActeImage from "./onglets/OngletExtraitActeImage";
+
+const PartieActe = () => {
+  const navigate = useNavigate();
+  const { ongletsActifs, miseAJourEffectuee, estActeSigne, estEligibleDoubleNumerique, typeActe } = useContext(
+    EditionMiseAJourContext.Valeurs
+  );
+  const { changerOnglet } = useContext(EditionMiseAJourContext.Actions);
+
+  const afficherOngletExtrait = estEligibleDoubleNumerique && typeActe === "IMAGE" && !estActeSigne;
+
+  return (
+    <div className={estActeSigne ? "mx-auto w-full max-w-[90rem]" : "w-1/2"}>
+      <OngletsBouton
+        onglets={[
+          ...(!estActeSigne ? [{ cle: ECleOngletsMiseAJour.ACTE, libelle: "Acte registre" }] : []),
+          {
+            cle: ECleOngletsMiseAJour.ACTE_MIS_A_JOUR,
+            libelle: "Acte mis à jour",
+            inactif: !miseAJourEffectuee && !estActeSigne
+          },
+          ...(afficherOngletExtrait ? [{ cle: ECleOngletsMiseAJour.EXTRAIT, libelle: "Extrait" }] : [])
+        ]}
+        cleOngletActif={estActeSigne ? ECleOngletsMiseAJour.ACTE_MIS_A_JOUR : ongletsActifs.actes}
+        changerOnglet={(valeur: string) => changerOnglet(valeur as ECleOngletsMiseAJour, null)}
+      />
+
+      {!estActeSigne && <OngletActe estActif={ongletsActifs.actes === ECleOngletsMiseAJour.ACTE} />}
+
+      <OngletActeMisAJour estActif={estActeSigne || ongletsActifs.actes === ECleOngletsMiseAJour.ACTE_MIS_A_JOUR} />
+
+      {afficherOngletExtrait && (
+        <OngletExtraitActeImage estActif={ongletsActifs.actes === ECleOngletsMiseAJour.EXTRAIT} />
+      )}
+
+      <ConteneurBoutonBasDePage
+        position="gauche"
+        afficherDegrade
+      >
+        <Bouton
+          title={estActeSigne ? "Retour rechercher un acte" : "Abandonner"}
+          type="button"
+          onClick={() => navigate(LiensRECE.genererLien(INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION.url), { replace: true })}
+        >
+          {estActeSigne ? "Retour rechercher un acte" : "Abandonner"}
+        </Bouton>
+      </ConteneurBoutonBasDePage>
+    </div>
+  );
+};
+
+export default PartieActe;
+
