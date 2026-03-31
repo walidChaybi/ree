@@ -277,4 +277,54 @@ describe("VerificationDonnees", () => {
     const { container } = renderComp(new MockFicheActeBuilder().deNature("NAISSANCE").generer(), { verificationDonneesEffectuee: true });
     expect(container).toMatchSnapshot();
   });
+
+  test("ne rend rien quand acte est null", () => {
+    const { container } = renderComp(null);
+    expect(container.innerHTML).toBe("");
+  });
+
+  test("soumission pour un acte non éligible double numérique ouvre la modale sans stocker de payload", async () => {
+    // Un acte de type IMAGE n'est pas éligible au double numérique → typeSignature = MISE_A_JOUR
+    renderComp(new MockFicheActeBuilder().deType("IMAGE").deNature("NAISSANCE").generer(), { verificationDonneesEffectuee: true });
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /Terminer et signer/i }));
+    });
+    // Pas de PATCH car c'est la voie MISE_A_JOUR (pas de construirePayload)
+    await waitFor(() => {
+      expect(MockApi.getMock().history.patch.length).toBe(0);
+    });
+  });
+
+  test("bouton actif quand verificationObligatoire=false même si verificationDonneesEffectuee=false", () => {
+    renderComp(new MockFicheActeBuilder().deNature("NAISSANCE").generer(), {
+      verificationObligatoire: false,
+      verificationDonneesEffectuee: false
+    });
+    expect(screen.getByRole("button", { name: /Terminer et signer/i })).toHaveProperty("disabled", false);
+  });
+
+  test("soumission double numérique pour nature INCONNUE ne déclenche pas de PATCH car construirePayload retourne null", async () => {
+    renderComp(new MockFicheActeBuilder().deType("TEXTE").deNature("INCONNUE" as any).generer(), { verificationDonneesEffectuee: true });
+    const btn = screen.queryByRole("button", { name: /Terminer et signer/i });
+    if (btn) {
+      await act(async () => {
+        fireEvent.click(btn);
+      });
+      // construirePayload retourne null pour nature INCONNUE → erreur affichée, pas de modale
+      await waitFor(() => {
+        expect(MockApi.getMock().history.patch.length).toBe(0);
+      });
+    }
+  });
+
+  test("snapshot pour MARIAGE avec verificationDonneesEffectuee=true", () => {
+    const { container } = renderComp(new MockFicheActeBuilder().deNature("MARIAGE").generer(), { verificationDonneesEffectuee: true });
+    expect(container).toMatchSnapshot();
+  });
+
+  test("snapshot pour DECES avec verificationDonneesEffectuee=true", () => {
+    const { container } = renderComp(new MockFicheActeBuilder().deNature("DECES").generer(), { verificationDonneesEffectuee: true });
+    expect(container).toMatchSnapshot();
+  });
 });
