@@ -1,127 +1,62 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.21.5-74d586df47b25dbd05bd0957999819196e59934a  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Acte_Image" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="37" uuid="a7c16bee-a7d3-4fc0-855c-8bf5f355670a">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="extrait_copie/EXTRAIT_COPIE_ACTE_TEXTE/DataAdapter.xml"/>
-	<parameter name="JSON_INPUT_STREAM" class="java.io.InputStream" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.source" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.sources" class="java.util.List" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.date.pattern" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.number.pattern" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="JSON_LOCALE" class="java.util.Locale" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.locale.code" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="JSON_TIME_ZONE" class="java.util.TimeZone" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.timezone.id" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="SR_Acte_Image_Portrait" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[images du rapport]]></parameterDescription>
-	</parameter>
-	<parameter name="headerSubReport" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[header du rapport]]></parameterDescription>
-	</parameter>
-	<parameter name="footerSubReport" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[footer du rapport]]></parameterDescription>
-	</parameter>
-	<parameter name="signatureSubReport" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[signature du rapport]]></parameterDescription>
-	</parameter>
-	<field name="pas_de_bloc_signature" class="java.lang.Boolean"/>
-	<field name="filigrane_archive" class="java.lang.Boolean"/>
-	<field name="erreur" class="java.lang.String"/>
-	<field name="code_CTV" class="java.lang.String"/>
-	<field name="reference_acte" class="java.lang.String">
-		<fieldDescription><![CDATA[reference_acte]]></fieldDescription>
-	</field>
-	<field name="reference_registre" class="java.lang.String"/>
-	<field name="mentions" class="java.lang.String"/>
-	<field name="reference_rece" class="java.lang.String"/>
-	<pageHeader>
-		<band height="40">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<textField>
-				<reportElement x="0" y="0" width="149" height="20" uuid="49d55118-3e7a-444d-b155-7abd4c91209b">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<printWhenExpression><![CDATA[$F{reference_rece} != null]]></printWhenExpression>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{reference_rece}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="406" y="0" width="149" height="20" uuid="89331d81-deda-4495-bd9b-f03c8841af7a">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<printWhenExpression><![CDATA[$F{reference_registre} != null]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{reference_registre}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageHeader>
-	<detail>
-		<band height="699" splitType="Stretch">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<subreport>
-				<reportElement stretchType="ContainerHeight" x="30" y="0" width="495" height="699" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="1c3e941b-e628-4fa7-bf23-50c85cc4e0db">
-					<printWhenExpression><![CDATA[$F{erreur} == null]]></printWhenExpression>
-				</reportElement>
-				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("corps_image")]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{SR_Acte_Image_Portrait}]]></subreportExpression>
-			</subreport>
-			<image>
-				<reportElement x="30" y="0" width="495" height="699" isPrintWhenDetailOverflows="true" uuid="d5d7a19d-060a-4875-954b-e176ab96898a">
-					<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(true) && $F{erreur} == null]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA[net.sf.jasperreports.renderers.BatikRenderer.getInstanceFromText("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"765\" height=\"990\"><text x=\"-575\" y=\"550\" transform=\"rotate(-50)\" style=\"font-size:46px;fill:#808080;fill-opacity:0.7\">Cette copie n'a pas valeur d'acte authentique</text></svg>")]]></imageExpression>
-			</image>
-			<image scaleImage="RetainShape">
-				<reportElement x="30" y="0" width="495" height="699" isPrintWhenDetailOverflows="true" uuid="d5d7a19d-060a-4875-954b-e176ab96898a">
-					<property name="com.jaspersoft.studio.unit.width" value="mm"/>
-					<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(true) && $F{erreur} == null]]></printWhenExpression>
-				</reportElement>
-				<graphicElement fill="Solid"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.renderers.BatikRenderer.getInstanceFromText("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"765\" height=\"990\"><text x=\"-275\" y=\"460\" transform=\"rotate(-50)\" style=\"font-size:80px;fill:#808080;fill-opacity:0.7\">ARCHIVE</text></svg>")]]></imageExpression>
-			</image>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement stretchType="ContainerHeight" x="0" y="0" width="555" height="15" isRemoveLineWhenBlank="true" forecolor="#FA0C07" uuid="194d7119-0580-4f35-b647-5f6978dfe64f">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="mm"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font fontName="Liberation Mono" size="20" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{erreur}]]></textFieldExpression>
-			</textField>
-		</band>
-		<band height="250" splitType="Prevent">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<printWhenExpression><![CDATA[!$F{mentions}.isBlank() && !$F{mentions}.isEmpty()]]></printWhenExpression>
-			<textField>
-				<reportElement x="0" y="0" width="555" height="250" uuid="4f6dadec-a202-4455-9083-5d664bbc3a42">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{mentions}]]></textFieldExpression>
-			</textField>
-		</band>
-	</detail>
-	<pageFooter>
-		<band height="44" splitType="Stretch">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(false) &&  !$F{code_CTV}.equals("")]]></printWhenExpression>
-			<subreport>
-				<reportElement x="0" y="0" width="555" height="44" uuid="de999025-fb86-4a09-a556-9add07a1a340">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<printWhenExpression><![CDATA[$F{erreur} == null && $F{filigrane_archive}.equals(false) &&  !$F{code_CTV}.equals("") && $F{pas_de_bloc_signature}.equals(false)]]></printWhenExpression>
-				</reportElement>
-				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("")]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{footerSubReport}]]></subreportExpression>
-			</subreport>
-		</band>
-	</pageFooter>
-</jasperReport>
+package fr.gouv.diplomatie.rece.composition.util;
+
+import fr.gouv.diplomatie.rece.commun.exceptions.TechnicalException;
+import fr.gouv.diplomatie.rece.composition.erreurs.TechCodeErreur;
+import lombok.experimental.UtilityClass;
+
+import javax.imageio.ImageIO;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Base64;
+
+@UtilityClass
+public final class OrientationActeImageUtil {
+
+	private static final String FORMAT_SORTIE = "png";
+
+	/**
+	 * Si l'image encodée en base64 est en paysage (largeur > hauteur), la fait pivoter de -90°
+	 * afin d'obtenir une image portrait. Si l'image est déjà portrait (ou carrée), la chaîne
+	 * d'origine est renvoyée telle quelle (pas de ré-encodage, pas de perte de qualité).
+	 */
+	public static String pivoterSiPaysage(String imageBase64) {
+		BufferedImage imageSource;
+		try {
+			byte[] octetsImage = Base64.getDecoder().decode(imageBase64);
+			imageSource = ImageIO.read(new ByteArrayInputStream(octetsImage));
+		} catch (IOException exception) {
+			throw new TechnicalException(TechCodeErreur.ERREUR_ANALYSE_JSON, exception);
+		}
+		if (imageSource == null) {
+			throw new TechnicalException(TechCodeErreur.ERREUR_ANALYSE_JSON,
+					new IllegalStateException("Image de l'acte illisible"));
+		}
+
+		int largeur = imageSource.getWidth();
+		int hauteur = imageSource.getHeight();
+		if (largeur <= hauteur) {
+			return imageBase64;
+		}
+
+		BufferedImage imagePivotee = new BufferedImage(hauteur, largeur, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D dessin = imagePivotee.createGraphics();
+		try {
+			dessin.translate(0, largeur);
+			dessin.rotate(-Math.PI / 2);
+			dessin.drawImage(imageSource, 0, 0, null);
+		} finally {
+			dessin.dispose();
+		}
+
+		try {
+			ByteArrayOutputStream fluxSortie = new ByteArrayOutputStream();
+			ImageIO.write(imagePivotee, FORMAT_SORTIE, fluxSortie);
+			return Base64.getEncoder().encodeToString(fluxSortie.toByteArray());
+		} catch (IOException exception) {
+			throw new TechnicalException(TechCodeErreur.ERREUR_ANALYSE_JSON, exception);
+		}
+	}
+}
