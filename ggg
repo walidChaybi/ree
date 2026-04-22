@@ -1,62 +1,385 @@
-package fr.gouv.diplomatie.rece.composition.util;
+package fr.gouv.diplomatie.rece.composition.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.gouv.diplomatie.rece.commun.annotations.doc.ToRefactor;
+import fr.gouv.diplomatie.rece.commun.constants.ApiConstants;
+import fr.gouv.diplomatie.rece.commun.exceptions.BusinessException;
 import fr.gouv.diplomatie.rece.commun.exceptions.TechnicalException;
+import fr.gouv.diplomatie.rece.composition.adapters.rest.consumers.UtilisateurAdapter;
+import fr.gouv.diplomatie.rece.composition.domain.enums.TypeDocumentComposition;
+import fr.gouv.diplomatie.rece.composition.domain.enums.TypeService;
+import fr.gouv.diplomatie.rece.composition.domain.model.ActeImageDoubleNumerique;
+import fr.gouv.diplomatie.rece.composition.domain.model.DocumentComposition;
+import fr.gouv.diplomatie.rece.composition.domain.model.utilisateur.AdresseService;
+import fr.gouv.diplomatie.rece.composition.domain.model.utilisateur.FonctionAgent;
+import fr.gouv.diplomatie.rece.composition.domain.model.utilisateur.Service;
+import fr.gouv.diplomatie.rece.composition.domain.model.utilisateur.SignatureManuscrite;
+import fr.gouv.diplomatie.rece.composition.domain.model.utilisateur.Utilisateur;
+import fr.gouv.diplomatie.rece.composition.domain.templates.JasperTemplate;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.ActeImage;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.ActeTexte;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.AttestationPacs;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.MentionsUlterieures;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.Plurilingues;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CadArch118;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CadEc116;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CadEc50;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CarnEc115;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CarnEc117;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CarnEc19;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CarnEc24;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CarnEc64;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CarnEcAPR;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CarnEcPTA;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CarnEcRDM;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.CarnPac01;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.accompagnement.Fa118;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.certificat.CarnCs01;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.certificat.CarnEc17;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.certificat.CertificatInscriptionRC;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.certificat.CertificatInscriptionRCA;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.certificat.CertificatSituation;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.extrait.ExtraitCopieActeTexte;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.refus.CarnCsPac01;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.refus.CarnCsPac02;
+import fr.gouv.diplomatie.rece.composition.domain.templates.rapport.refus.Courrier18Genealogiste;
 import fr.gouv.diplomatie.rece.composition.erreurs.TechCodeErreur;
-import lombok.experimental.UtilityClass;
+import fr.gouv.diplomatie.rece.composition.ports.out.JasperReportAdapterPort;
+import fr.gouv.diplomatie.rece.composition.util.OrientationActeImageUtil;
+import fr.gouv.diplomatie.rece.composition.util.ServicesUtil;
+import fr.gouv.diplomatie.rece.composition.util.json.IJsonTraitement;
+import fr.gouv.diplomatie.rece.composition.util.json.JsonTraitementRemplaceVideParTirets;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.imageio.ImageIO;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 
-@UtilityClass
-public final class OrientationActeImageUtil {
+import static fr.gouv.diplomatie.rece.composition.erreurs.TechCodeErreur.ERREUR_ANALYSE_JSON;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.ADRESSE_INTERNET;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.ADR_SERVICE_DELIVREUR;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.BUREAU_AGENT;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.CP_ET_VILLE_SERVICE_DELIVREUR_LIGNE6;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.EST_DELIVRANCE_INTERMEDIAIRE;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.FONCTION_AGENT;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.IMAGE_SIGNATURE;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.LIBELLE_DEPARTEMENT;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.NOM_AGENT;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.NUM_ET_NOM_RUE_SERVICE_DELIVREUR_LIGNE4;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.PAS_DE_NOM_PRENOM_AGENT;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.PAS_DE_SIGNATURE;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.PRENOM_AGENT;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.PRENOM_NOM_AGENT;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.SERVICE_DELIVREUR;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.TEL_SERVICE_DELIVREUR;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.URL_TELEVERIFICATION;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.VILLE_DELIVRANCE;
+import static fr.gouv.diplomatie.rece.composition.util.CommonJasperVariables.VILLE_SERVICE_AGENT;
 
-	private static final String FORMAT_SORTIE = "png";
+@org.springframework.stereotype.Service
+@RequiredArgsConstructor
+@Slf4j
+@Setter
+public class CompositionService {
 
-	/**
-	 * Si l'image encodée en base64 est en paysage (largeur > hauteur), la fait pivoter de -90°
-	 * afin d'obtenir une image portrait. Si l'image est déjà portrait (ou carrée), la chaîne
-	 * d'origine est renvoyée telle quelle (pas de ré-encodage, pas de perte de qualité).
-	 */
-	public static String pivoterSiPaysage(String imageBase64) {
-		BufferedImage imageSource;
+	private final JasperReportAdapterPort jasperReportAdapter;
+
+	private final UtilisateurAdapter utilisateurAdapter;
+
+	private final ProjetActeService projetActeService;
+
+	@Value("${url.service.televerification}")
+	private String urlServiceTeleverification;
+
+	public DocumentComposition composeDocument(final String jsonData,
+											   final TypeDocumentComposition typeDocumentComposition, final String version, final String idArobas) {
+
+		final String variableUrlAremplacer = "$F{URL_televerification}";
+
+		return switch (typeDocumentComposition) {
+			case ACTE_NAISSANCE -> {
+				String jsonValorise = valoriserUrlTeleverification(remplaceChampsVidesParTirets(jsonData));
+				yield generateDocumentAvecInfoAgentEtDates(jsonValorise, idArobas, Plurilingues.getActeNaissance(), version);
+			}
+			case ACTE_MARIAGE -> {
+				String jsonValorise = valoriserUrlTeleverification(remplaceChampsVidesParTirets(jsonData));
+				yield generateDocumentAvecInfoAgentEtDates(jsonValorise, idArobas, Plurilingues.getActeMariage(), version);
+			}
+			case ACTE_DECES -> {
+				String jsonValorise = valoriserUrlTeleverification(remplaceChampsVidesParTirets(jsonData));
+				yield generateDocumentAvecInfoAgentEtDates(jsonValorise, idArobas, Plurilingues.getActeDeces(), version);
+			}
+			case CA118 -> jasperReportAdapter.getDocumentComposition(jsonData, Fa118.getCourrier(), version);
+			case PROJET_ACTE -> {
+				String jsonValorise = projetActeService.composerDocument(jsonData);
+				yield jasperReportAdapter.getDocumentComposition(jsonValorise, ActeTexte.getActeTexte(), version);
+			}
+			case ACTE_TEXTE -> jasperReportAdapter.getDocumentComposition(jsonData, ActeTexte.getActeTexte(), version);
+			case CARN_CSPAC_01 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnCsPac01.getCourrier(), version);
+			case CERTIFICAT_SITUATION ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CertificatSituation.getCourrier(), version);
+			case CARN_CSPAC_02 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnCsPac02.getCourrier(), version);
+			case CARN_CS_01 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnCs01.getCourrier(), version);
+			case CERTIFICAT_INSCRIPTION_RCA ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CertificatInscriptionRCA.getCourrier(),
+														 version);
+			case CERTIFICAT_INSCRIPTION_RC ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CertificatInscriptionRC.getCourrier(),
+														 version);
+			case ATTESTATION_PACS ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, AttestationPacs.getCourrier(), version);
+			case CARN_EC_18 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, Courrier18Genealogiste.getCourrier(),
+														 version);
+			case CARN_EC_17 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnEc17.getCourrier(), version);
+			case CAD_EC_116 -> {
+				String jsonDataUrlRemplace = jsonData.replace(variableUrlAremplacer, urlServiceTeleverification);
+				yield generateDocumentAvecInfoAgentEtDates(jsonDataUrlRemplace, idArobas, CadEc116.getCourrier(), version);
+			}
+			case CAD_EC_50 -> {
+				String jsonDataUrlRemplace = jsonData.replace(variableUrlAremplacer, urlServiceTeleverification);
+				yield generateDocumentAvecInfoAgentEtDates(jsonDataUrlRemplace, idArobas, CadEc50.getCourrier(), version);
+			}
+			case CARN_EC_117 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnEc117.getCourrier(), version);
+			case CARN_EC_19 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnEc19.getCourrier(), version);
+			case CARN_EC_115 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnEc115.getCourrier(), version);
+			case CARN_EC_64 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnEc64.getCourrier(), version);
+			case CARN_EC_24 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnEc24.getCourrier(), version);
+			case EXTAIT_COPIE_ACTE_TEXTE ->
+					generateDocumentAvecInfoAgentEtDates(valoriserUrlTeleverification(jsonData), idArobas, ExtraitCopieActeTexte.getCourrier(),
+														 version);
+			case CARN_EC_APR ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnEcAPR.getCourrier(), version);
+			case CARN_EC_PTA ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnEcPTA.getCourrier(), version);
+			case CARN_EC_RDM ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnEcRDM.getCourrier(), version);
+			case CAD_ARCH_118 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CadArch118.getCourrier(), version);
+			case ACTE_IMAGE -> genererDocumentCompositionViaImageAvecJasper(jsonData, version, idArobas);
+			case CARN_PAC_01 ->
+					generateDocumentAvecInfoAgentEtDates(jsonData, idArobas, CarnPac01.getCourrier(), version);
+			case MENTIONS_ULTERIEURES ->
+					jasperReportAdapter.getDocumentComposition(jsonData, MentionsUlterieures.getMention(), version);
+		};
+	}
+
+	public DocumentComposition composerActeImageDoubleNumerique(ActeImageDoubleNumerique acteImageDoubleNumerique) {
+		ActeImageDoubleNumerique acteImageOriente = orienterCorpsImageEnPortrait(acteImageDoubleNumerique);
+		String acteImageDoubleNumeriqueEnJson;
 		try {
-			byte[] octetsImage = Base64.getDecoder().decode(imageBase64);
-			imageSource = ImageIO.read(new ByteArrayInputStream(octetsImage));
-		} catch (IOException exception) {
-			throw new TechnicalException(TechCodeErreur.ERREUR_ANALYSE_JSON, exception);
+			acteImageDoubleNumeriqueEnJson = new ObjectMapper().writeValueAsString(acteImageOriente);
+		} catch (JsonProcessingException exception) {
+			throw new BusinessException(TechCodeErreur.ERREUR_GENERATION_JSON, exception.getMessage(), exception);
 		}
-		if (imageSource == null) {
-			throw new TechnicalException(TechCodeErreur.ERREUR_ANALYSE_JSON,
-					new IllegalStateException("Image de l'acte illisible"));
-		}
+		return jasperReportAdapter.getDocumentComposition(acteImageDoubleNumeriqueEnJson, ActeImage.getActeImageDoubleNumerique(), "1");
+	}
 
-		int largeur = imageSource.getWidth();
-		int hauteur = imageSource.getHeight();
-		if (largeur <= hauteur) {
-			return imageBase64;
+	private ActeImageDoubleNumerique orienterCorpsImageEnPortrait(ActeImageDoubleNumerique acteImageDoubleNumerique) {
+		List<String> corpsImage = acteImageDoubleNumerique.getCorpsImage();
+		if (corpsImage == null || corpsImage.isEmpty()) {
+			return acteImageDoubleNumerique;
 		}
+		List<String> corpsImageOriente = corpsImage.stream()
+												   .map(OrientationActeImageUtil::pivoterSiPaysage)
+												   .toList();
+		return ActeImageDoubleNumerique.builder()
+									   .corpsImage(corpsImageOriente)
+									   .referenceRece(acteImageDoubleNumerique.getReferenceRece())
+									   .referenceRegistre(acteImageDoubleNumerique.getReferenceRegistre())
+									   .mentions(acteImageDoubleNumerique.getMentions())
+									   .build();
+	}
 
-		BufferedImage imagePivotee = new BufferedImage(hauteur, largeur, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D dessin = imagePivotee.createGraphics();
+	private DocumentComposition genererDocumentCompositionViaImageAvecJasper(String jsonData, String version, String idArobas) {
+		JasperTemplate jasperTemplate = orientationJasperActeImage(jsonData);
+		Utilisateur utilisateur = utilisateurAdapter.getUtilisateurParIdArobas(idArobas);
+		String informationsAgent = ajouterInformationsAgent(jsonData, utilisateur);
+		return jasperReportAdapter.getDocumentComposition(informationsAgent, jasperTemplate, version);
+	}
+
+	private String valoriserUrlTeleverification(String jsonData) {
+		Objects.requireNonNull(jsonData, "Les données json sont obligatoires");
+
 		try {
-			dessin.translate(0, largeur);
-			dessin.rotate(-Math.PI / 2);
-			dessin.drawImage(imageSource, 0, 0, null);
-		} finally {
-			dessin.dispose();
-		}
-
-		try {
-			ByteArrayOutputStream fluxSortie = new ByteArrayOutputStream();
-			ImageIO.write(imagePivotee, FORMAT_SORTIE, fluxSortie);
-			return Base64.getEncoder().encodeToString(fluxSortie.toByteArray());
-		} catch (IOException exception) {
-			throw new TechnicalException(TechCodeErreur.ERREUR_ANALYSE_JSON, exception);
+			JSONObject jsonObject = new JSONObject(jsonData);
+			jsonObject.put(URL_TELEVERIFICATION, urlServiceTeleverification);
+			return jsonObject.toString();
+		} catch (JSONException e) {
+			throw new TechnicalException(TechCodeErreur.ERREUR_GENERATION_JSON, e);
 		}
 	}
+
+	private String remplaceChampsVidesParTirets(String jsonData) {
+		final JSONObject jsonObject = new JSONObject(jsonData);
+		remplaceChampsVidesParTirets(jsonObject, new JsonTraitementRemplaceVideParTirets());
+
+		return jsonObject.toString();
+	}
+
+	private void remplaceChampsVidesParTirets(JSONObject jsonObject, IJsonTraitement jsontraitement) {
+		Iterator<String> keys = jsonObject.keys();
+		while (keys.hasNext()) {
+			String key = keys.next();
+			Object value = jsonObject.get(key);
+
+			if (value instanceof JSONObject) {
+				remplaceChampsVidesParTirets((JSONObject) value, jsontraitement);
+			} else {
+				jsontraitement.traiteJsonObjectAvecCleValeur(jsonObject, key, value);
+			}
+		}
+	}
+
+	public JasperTemplate orientationJasperActeImage(String jsonData) {
+
+		final JSONObject jsonObject = new JSONObject(jsonData);
+
+		JSONArray imagesJson = jsonObject.getJSONArray("corps_image");
+		if (imagesJson != null) {
+			// On se base sur la première image pour définir l'orientation du document qui
+			// va être généré
+			String imageJson = imagesJson.getString(0);
+			byte[] imageBytes = Base64.getDecoder().decode(imageJson);
+			BufferedImage image;
+			try {
+				image = ImageIO.read(new ByteArrayInputStream(imageBytes));
+				if (image.getHeight() < image.getWidth()) {
+					return ActeImage.getActeImagePaysage();
+				} else {
+					return ActeImage.getActeImagePortrait();
+				}
+			} catch (IOException e) {
+				throw new TechnicalException(ERREUR_ANALYSE_JSON, e);
+			}
+		}
+		return null;
+	}
+
+	private DocumentComposition generateDocumentAvecInfoAgentEtDates(String jsonData, String idArobas,
+																	 JasperTemplate courrier, String version) {
+		Utilisateur utilisateur = utilisateurAdapter.getUtilisateurParIdArobas(idArobas);
+		String informationAgent = ajouterInformationsAgent(jsonData, utilisateur);
+		return jasperReportAdapter.getDocumentComposition(informationAgent, courrier, version);
+	}
+
+	private String ajouterInformationsAgent(String jsonData, Utilisateur utilisateur) {
+		try {
+			final JSONObject jsonObject = new JSONObject(jsonData);
+
+			// TODO : A supprimer lorsque la délivrance intermédiaire (batch adapteur) sera décomissioné
+			boolean estDelivranceIntermediaire = estDelivranceIntermediaire(utilisateur.getIdArobas());
+			jsonObject.put(EST_DELIVRANCE_INTERMEDIAIRE, estDelivranceIntermediaire);
+			if (!jsonObject.optBoolean(PAS_DE_NOM_PRENOM_AGENT, false) &&
+					!estDelivranceIntermediaire) {
+				jsonObject.put(PRENOM_AGENT, utilisateur.getPrenom());
+				jsonObject.put(NOM_AGENT, utilisateur.getNom());
+				jsonObject.put(PRENOM_NOM_AGENT, utilisateur.getPrenom() + " " + utilisateur.getNom());
+			}
+
+			Service serviceDelivreur = ServicesUtil.getServiceParentServiceOuPoste(utilisateur.getService());
+			jsonObject.put(SERVICE_DELIVREUR, serviceDelivreur.getLibelleService());
+			ajouterLibelleDepartementEtBureauAgent(utilisateur, serviceDelivreur, jsonObject);
+
+			// Ville de l'agent
+			if (serviceDelivreur.getAdresseService() != null) {
+				AdresseService adresse = serviceDelivreur.getAdresseService();
+				jsonObject.put(VILLE_SERVICE_AGENT, adresse.getVille());
+				jsonObject.put(ADRESSE_INTERNET, adresse.getAdresseInternet());
+				jsonObject.put(TEL_SERVICE_DELIVREUR, adresse.getTelephone());
+				jsonObject.put(VILLE_DELIVRANCE, adresse.getVille());
+				jsonObject.put(ADR_SERVICE_DELIVREUR, getAdresseServiceDelivreurEnJson(adresse));
+			}
+
+			FonctionAgent fonctionAgent = utilisateur.getFonctionAgent();
+			if (fonctionAgent != null) {
+				jsonObject.put(FONCTION_AGENT, fonctionAgent.getLibelleFonction());
+			}
+
+			// Si on est en délivrance intermédiaire, le batch adaptateur a déjà ajouté l'image signature de l'agent dans le json
+			boolean ajouterSignature = !jsonObject.optBoolean(PAS_DE_SIGNATURE, false);
+			SignatureManuscrite signatureManuscrite = utilisateur.getSignatureManuscrite();
+			if (ajouterSignature && signatureManuscrite != null) {
+				jsonObject.put(IMAGE_SIGNATURE, signatureManuscrite.getContenu());
+			}
+
+			return jsonObject.toString();
+		} catch (JSONException exception) {
+			throw new TechnicalException(ERREUR_ANALYSE_JSON, exception);
+		}
+	}
+
+	private boolean estDelivranceIntermediaire(String idArobas) {
+		// Si l'id_arobas est celui de l'utilisateur rece, on est en délivrance intermédiaire
+		return ApiConstants.ID_AROBAS_UTILISATEUR_RECE.equals(idArobas);
+	}
+
+	@ToRefactor
+	// Réduire la complexité de la méthode
+	// Il y a de la duplication de condition
+	private void ajouterLibelleDepartementEtBureauAgent(Utilisateur utilisateur, Service serviceDelivreur, JSONObject jsonObject) {
+		TypeService typeServiceDelivreur = serviceDelivreur.getType();
+		if (typeServiceDelivreur == TypeService.SERVICE || typeServiceDelivreur == TypeService.MINISTERE) {
+			switch (utilisateur.getService().getType()) {
+				case SERVICE:
+				case DEPARTEMENT:
+				case MINISTERE:
+					jsonObject.put(LIBELLE_DEPARTEMENT, utilisateur.getService().getLibelleService());
+					jsonObject.put(BUREAU_AGENT, "");
+					break;
+
+				case BUREAU:
+				case SECTION:
+					Service service = ServicesUtil.getServiceType(utilisateur.getService(), TypeService.DEPARTEMENT);
+					jsonObject.put(LIBELLE_DEPARTEMENT, service.getLibelleService());
+					jsonObject.put(BUREAU_AGENT, utilisateur.getService().getLibelleService());
+					break;
+				default:
+					// no default case
+			}
+		} else if (typeServiceDelivreur == TypeService.POSTE) {
+			TypeService type = utilisateur.getService().getType();
+			if (type == TypeService.POSTE) {
+				jsonObject.put(LIBELLE_DEPARTEMENT, utilisateur.getService().getLibelleService());
+				jsonObject.put(BUREAU_AGENT, "");
+			} else if (type == TypeService.SECTION_CONSULAIRE) {
+				jsonObject.put(LIBELLE_DEPARTEMENT, serviceDelivreur.getLibelleService());
+				jsonObject.put(BUREAU_AGENT, utilisateur.getService().getLibelleService());
+			}
+		} else {
+			log.warn("Utilisateur non rattaché à une entité SERVICE ou POSTE : nom:'{}' idArobas:'{}'",
+					 utilisateur.getNom(), utilisateur.getIdArobas());
+		}
+	}
+
+	@NotNull
+	private JSONObject getAdresseServiceDelivreurEnJson(AdresseService adresse) {
+		final JSONObject jsonAdresseServiceDelivreur = new JSONObject();
+		jsonAdresseServiceDelivreur.put(NUM_ET_NOM_RUE_SERVICE_DELIVREUR_LIGNE4, adresse.getLigne4());
+		jsonAdresseServiceDelivreur.put(CP_ET_VILLE_SERVICE_DELIVREUR_LIGNE6, adresse.getLigne6());
+		return jsonAdresseServiceDelivreur;
+	}
+
 }
