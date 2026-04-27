@@ -1,127 +1,158 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.21.5-74d586df47b25dbd05bd0957999819196e59934a  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Acte_Image" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="37" uuid="a7c16bee-a7d3-4fc0-855c-8bf5f355670a">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="extrait_copie/EXTRAIT_COPIE_ACTE_TEXTE/DataAdapter.xml"/>
-	<parameter name="JSON_INPUT_STREAM" class="java.io.InputStream" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.source" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.sources" class="java.util.List" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.date.pattern" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.number.pattern" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="JSON_LOCALE" class="java.util.Locale" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.locale.code" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="JSON_TIME_ZONE" class="java.util.TimeZone" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.timezone.id" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="SR_Acte_Image_Portrait_Double_Numerique" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[images du rapport]]></parameterDescription>
-	</parameter>
-	<parameter name="headerSubReport" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[header du rapport]]></parameterDescription>
-	</parameter>
-	<parameter name="footerSubReport" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[footer du rapport]]></parameterDescription>
-	</parameter>
-	<parameter name="signatureSubReport" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[signature du rapport]]></parameterDescription>
-	</parameter>
-	<field name="pas_de_bloc_signature" class="java.lang.Boolean"/>
-	<field name="filigrane_archive" class="java.lang.Boolean"/>
-	<field name="erreur" class="java.lang.String"/>
-	<field name="code_CTV" class="java.lang.String"/>
-	<field name="reference_acte" class="java.lang.String">
-		<fieldDescription><![CDATA[reference_acte]]></fieldDescription>
-	</field>
-	<field name="reference_registre" class="java.lang.String"/>
-	<field name="mentions" class="java.lang.String"/>
-	<field name="reference_rece" class="java.lang.String"/>
-	<pageHeader>
-		<band height="40">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<textField>
-				<reportElement x="0" y="0" width="149" height="20" uuid="49d55118-3e7a-444d-b155-7abd4c91209b">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<printWhenExpression><![CDATA[$F{reference_rece} != null]]></printWhenExpression>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{reference_rece}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="406" y="0" width="149" height="20" uuid="89331d81-deda-4495-bd9b-f03c8841af7a">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<printWhenExpression><![CDATA[$F{reference_registre} != null]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{reference_registre}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageHeader>
-	<detail>
-		<band height="650" splitType="Stretch">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<subreport>
-				<reportElement stretchType="ContainerHeight" x="48" y="0" width="460" height="650" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="1c3e941b-e628-4fa7-bf23-50c85cc4e0db">
-					<printWhenExpression><![CDATA[$F{erreur} == null]]></printWhenExpression>
-				</reportElement>
-				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("corps_image")]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{SR_Acte_Image_Portrait_Double_Numerique}]]></subreportExpression>
-			</subreport>
-			<image>
-				<reportElement x="48" y="0" width="460" height="650" isPrintWhenDetailOverflows="true" uuid="d5d7a19d-060a-4875-954b-e176ab96898a">
-					<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(true) && $F{erreur} == null]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA[net.sf.jasperreports.renderers.BatikRenderer.getInstanceFromText("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"765\" height=\"990\"><text x=\"-575\" y=\"550\" transform=\"rotate(-50)\" style=\"font-size:46px;fill:#808080;fill-opacity:0.7\">Cette copie n'a pas valeur d'acte authentique</text></svg>")]]></imageExpression>
-			</image>
-			<image scaleImage="RetainShape">
-				<reportElement x="48" y="0" width="460" height="650" isPrintWhenDetailOverflows="true" uuid="d5d7a19d-060a-4875-954b-e176ab96898a">
-					<property name="com.jaspersoft.studio.unit.width" value="mm"/>
-					<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(true) && $F{erreur} == null]]></printWhenExpression>
-				</reportElement>
-				<graphicElement fill="Solid"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.renderers.BatikRenderer.getInstanceFromText("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"765\" height=\"990\"><text x=\"-275\" y=\"460\" transform=\"rotate(-50)\" style=\"font-size:80px;fill:#808080;fill-opacity:0.7\">ARCHIVE</text></svg>")]]></imageExpression>
-			</image>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement stretchType="ContainerHeight" x="0" y="0" width="555" height="15" isRemoveLineWhenBlank="true" forecolor="#FA0C07" uuid="194d7119-0580-4f35-b647-5f6978dfe64f">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="mm"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font fontName="Liberation Mono" size="20" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{erreur}]]></textFieldExpression>
-			</textField>
-		</band>
-		<band height="250" splitType="Prevent">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<printWhenExpression><![CDATA[!$F{mentions}.isBlank() && !$F{mentions}.isEmpty()]]></printWhenExpression>
-			<textField>
-				<reportElement x="0" y="0" width="555" height="250" uuid="4f6dadec-a202-4455-9083-5d664bbc3a42">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{mentions}]]></textFieldExpression>
-			</textField>
-		</band>
-	</detail>
-	<pageFooter>
-		<band height="44" splitType="Stretch">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(false) &&  !$F{code_CTV}.equals("")]]></printWhenExpression>
-			<subreport>
-				<reportElement x="0" y="0" width="555" height="44" uuid="de999025-fb86-4a09-a556-9add07a1a340">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<printWhenExpression><![CDATA[$F{erreur} == null && $F{filigrane_archive}.equals(false) &&  !$F{code_CTV}.equals("") && $F{pas_de_bloc_signature}.equals(false)]]></printWhenExpression>
-				</reportElement>
-				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("")]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{footerSubReport}]]></subreportExpression>
-			</subreport>
-		</band>
-	</pageFooter>
-</jasperReport>
+import { CONFIG_POST_COMPOSITION_ACTE_TEXTE } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
+import { CONFIG_GET_CORPS_ACTE_IMAGE } from "@api/configurations/etatCivil/acte/GetCorpsActeImage";
+import { CONFIG_GET_RECOMPOSER_DOCUMENT_FINAL } from "@api/configurations/etatCivil/acte/GetRecomposerDocumentFinalConfigApi";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_REPRIS } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeReprisConfigApi";
+import {
+  CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+  IDonneesCompositionActeIn
+} from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
+import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
+import React, { useEffect, useState } from "react";
+import AffichageDocument from "../../../../composants/commun/affichageDocument/AffichageDocument";
+import Bouton from "../../../../composants/commun/bouton/Bouton";
+import useFetchApi from "../../../../hooks/api/FetchApiHook";
+import { EMimeType } from "../../../../ressources/EMimeType";
+import AfficherMessage from "../../../../utils/AfficherMessage";
+
+const estActeImageAvecReferenceRece = (typeActe?: keyof typeof ETypeActe, numeroActeElectronique?: string | null) =>
+  typeActe === ETypeActe.IMAGE && Boolean(numeroActeElectronique?.trim());
+
+interface IVisionneuseActeProps {
+  idActe?: string;
+  typeActe?: keyof typeof ETypeActe;
+  estReecrit?: boolean;
+  /** Acte image signé en double numérique (réf. RECE) : afficher le PDF recomposé plutôt que le corps-image brut. */
+  numeroActeElectronique?: string | null;
+}
+
+const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeActe, estReecrit, numeroActeElectronique }) => {
+  const [contenuTexteBase64, setContenuTexteBase64] = useState<string | null>(null);
+  const [contenuImageBase64, setContenuImageBase64] = useState<string | null>(null);
+  const [contenuImageBlob, setContenuImageBlob] = useState<Blob | null>(null);
+  const [estImage, setEstImage] = useState(typeActe === ETypeActe.IMAGE);
+
+  const [donneesPourCompositionActeTexte, setDonneesPourCompositionActeTexte] = useState<IDonneesCompositionActeIn | null>(null);
+  const [donneesPourCompositionActeRepris, setDonneesPourCompositionActeRepris] = useState<string | null>(null);
+
+  const { appelApi: postCompositionActeTexte } = useFetchApi(CONFIG_POST_COMPOSITION_ACTE_TEXTE);
+  const { appelApi: recupererCorpsActeImage } = useFetchApi(CONFIG_GET_CORPS_ACTE_IMAGE);
+  const { appelApi: recomposerDocumentFinal } = useFetchApi(CONFIG_GET_RECOMPOSER_DOCUMENT_FINAL);
+  const { appelApi: recupererDonneesCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR);
+  const { appelApi: recupererDonneesPourCompositionActeRepris } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_REPRIS);
+
+  useEffect(() => {
+    if (!idActe) return;
+
+    const afficherPdfComposeImage = estActeImageAvecReferenceRece(typeActe, numeroActeElectronique);
+
+    switch (true) {
+      case estImage:
+        if (afficherPdfComposeImage) {
+          if (!contenuImageBlob) {
+            recomposerDocumentFinal({
+              parametres: { path: { idActe } },
+              apresSucces: pdf => {
+                if (pdf.size === 0) {
+                  AfficherMessage.erreur("La visualisation de l'acte n'est pas disponible");
+                }
+                setContenuImageBlob(pdf);
+              },
+              apresErreur: erreurs =>
+                AfficherMessage.erreur("Impossible de récupérer l'acte recomposé", {
+                  erreurs
+                })
+            });
+          }
+        } else if (!contenuImageBase64) {
+          setContenuImageBlob(null);
+          recupererCorpsActeImage({
+            parametres: { path: { idActe } },
+            apresSucces: corpsActeImage => setContenuImageBase64(corpsActeImage.contenu),
+            apresErreur: erreurs =>
+              AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte image.", {
+                erreurs
+              })
+          });
+        }
+        break;
+
+      case estReecrit:
+        !donneesPourCompositionActeRepris &&
+          recupererDonneesPourCompositionActeRepris({
+            parametres: { path: { idActe } },
+            apresSucces: setDonneesPourCompositionActeRepris,
+            apresErreur: erreurs =>
+              AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte texte.", {
+                erreurs
+              })
+          });
+        break;
+
+      default:
+        !donneesPourCompositionActeTexte &&
+          recupererDonneesCompositionActeTexte({
+            parametres: { path: { idActe } },
+            apresSucces: setDonneesPourCompositionActeTexte,
+            apresErreur: erreurs =>
+              AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte texte.", {
+                erreurs
+              })
+          });
+        break;
+    }
+  }, [idActe, estImage, estReecrit, typeActe, numeroActeElectronique]);
+
+  useEffect(() => {
+    if (!donneesPourCompositionActeTexte) return;
+
+    postCompositionActeTexte({
+      parametres: {
+        body: {
+          nature_acte: donneesPourCompositionActeTexte.natureActe,
+          texte_corps_acte: donneesPourCompositionActeTexte.texteCorpsActe,
+          mentions: donneesPourCompositionActeTexte.mentions,
+          titulaires: donneesPourCompositionActeTexte.titulaires,
+          reference_acte: donneesPourCompositionActeTexte.referenceActe,
+          reference_registre_papier: donneesPourCompositionActeTexte.referenceRegistrePapier
+        }
+      },
+      apresSucces: reponse => setContenuTexteBase64(reponse.contenu),
+      apresErreur: erreurs => AfficherMessage.erreur("Impossible d'obtenir les informations de l'acte", { erreurs })
+    });
+  }, [donneesPourCompositionActeTexte]);
+
+  const onClickSwitchActeExtraitRepris = () => {
+    setEstImage(prec => !prec);
+  };
+
+  const afficherPdfComposeImage = estActeImageAvecReferenceRece(typeActe, numeroActeElectronique);
+  const documentImageComposePret = estImage && afficherPdfComposeImage && contenuImageBlob;
+  const documentImageBrutPret = estImage && !afficherPdfComposeImage && contenuImageBase64;
+  const documentTextePret = !estImage && contenuTexteBase64;
+
+  return (
+    <>
+      {estReecrit && (
+        <Bouton
+          className="float-right"
+          onClick={onClickSwitchActeExtraitRepris}
+          styleBouton="principal"
+        >
+          {estImage ? "Voir extrait repris" : "Voir acte"}
+        </Bouton>
+      )}
+      {(documentImageComposePret || documentImageBrutPret || documentTextePret) && (
+        <AffichageDocument
+          contenuBlob={documentImageComposePret ? contenuImageBlob! : undefined}
+          contenuBase64={
+            documentTextePret ? contenuTexteBase64! : documentImageBrutPret ? contenuImageBase64! : undefined
+          }
+          typeZoom={documentImageComposePret ? "page-fit" : documentImageBrutPret ? "auto" : 90}
+          typeMime={EMimeType.APPLI_PDF}
+        />
+      )}
+    </>
+  );
+};
+
+export default VisionneuseActe;
