@@ -1,177 +1,360 @@
-import { CONFIG_GET_EXTRAIT_ACTE_IMAGE } from "@api/configurations/etatCivil/acte/GetExtraitActeImageConfig";
-import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
+import { CONFIG_POST_COMPOSITION_ACTE_TEXTE } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
+import {
+  CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+  IDonneesCompositionActeIn
+} from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
+import { CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF } from "@api/configurations/etatCivil/acte/GetImagesActeFormatTiffConfigApi";
+import { CONFIG_POST_COMPOSITION_ACTE_IMAGE_DOUBLE_NUMERIQUE } from "@api/configurations/etatCivil/acte/PostCompositionActeImageDoubleNumeriqueConfigApi";
+import OngletActeMisAJour from "@composants/pages/requetesMiseAJour/onglets/OngletActeMisAJour";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
-import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
-import { URL_ACCUEIL } from "@router/infoPages/InfoPagesBase";
-import { render, screen, waitFor } from "@testing-library/react";
-import React, { useContext } from "react";
+import { imageTiffVideBase64 } from "@mock/data/ImageTiff";
+import { pdfVideBase64 } from "@mock/data/pdfVideBase64";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, test, vi } from "vitest";
-import EditionMiseAJourContextProvider, { EditionMiseAJourContext } from "../../contexts/EditionMiseAJourContextProvider";
+import {
+  EditionMiseAJourContext,
+  IEditionMiseAJourContext,
+  IEditionMiseAJourContextActions
+} from "../../../../../contexts/EditionMiseAJourContextProvider";
 
-const mockedNavigate = vi.fn();
-
-vi.mock("react-router", async () => {
-  const actual = await vi.importActual<typeof import("react-router")>("react-router");
-  return { ...actual, useNavigate: () => mockedNavigate };
-});
-
-const lancerTraitementAbandonnerMock = vi.fn((appel?: { finalement?: () => void }) => appel?.finalement?.());
-
-vi.mock("../../hooks/api/TraitementApiHook", () => ({
-  default: () => ({
-    lancerTraitement: lancerTraitementAbandonnerMock,
-    traitementEnCours: false
-  })
+const afficherErreurMock = vi.fn();
+vi.mock("../../../../../utils/AfficherMessage", () => ({
+  default: {
+    erreur: (...args: unknown[]) => afficherErreurMock(...args)
+  }
 }));
 
-vi.mock("../../hooks/CreateBlocker", () => ({
-  useCreateBlocker: () => ({
-    gestionBlocker: {
-      activerBlockerSansConfirmation: vi.fn(),
-      activerBlockerAvecConfirmation: vi.fn(),
-      desactiverBlocker: vi.fn()
-    },
-    BlockerNavigation: () => null
-  })
-}));
-
-vi.mock("../../composants/pages/requetesMiseAJour/compteurTemps/CompteurTemps", () => ({
-  default: () => null
-}));
-
-vi.mock("../../composants/commun/chargeurs/PageChargeur", () => ({
-  default: () => null
-}));
-
-const verifierDroitsMiseAJourActeMock = vi.fn();
-const estActeEligibleDoubleNumeriqueMock = vi.fn();
-
-vi.mock("../../composants/pages/requetesMiseAJour/droitsMiseAJourUtils", () => ({
-  verifierDroitsMiseAJourActe: (...args: unknown[]) => verifierDroitsMiseAJourActeMock(...args),
-  estActeEligibleDoubleNumerique: (...args: unknown[]) => estActeEligibleDoubleNumeriqueMock(...args)
-}));
-
-vi.mock("../../utils/AfficherMessage", () => ({
-  default: { erreur: vi.fn() }
-}));
-
-const ComposantDeTest: React.FC = () => {
-  const { typeActe, extraitActeImage, estEligibleDoubleNumerique } = useContext(EditionMiseAJourContext.Valeurs);
-  return (
-    <div>
-      <div data-testid="typeActe">{typeActe ?? "null"}</div>
-      <div data-testid="eligible">{String(estEligibleDoubleNumerique)}</div>
-      <div data-testid="extrait">{extraitActeImage ?? "null"}</div>
-    </div>
-  );
+const donneesCompositionAvecTexte: IDonneesCompositionActeIn = {
+  referenceActe: "REF-RECE",
+  referenceRegistrePapier: "REF-REG",
+  texteCorpsActe: "Corps de l'acte pour affichage texte",
+  mentions: "Mentions",
+  natureActe: "NAISSANCE",
+  titulaires: ""
 };
 
-describe("EditionMiseAJourContextProvider", () => {
+const donneesCompositionSansTexte: IDonneesCompositionActeIn = {
+  referenceActe: "REF-RECE",
+  referenceRegistrePapier: "REF-REG",
+  texteCorpsActe: "",
+  mentions: "Mentions",
+  natureActe: "NAISSANCE",
+  titulaires: ""
+};
+
+const imagesTiffMock = [{ contenu: imageTiffVideBase64, noPage: 1 }];
+
+const corpsDoubleNumeriqueAttendu = {
+  corpsImage: [imageTiffVideBase64],
+  referenceRece: "REF-RECE",
+  referenceRegistre: "REF-REG",
+  mentions: "Mentions"
+};
+
+const donneesCompositionSansReferences: IDonneesCompositionActeIn = {
+  referenceActe: undefined,
+  referenceRegistrePapier: undefined,
+  texteCorpsActe: "",
+  mentions: undefined,
+  natureActe: "NAISSANCE",
+  titulaires: ""
+};
+
+const mockPostCompositionActeTexte = () => {
+  MockApi.deployer(CONFIG_POST_COMPOSITION_ACTE_TEXTE, undefined, { data: { contenu: pdfVideBase64, nbPages: 1 } });
+};
+
+const setComposerActeMisAJour = vi.fn();
+
+const valeursEditionParDefaut: Partial<IEditionMiseAJourContext> = {
+  idActe: "acte-123",
+  composerActeMisAJour: false,
+  estEligibleDoubleNumerique: false,
+  estActeSigne: false,
+  typeActe: "TEXTE"
+};
+
+const actionsEdition: IEditionMiseAJourContextActions = {
+  setComposerActeMisAJour,
+  extraireTexte: vi.fn(),
+  changerOnglet: vi.fn(),
+  activerOngletActeMisAJour: vi.fn(),
+  desactiverBlocker: vi.fn(),
+  setEstActeSigne: vi.fn(),
+  enregistrerGestionnaireTexte: vi.fn()
+};
+
+describe("OngletActeMisAJour", () => {
+  const renderAvecContext = (surchargesContexte: Partial<IEditionMiseAJourContext> = {}, estActif = true) => {
+    return render(
+      <MockRECEContextProvider>
+        <EditionMiseAJourContext.Valeurs.Provider value={{ ...valeursEditionParDefaut, ...surchargesContexte } as IEditionMiseAJourContext}>
+          <EditionMiseAJourContext.Actions.Provider value={actionsEdition as IEditionMiseAJourContextActions}>
+            <OngletActeMisAJour estActif={estActif} />
+          </EditionMiseAJourContext.Actions.Provider>
+        </EditionMiseAJourContext.Valeurs.Provider>
+      </MockRECEContextProvider>
+    );
+  };
+
   afterEach(() => {
     MockApi.stopMock();
     vi.clearAllMocks();
   });
 
-  test("redirige à l'accueil si la vérification des droits (resume acte) échoue", async () => {
-    MockApi.deployer(CONFIG_GET_RESUME_ACTE, { path: { idActe: "idActe" }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } }, { codeHttp: 500 });
+  test("DOIT afficher 'Chargement du document…' QUAND aucune composition n'est demandée", () => {
+    const { getByText } = renderAvecContext({ composerActeMisAJour: false });
+    expect(getByText(/Chargement du document…/i)).toBeDefined();
+  });
 
-    render(
-      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
-        <EditionMiseAJourContextProvider idActe="idActe" idRequete="idRequete" estMiseAJourAvecMentions={false}>
-          <ComposantDeTest />
-        </EditionMiseAJourContextProvider>
-      </MockRECEContextProvider>
+  test("DOIT afficher le PDF QUAND la composition texte est demandée pour un acte de type TEXTE", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionSansTexte }
     );
+    mockPostCompositionActeTexte();
+
+    const { getByTitle } = renderAvecContext({ composerActeMisAJour: true, typeActe: "TEXTE" });
+
+    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
+    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
+  });
+
+  test("DOIT composer via le texte QUAND l'acte est de type IMAGE mais non éligible au double numérique", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionSansTexte }
+    );
+    mockPostCompositionActeTexte();
+
+    const { getByTitle } = renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "IMAGE",
+      estEligibleDoubleNumerique: false
+    });
+
+    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
+    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
+  });
+
+  test("DOIT composer via images TIFF et double numérique QUAND l'acte est IMAGE et éligible au double numérique", async () => {
+    MockApi.deployer(CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF, { path: { idActe: "acte-123" } }, { data: imagesTiffMock });
+
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionSansTexte }
+    );
+
+    MockApi.deployer(
+      CONFIG_POST_COMPOSITION_ACTE_IMAGE_DOUBLE_NUMERIQUE,
+      { body: corpsDoubleNumeriqueAttendu },
+      { data: { contenu: pdfVideBase64, nbPages: 1 } }
+    );
+
+    const { getByTitle } = renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "IMAGE",
+      estEligibleDoubleNumerique: true
+    });
+
+    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
+    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
+  });
+
+  test("DOIT proposer le mode texte QUAND double numérique et acte non signé", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionAvecTexte }
+    );
+    mockPostCompositionActeTexte();
+
+    const { getByLabelText, getByText } = renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "TEXTE",
+      estEligibleDoubleNumerique: true
+    });
+
+    await waitFor(() => expect(getByLabelText("Afficher en texte")).toBeDefined());
+
+    fireEvent.click(getByLabelText("Afficher en texte"));
+
+    await waitFor(() => expect(getByText("Corps de l'acte pour affichage texte")).toBeDefined());
+  });
+
+  test("NE DOIT pas afficher le sélecteur PDF/Texte QUAND l'acte est signé", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionAvecTexte }
+    );
+    mockPostCompositionActeTexte();
+
+    const { queryByLabelText, getByTitle } = renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "TEXTE",
+      estEligibleDoubleNumerique: true,
+      estActeSigne: true
+    });
+
+    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
+    expect(queryByLabelText("Afficher en texte")).toBeNull();
+  });
+
+  test("NE DOIT pas extraire le texte QUAND le mode d'affichage est PDF", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionAvecTexte }
+    );
+    mockPostCompositionActeTexte();
+
+    const { getByLabelText } = renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "TEXTE",
+      estEligibleDoubleNumerique: true
+    });
+
+    await waitFor(() => expect(getByLabelText("Afficher en PDF")).toBeDefined());
+
+    fireEvent.mouseUp(document.body);
+
+    expect(actionsEdition.extraireTexte).not.toHaveBeenCalled();
+  });
+
+  test("DOIT afficher 'Aucune donnée textuelle disponible' QUAND le texte du corps est vide en mode texte", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionSansTexte }
+    );
+    mockPostCompositionActeTexte();
+
+    const { getByLabelText, getByText } = renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "TEXTE",
+      estEligibleDoubleNumerique: true
+    });
+
+    await waitFor(() => expect(getByLabelText("Afficher en texte")).toBeDefined());
+    fireEvent.click(getByLabelText("Afficher en texte"));
+
+    await waitFor(() => expect(getByText("Aucune donnée textuelle disponible")).toBeDefined());
+  });
+
+  test("NE DOIT pas appeler extraireTexte QUAND la sélection de texte est vide", () => {
+    const { getByLabelText, container } = renderAvecContext({
+      estEligibleDoubleNumerique: true,
+      estActeSigne: false
+    });
+
+    fireEvent.click(getByLabelText("Afficher en texte"));
+
+    const divAvecHandler = container.querySelector(".mx-auto");
+    fireEvent.mouseUp(divAvecHandler!);
+
+    expect(actionsEdition.extraireTexte).not.toHaveBeenCalled();
+  });
+
+  test("DOIT appeler extraireTexte QUAND du texte est sélectionné en mode texte", () => {
+    vi.spyOn(window, "getSelection").mockReturnValue({
+      toString: () => "texte sélectionné",
+      removeAllRanges: vi.fn()
+    } as unknown as Selection);
+
+    const { getByLabelText, container } = renderAvecContext({
+      estEligibleDoubleNumerique: true,
+      estActeSigne: false
+    });
+
+    fireEvent.click(getByLabelText("Afficher en texte"));
+
+    fireEvent.mouseUp(container.querySelector(".mx-auto")!);
+
+    expect(actionsEdition.extraireTexte).toHaveBeenCalledWith("texte sélectionné");
+  });
+
+  test("DOIT setter contenuPdf à '' QUAND reponse.contenu est null (double numérique)", async () => {
+    MockApi.deployer(CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF, { path: { idActe: "acte-123" } }, { data: imagesTiffMock });
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionSansTexte }
+    );
+    MockApi.deployer(
+      CONFIG_POST_COMPOSITION_ACTE_IMAGE_DOUBLE_NUMERIQUE,
+      { body: corpsDoubleNumeriqueAttendu },
+      { data: { contenu: undefined as unknown as string, nbPages: 1 } }
+    );
+
+    renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "IMAGE",
+      estEligibleDoubleNumerique: true
+    });
+
+    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
+  });
+
+  test("DOIT afficher l'état erreur QUAND récupération des données composition échoue (texte)", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { codeHttp: 500 }
+    );
+
+    renderAvecContext({ composerActeMisAJour: true, typeActe: "TEXTE" });
+
+    await waitFor(() => expect(screen.getByText("Impossible de charger le document")).toBeDefined());
+    expect(afficherErreurMock).toHaveBeenCalled();
+  });
+
+  test("DOIT afficher l'état erreur QUAND la composition PDF échoue (texte)", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { data: donneesCompositionSansTexte }
+    );
+    MockApi.deployer(CONFIG_POST_COMPOSITION_ACTE_TEXTE, undefined, { codeHttp: 500 });
+
+    renderAvecContext({ composerActeMisAJour: true, typeActe: "TEXTE" });
+
+    await waitFor(() => expect(screen.getByText("Impossible de charger le document")).toBeDefined());
+    expect(afficherErreurMock).toHaveBeenCalledWith("Impossible de générer le document PDF");
+  });
+
+  test("DOIT afficher l'état erreur QUAND récupération images TIFF échoue (double numérique)", async () => {
+    MockApi.deployer(CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF, { path: { idActe: "acte-123" } }, { codeHttp: 500 });
+
+    renderAvecContext({
+      composerActeMisAJour: true,
+      typeActe: "IMAGE",
+      estEligibleDoubleNumerique: true
+    });
+
+    await waitFor(() => expect(screen.getByText("Impossible de charger le document")).toBeDefined());
+    expect(afficherErreurMock).toHaveBeenCalled();
+  });
+
+  test("DOIT réessayer quand l'utilisateur clique sur 'Réessayer' en cas d'erreur (texte)", async () => {
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
+      { path: { idActe: "acte-123" } },
+      { codeHttp: 500 }
+    );
+
+    renderAvecContext({ composerActeMisAJour: true, typeActe: "TEXTE" });
+
+    await waitFor(() => expect(screen.getByText("Impossible de charger le document")).toBeDefined());
+    fireEvent.click(screen.getByText("Réessayer"));
 
     await waitFor(() => {
-      expect(lancerTraitementAbandonnerMock).toHaveBeenCalled();
-      expect(mockedNavigate).toHaveBeenCalledWith(URL_ACCUEIL, { replace: true });
+      const appels = MockApi.getMock().history.get.filter(h => h.url?.includes("donneesPourCompositionActeTexteMisAJour"));
+      expect(appels.length).toBeGreaterThanOrEqual(2);
     });
-  });
-
-  test("redirige à l'accueil si l'utilisateur n'est pas autorisé", async () => {
-    verifierDroitsMiseAJourActeMock.mockReturnValue({
-      autorise: false,
-      peutMettreAJourMentions: false,
-      peutMettreAJourAnalyseMarginale: false
-    });
-    estActeEligibleDoubleNumeriqueMock.mockReturnValue(false);
-
-    MockApi.deployer(
-      CONFIG_GET_RESUME_ACTE,
-      { path: { idActe: "idActe" }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
-      { data: new MockFicheActeBuilder().deType("IMAGE").genererDto() }
-    );
-
-    render(
-      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
-        <EditionMiseAJourContextProvider idActe="idActe" idRequete="idRequete" estMiseAJourAvecMentions={false}>
-          <ComposantDeTest />
-        </EditionMiseAJourContextProvider>
-      </MockRECEContextProvider>
-    );
-
-    await waitFor(() => {
-      expect(lancerTraitementAbandonnerMock).toHaveBeenCalled();
-      expect(mockedNavigate).toHaveBeenCalledWith(URL_ACCUEIL, { replace: true });
-    });
-  });
-
-  test("renseigne typeActe, eligibleDoubleNumerique et extraitActeImage quand tout se passe bien", async () => {
-    verifierDroitsMiseAJourActeMock.mockReturnValue({
-      autorise: true,
-      peutMettreAJourMentions: true,
-      peutMettreAJourAnalyseMarginale: true
-    });
-    estActeEligibleDoubleNumeriqueMock.mockReturnValue(true);
-
-    MockApi.deployer(
-      CONFIG_GET_RESUME_ACTE,
-      { path: { idActe: "idActe" }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
-      { data: new MockFicheActeBuilder().deType("IMAGE").genererDto() }
-    );
-    MockApi.deployer(CONFIG_GET_EXTRAIT_ACTE_IMAGE, { path: { idActe: "idActe" } }, { data: [{ extrait: "EXTRAIT_OK" }] });
-
-    render(
-      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
-        <EditionMiseAJourContextProvider idActe="idActe" idRequete="idRequete" estMiseAJourAvecMentions={false}>
-          <ComposantDeTest />
-        </EditionMiseAJourContextProvider>
-      </MockRECEContextProvider>
-    );
-
-    await waitFor(() => expect(screen.getByTestId("typeActe").textContent).toBe("IMAGE"));
-    await waitFor(() => expect(screen.getByTestId("eligible").textContent).toBe("true"));
-    await waitFor(() => expect(screen.getByTestId("extrait").textContent).toBe("EXTRAIT_OK"));
-  });
-
-  test("met extraitActeImage à null si l'appel d'extrait échoue", async () => {
-    verifierDroitsMiseAJourActeMock.mockReturnValue({
-      autorise: true,
-      peutMettreAJourMentions: true,
-      peutMettreAJourAnalyseMarginale: true
-    });
-    estActeEligibleDoubleNumeriqueMock.mockReturnValue(true);
-
-    MockApi.deployer(
-      CONFIG_GET_RESUME_ACTE,
-      { path: { idActe: "idActe" }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
-      { data: new MockFicheActeBuilder().deType("IMAGE").genererDto() }
-    );
-    MockApi.deployer(CONFIG_GET_EXTRAIT_ACTE_IMAGE, { path: { idActe: "idActe" } }, { codeHttp: 500 });
-
-    render(
-      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
-        <EditionMiseAJourContextProvider idActe="idActe" idRequete="idRequete" estMiseAJourAvecMentions={false}>
-          <ComposantDeTest />
-        </EditionMiseAJourContextProvider>
-      </MockRECEContextProvider>
-    );
-
-    await waitFor(() => expect(screen.getByTestId("typeActe").textContent).toBe("IMAGE"));
-    await waitFor(() => expect(screen.getByTestId("extrait").textContent).toBe("null"));
   });
 });
-
