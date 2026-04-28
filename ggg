@@ -1,360 +1,141 @@
-import { CONFIG_POST_COMPOSITION_ACTE_TEXTE } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
-import {
-  CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-  IDonneesCompositionActeIn
-} from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
-import { CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF } from "@api/configurations/etatCivil/acte/GetImagesActeFormatTiffConfigApi";
-import { CONFIG_POST_COMPOSITION_ACTE_IMAGE_DOUBLE_NUMERIQUE } from "@api/configurations/etatCivil/acte/PostCompositionActeImageDoubleNumeriqueConfigApi";
-import OngletActeMisAJour from "@composants/pages/requetesMiseAJour/onglets/OngletActeMisAJour";
-import { MockApi } from "@mock/appelsApi/MockApi";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { imageTiffVideBase64 } from "@mock/data/ImageTiff";
-import { pdfVideBase64 } from "@mock/data/pdfVideBase64";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { afterEach, describe, expect, test, vi } from "vitest";
-import {
-  EditionMiseAJourContext,
-  IEditionMiseAJourContext,
-  IEditionMiseAJourContextActions
-} from "../../../../../contexts/EditionMiseAJourContextProvider";
-
-const afficherErreurMock = vi.fn();
-vi.mock("../../../../../utils/AfficherMessage", () => ({
-  default: {
-    erreur: (...args: unknown[]) => afficherErreurMock(...args)
-  }
-}));
-
-const donneesCompositionAvecTexte: IDonneesCompositionActeIn = {
-  referenceActe: "REF-RECE",
-  referenceRegistrePapier: "REF-REG",
-  texteCorpsActe: "Corps de l'acte pour affichage texte",
-  mentions: "Mentions",
-  natureActe: "NAISSANCE",
-  titulaires: ""
-};
-
-const donneesCompositionSansTexte: IDonneesCompositionActeIn = {
-  referenceActe: "REF-RECE",
-  referenceRegistrePapier: "REF-REG",
-  texteCorpsActe: "",
-  mentions: "Mentions",
-  natureActe: "NAISSANCE",
-  titulaires: ""
-};
-
-const imagesTiffMock = [{ contenu: imageTiffVideBase64, noPage: 1 }];
-
-const corpsDoubleNumeriqueAttendu = {
-  corpsImage: [imageTiffVideBase64],
-  referenceRece: "REF-RECE",
-  referenceRegistre: "REF-REG",
-  mentions: "Mentions"
-};
-
-const donneesCompositionSansReferences: IDonneesCompositionActeIn = {
-  referenceActe: undefined,
-  referenceRegistrePapier: undefined,
-  texteCorpsActe: "",
-  mentions: undefined,
-  natureActe: "NAISSANCE",
-  titulaires: ""
-};
-
-const mockPostCompositionActeTexte = () => {
-  MockApi.deployer(CONFIG_POST_COMPOSITION_ACTE_TEXTE, undefined, { data: { contenu: pdfVideBase64, nbPages: 1 } });
-};
-
-const setComposerActeMisAJour = vi.fn();
-
-const valeursEditionParDefaut: Partial<IEditionMiseAJourContext> = {
-  idActe: "acte-123",
-  composerActeMisAJour: false,
-  estEligibleDoubleNumerique: false,
-  estActeSigne: false,
-  typeActe: "TEXTE"
-};
-
-const actionsEdition: IEditionMiseAJourContextActions = {
-  setComposerActeMisAJour,
-  extraireTexte: vi.fn(),
-  changerOnglet: vi.fn(),
-  activerOngletActeMisAJour: vi.fn(),
-  desactiverBlocker: vi.fn(),
-  setEstActeSigne: vi.fn(),
-  enregistrerGestionnaireTexte: vi.fn()
-};
-
-describe("OngletActeMisAJour", () => {
-  const renderAvecContext = (surchargesContexte: Partial<IEditionMiseAJourContext> = {}, estActif = true) => {
-    return render(
-      <MockRECEContextProvider>
-        <EditionMiseAJourContext.Valeurs.Provider value={{ ...valeursEditionParDefaut, ...surchargesContexte } as IEditionMiseAJourContext}>
-          <EditionMiseAJourContext.Actions.Provider value={actionsEdition as IEditionMiseAJourContextActions}>
-            <OngletActeMisAJour estActif={estActif} />
-          </EditionMiseAJourContext.Actions.Provider>
-        </EditionMiseAJourContext.Valeurs.Provider>
-      </MockRECEContextProvider>
-    );
-  };
-
-  afterEach(() => {
-    MockApi.stopMock();
-    vi.clearAllMocks();
-  });
-
-  test("DOIT afficher 'Chargement du document…' QUAND aucune composition n'est demandée", () => {
-    const { getByText } = renderAvecContext({ composerActeMisAJour: false });
-    expect(getByText(/Chargement du document…/i)).toBeDefined();
-  });
-
-  test("DOIT afficher le PDF QUAND la composition texte est demandée pour un acte de type TEXTE", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionSansTexte }
-    );
-    mockPostCompositionActeTexte();
-
-    const { getByTitle } = renderAvecContext({ composerActeMisAJour: true, typeActe: "TEXTE" });
-
-    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
-    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
-  });
-
-  test("DOIT composer via le texte QUAND l'acte est de type IMAGE mais non éligible au double numérique", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionSansTexte }
-    );
-    mockPostCompositionActeTexte();
-
-    const { getByTitle } = renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "IMAGE",
-      estEligibleDoubleNumerique: false
-    });
-
-    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
-    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
-  });
-
-  test("DOIT composer via images TIFF et double numérique QUAND l'acte est IMAGE et éligible au double numérique", async () => {
-    MockApi.deployer(CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF, { path: { idActe: "acte-123" } }, { data: imagesTiffMock });
-
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionSansTexte }
-    );
-
-    MockApi.deployer(
-      CONFIG_POST_COMPOSITION_ACTE_IMAGE_DOUBLE_NUMERIQUE,
-      { body: corpsDoubleNumeriqueAttendu },
-      { data: { contenu: pdfVideBase64, nbPages: 1 } }
-    );
-
-    const { getByTitle } = renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "IMAGE",
-      estEligibleDoubleNumerique: true
-    });
-
-    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
-    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
-  });
-
-  test("DOIT proposer le mode texte QUAND double numérique et acte non signé", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionAvecTexte }
-    );
-    mockPostCompositionActeTexte();
-
-    const { getByLabelText, getByText } = renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "TEXTE",
-      estEligibleDoubleNumerique: true
-    });
-
-    await waitFor(() => expect(getByLabelText("Afficher en texte")).toBeDefined());
-
-    fireEvent.click(getByLabelText("Afficher en texte"));
-
-    await waitFor(() => expect(getByText("Corps de l'acte pour affichage texte")).toBeDefined());
-  });
-
-  test("NE DOIT pas afficher le sélecteur PDF/Texte QUAND l'acte est signé", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionAvecTexte }
-    );
-    mockPostCompositionActeTexte();
-
-    const { queryByLabelText, getByTitle } = renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "TEXTE",
-      estEligibleDoubleNumerique: true,
-      estActeSigne: true
-    });
-
-    await waitFor(() => expect(getByTitle("Document PDF")).toBeDefined());
-    expect(queryByLabelText("Afficher en texte")).toBeNull();
-  });
-
-  test("NE DOIT pas extraire le texte QUAND le mode d'affichage est PDF", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionAvecTexte }
-    );
-    mockPostCompositionActeTexte();
-
-    const { getByLabelText } = renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "TEXTE",
-      estEligibleDoubleNumerique: true
-    });
-
-    await waitFor(() => expect(getByLabelText("Afficher en PDF")).toBeDefined());
-
-    fireEvent.mouseUp(document.body);
-
-    expect(actionsEdition.extraireTexte).not.toHaveBeenCalled();
-  });
-
-  test("DOIT afficher 'Aucune donnée textuelle disponible' QUAND le texte du corps est vide en mode texte", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionSansTexte }
-    );
-    mockPostCompositionActeTexte();
-
-    const { getByLabelText, getByText } = renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "TEXTE",
-      estEligibleDoubleNumerique: true
-    });
-
-    await waitFor(() => expect(getByLabelText("Afficher en texte")).toBeDefined());
-    fireEvent.click(getByLabelText("Afficher en texte"));
-
-    await waitFor(() => expect(getByText("Aucune donnée textuelle disponible")).toBeDefined());
-  });
-
-  test("NE DOIT pas appeler extraireTexte QUAND la sélection de texte est vide", () => {
-    const { getByLabelText, container } = renderAvecContext({
-      estEligibleDoubleNumerique: true,
-      estActeSigne: false
-    });
-
-    fireEvent.click(getByLabelText("Afficher en texte"));
-
-    const divAvecHandler = container.querySelector(".mx-auto");
-    fireEvent.mouseUp(divAvecHandler!);
-
-    expect(actionsEdition.extraireTexte).not.toHaveBeenCalled();
-  });
-
-  test("DOIT appeler extraireTexte QUAND du texte est sélectionné en mode texte", () => {
-    vi.spyOn(window, "getSelection").mockReturnValue({
-      toString: () => "texte sélectionné",
-      removeAllRanges: vi.fn()
-    } as unknown as Selection);
-
-    const { getByLabelText, container } = renderAvecContext({
-      estEligibleDoubleNumerique: true,
-      estActeSigne: false
-    });
-
-    fireEvent.click(getByLabelText("Afficher en texte"));
-
-    fireEvent.mouseUp(container.querySelector(".mx-auto")!);
-
-    expect(actionsEdition.extraireTexte).toHaveBeenCalledWith("texte sélectionné");
-  });
-
-  test("DOIT setter contenuPdf à '' QUAND reponse.contenu est null (double numérique)", async () => {
-    MockApi.deployer(CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF, { path: { idActe: "acte-123" } }, { data: imagesTiffMock });
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionSansTexte }
-    );
-    MockApi.deployer(
-      CONFIG_POST_COMPOSITION_ACTE_IMAGE_DOUBLE_NUMERIQUE,
-      { body: corpsDoubleNumeriqueAttendu },
-      { data: { contenu: undefined as unknown as string, nbPages: 1 } }
-    );
-
-    renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "IMAGE",
-      estEligibleDoubleNumerique: true
-    });
-
-    await waitFor(() => expect(setComposerActeMisAJour).toHaveBeenCalledWith(false));
-  });
-
-  test("DOIT afficher l'état erreur QUAND récupération des données composition échoue (texte)", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { codeHttp: 500 }
-    );
-
-    renderAvecContext({ composerActeMisAJour: true, typeActe: "TEXTE" });
-
-    await waitFor(() => expect(screen.getByText("Impossible de charger le document")).toBeDefined());
-    expect(afficherErreurMock).toHaveBeenCalled();
-  });
-
-  test("DOIT afficher l'état erreur QUAND la composition PDF échoue (texte)", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { data: donneesCompositionSansTexte }
-    );
-    MockApi.deployer(CONFIG_POST_COMPOSITION_ACTE_TEXTE, undefined, { codeHttp: 500 });
-
-    renderAvecContext({ composerActeMisAJour: true, typeActe: "TEXTE" });
-
-    await waitFor(() => expect(screen.getByText("Impossible de charger le document")).toBeDefined());
-    expect(afficherErreurMock).toHaveBeenCalledWith("Impossible de générer le document PDF");
-  });
-
-  test("DOIT afficher l'état erreur QUAND récupération images TIFF échoue (double numérique)", async () => {
-    MockApi.deployer(CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF, { path: { idActe: "acte-123" } }, { codeHttp: 500 });
-
-    renderAvecContext({
-      composerActeMisAJour: true,
-      typeActe: "IMAGE",
-      estEligibleDoubleNumerique: true
-    });
-
-    await waitFor(() => expect(screen.getByText("Impossible de charger le document")).toBeDefined());
-    expect(afficherErreurMock).toHaveBeenCalled();
-  });
-
-  test("DOIT réessayer quand l'utilisateur clique sur 'Réessayer' en cas d'erreur (texte)", async () => {
-    MockApi.deployer(
-      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
-      { path: { idActe: "acte-123" } },
-      { codeHttp: 500 }
-    );
-
-    renderAvecContext({ composerActeMisAJour: true, typeActe: "TEXTE" });
-
-    await waitFor(() => expect(screen.getByText("Impossible de charger le document")).toBeDefined());
-    fireEvent.click(screen.getByText("Réessayer"));
-
-    await waitFor(() => {
-      const appels = MockApi.getMock().history.get.filter(h => h.url?.includes("donneesPourCompositionActeTexteMisAJour"));
-      expect(appels.length).toBeGreaterThanOrEqual(2);
-    });
-  });
-});
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.21.5-74d586df47b25dbd05bd0957999819196e59934a  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Acte_Image" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="37" uuid="a7c16bee-a7d3-4fc0-855c-8bf5f355670a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="extrait_copie/EXTRAIT_COPIE_ACTE_TEXTE/DataAdapter.xml"/>
+	<parameter name="JSON_INPUT_STREAM" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="net.sf.jasperreports.json.source" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="net.sf.jasperreports.json.sources" class="java.util.List" isForPrompting="false"/>
+	<parameter name="net.sf.jasperreports.json.date.pattern" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="net.sf.jasperreports.json.number.pattern" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="JSON_LOCALE" class="java.util.Locale" isForPrompting="false"/>
+	<parameter name="net.sf.jasperreports.json.locale.code" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="JSON_TIME_ZONE" class="java.util.TimeZone" isForPrompting="false"/>
+	<parameter name="net.sf.jasperreports.json.timezone.id" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SR_Acte_Image_Portrait_Double_Numerique" class="net.sf.jasperreports.engine.JasperReport">
+		<parameterDescription><![CDATA[images du rapport]]></parameterDescription>
+	</parameter>
+	<parameter name="headerSubReport" class="net.sf.jasperreports.engine.JasperReport">
+		<parameterDescription><![CDATA[header du rapport]]></parameterDescription>
+	</parameter>
+	<parameter name="footerSubReport" class="net.sf.jasperreports.engine.JasperReport">
+		<parameterDescription><![CDATA[footer du rapport]]></parameterDescription>
+	</parameter>
+	<parameter name="signatureSubReport" class="net.sf.jasperreports.engine.JasperReport">
+		<parameterDescription><![CDATA[signature du rapport]]></parameterDescription>
+	</parameter>
+	<field name="pas_de_bloc_signature" class="java.lang.Boolean"/>
+	<field name="filigrane_archive" class="java.lang.Boolean"/>
+	<field name="erreur" class="java.lang.String"/>
+	<field name="code_CTV" class="java.lang.String"/>
+	<field name="reference_acte" class="java.lang.String">
+		<fieldDescription><![CDATA[reference_acte]]></fieldDescription>
+	</field>
+	<field name="reference_registre" class="java.lang.String"/>
+	<field name="mentions" class="java.lang.String"/>
+	<field name="reference_rece" class="java.lang.String"/>
+	<pageHeader>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="149" height="20" uuid="49d55118-3e7a-444d-b155-7abd4c91209b">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{reference_rece} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{reference_rece}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="0" width="149" height="20" uuid="89331d81-deda-4495-bd9b-f03c8841af7a">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[$F{reference_registre} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{reference_registre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="245" y="0" width="33" height="20" uuid="a1b7c2e4-1001-4a01-9a01-000000000001"/>
+				<textElement textAlignment="Right">
+					<font fontName="Liberation Mono" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + "/"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="278" y="0" width="32" height="20" uuid="a1b7c2e4-1001-4a01-9a01-000000000003"/>
+				<textElement textAlignment="Left">
+					<font fontName="Liberation Mono" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="700" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement stretchType="ContainerHeight" x="30" y="0" width="496" height="700" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="1c3e941b-e628-4fa7-bf23-50c85cc4e0db">
+					<printWhenExpression><![CDATA[$F{erreur} == null]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("corps_image")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SR_Acte_Image_Portrait_Double_Numerique}]]></subreportExpression>
+			</subreport>
+			<image>
+				<reportElement x="30" y="0" width="496" height="700" isPrintWhenDetailOverflows="true" uuid="d5d7a19d-060a-4875-954b-e176ab96898a">
+					<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(true) && $F{erreur} == null]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[net.sf.jasperreports.renderers.BatikRenderer.getInstanceFromText("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"765\" height=\"990\"><text x=\"-575\" y=\"550\" transform=\"rotate(-50)\" style=\"font-size:46px;fill:#808080;fill-opacity:0.7\">Cette copie n'a pas valeur d'acte authentique</text></svg>")]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape">
+				<reportElement x="30" y="0" width="496" height="700" isPrintWhenDetailOverflows="true" uuid="d5d7a19d-060a-4875-954b-e176ab96898a">
+					<property name="com.jaspersoft.studio.unit.width" value="mm"/>
+					<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(true) && $F{erreur} == null]]></printWhenExpression>
+				</reportElement>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.renderers.BatikRenderer.getInstanceFromText("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"765\" height=\"990\"><text x=\"-275\" y=\"460\" transform=\"rotate(-50)\" style=\"font-size:80px;fill:#808080;fill-opacity:0.7\">ARCHIVE</text></svg>")]]></imageExpression>
+			</image>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="ContainerHeight" x="0" y="0" width="555" height="15" isRemoveLineWhenBlank="true" forecolor="#FA0C07" uuid="194d7119-0580-4f35-b647-5f6978dfe64f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="mm"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Liberation Mono" size="20" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{erreur}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="250" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<printWhenExpression><![CDATA[!$F{mentions}.isBlank() && !$F{mentions}.isEmpty()]]></printWhenExpression>
+			<textField>
+				<reportElement x="0" y="0" width="555" height="250" uuid="4f6dadec-a202-4455-9083-5d664bbc3a42">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{mentions}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="44" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(false) &&  !$F{code_CTV}.equals("")]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="44" uuid="de999025-fb86-4a09-a556-9add07a1a340">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{erreur} == null && $F{filigrane_archive}.equals(false) &&  !$F{code_CTV}.equals("") && $F{pas_de_bloc_signature}.equals(false)]]></printWhenExpression>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{footerSubReport}]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageFooter>
+</jasperReport>
