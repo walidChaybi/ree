@@ -1,96 +1,72 @@
-import { FeatureFlag } from "./FeatureFlag";
+import { CONFIG_GET_UTILISATEUR_CONNECTE } from "@api/configuration/agent/utilisateurs/GetUtilisateurConnecteConfigApi";
+import PageChargeur from "@composants/commun/PageChargeur/PageChargeur";
+import useFetchApi from "@hooks/api/FetchApiHook";
+import { URL_DECONNEXION } from "@router/AppRouterUrls";
+import ErreurRouter from "@router/ErreurRouter";
+import { ZERO } from "@util/NombresMagiques";
+import { StockageLocal } from "@util/StockageLocal";
+import { getText } from "@util/TextUtils";
+import ToastMessage from "@util/ToastMessage";
+import React, { createContext, useCallback, useEffect, useMemo, useState } from "react";
+import { UtilisateurConnecte } from "../model/agent/UtilisateurConnecte";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 
-const CANARY_TESTING = "CANARY_TESTING";
-
-interface idArobasEtFeaturesFlags {
-  [key: string]: string[];
+interface IUtilisateurConnecteContext {
+  utilisateurConnecte: UtilisateurConnecte;
+  seDeconnecter: () => void;
 }
 
-class GestionnaireFeatureFlag {
-  estActif(featureFlag: FeatureFlag): boolean {
-    const valeurFlag = window.localStorage.getItem(featureFlag);
-    return this.estValeurFlagValide(valeurFlag);
-  }
+const UtilisateurConnecteContext = createContext<IUtilisateurConnecteContext>({} as IUtilisateurConnecteContext);
 
-  auMoinUnEstActif(...featureFlags: FeatureFlag[]): boolean {
-    return featureFlags.some(ff => this.estActif(ff));
-  }
+const UtilisateurConnecteContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+  useEffect(() => {
+    StockageLocal.insererIdentiteUtilisateurConnecteDepuisUrl();
+  }, []);
 
-  positionneFlagsAPartirDuHeader(header: any, idArobasUtilisateur: string) {
-    const idArobassEtFeaturesFlags: idArobasEtFeaturesFlags[] | undefined = this.getIdArobasEtFeaturesFlags(header);
+  const [utilisateurConnecte, setUtilisateurConnecte] = useState<UtilisateurConnecte | null>(null);
+  const [estVerifie, setEstVerifie] = useState<boolean>(false);
+  const [messageErreur, setMessageErreur] = useState<string>("");
+  const seDeconnecter = useCallback<() => void>(() => {
+    setUtilisateurConnecte(null);
+    setMessageErreur(getText("pages.login.erreurDeconnecte"));
+    window.location.replace(URL_DECONNEXION);
+  }, []);
+  const { appelApi: appelApiLogin } = useFetchApi(CONFIG_GET_UTILISATEUR_CONNECTE);
 
-    this.supprimeTousLesFlags(Object.keys(FeatureFlag));
-
-    const props = Object.keys(FeatureFlag);
-    props.forEach((prop: string) => {
-      const valeurFlag = this.getValeurFlagHeader(header, prop);
-      if (this.estValeurFlagValide(valeurFlag)) {
-        window.localStorage.setItem(prop, valeurFlag);
-      }
-    });
-
-    const featuresFlagsUtilisateurConnecte = this.getFeatureFlagsAPartirIdArobas(idArobassEtFeaturesFlags, idArobasUtilisateur);
-
-    if (featuresFlagsUtilisateurConnecte) {
-      featuresFlagsUtilisateurConnecte.forEach((featureFlag: string) => {
-        window.localStorage.setItem(featureFlag, "true");
-      });
-    }
-  }
-
-  private getFeatureFlagsAPartirIdArobas(idArobasEtFeaturesFlags: idArobasEtFeaturesFlags[] | undefined, idArobas: string): string[] {
-    const idArobasEtFeaturesFlagsTrouve = idArobasEtFeaturesFlags?.find(idOuFeatureFlag => idOuFeatureFlag.hasOwnProperty(idArobas));
-
-    return idArobasEtFeaturesFlagsTrouve ? idArobasEtFeaturesFlagsTrouve[idArobas] : [];
-  }
-
-  private getIdArobasEtFeaturesFlags(header: any): idArobasEtFeaturesFlags[] | undefined {
-    const canaryTestingHeader = this.getValeurFlagHeader(header, CANARY_TESTING);
-    return (canaryTestingHeader && canaryTestingHeader.trim() !== "") ? this.parseJson(canaryTestingHeader) : undefined;
-  }
-
-  private parseJson(json: string): idArobasEtFeaturesFlags[] | undefined {
-    let idArobasEtFeaturesFlags: idArobasEtFeaturesFlags[] | undefined;
-
-    try {
-      idArobasEtFeaturesFlags = JSON.parse(json);
-    } catch (error) {
-      window.alert(`Erreur lors du parsing du json du Header CANARY_TESTING: ${error}`);
-    }
-    return idArobasEtFeaturesFlags;
-  }
-
-  private getValeurFlagHeader(header: any, prop: string) {
-    let valeurFlag = "";
-    if (!header) return valeurFlag;
-
-    // Support both Fetch Headers object and plain record object
-    if (typeof header.get === "function") {
-      const val = header.get(prop) || header.get(prop.toLocaleLowerCase());
-      if (val) return val;
+  useEffect(() => {
+    if (estVerifie) {
+      return;
     }
 
-    const headerProps = Object.getOwnPropertyNames(header);
-    headerProps.forEach((headerProp: string) => {
-      if (headerProp.toLocaleLowerCase() === prop.toLocaleLowerCase()) {
-        valeurFlag = header[headerProp];
-      }
+    appelApiLogin({
+      apresSucces: (data, headers) => {
+        const utilisateur = UtilisateurConnecte.depuisDto(data);
+        if (utilisateur) {
+          gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(headers, utilisateur.idArobas);
+        }
+        setUtilisateurConnecte(utilisateur);
+      },
+      apresErreur: erreurs => {
+        const erreurCode = erreurs[ZERO]?.code;
+        ToastMessage.erreur(getText("pages.login.erreurAuthentification"));
+        setMessageErreur(getText(erreurCode ? `erreurFct.${erreurCode}` : "pages.login.erreurSysteme"));
+      },
+      finalement: () => setEstVerifie(true)
     });
-    return valeurFlag;
-  }
+  }, [estVerifie]);
 
-  private supprimeTousLesFlags(nomFlags: string[]): void {
-    const props = Object.keys(FeatureFlag);
-    props.forEach((prop: string) => {
-      if (nomFlags.includes(prop)) {
-        window.localStorage.removeItem(prop);
-      }
-    });
-  }
+  const valeurContexte: IUtilisateurConnecteContext = useMemo(
+    () => ({ utilisateurConnecte: utilisateurConnecte || ({} as UtilisateurConnecte), seDeconnecter }),
+    [utilisateurConnecte, seDeconnecter]
+  );
 
-  private estValeurFlagValide(valeurFlag: string | null): boolean {
-    return valeurFlag != null && valeurFlag.toLocaleLowerCase() === "true";
-  }
-}
+  if (!estVerifie) return <PageChargeur />;
 
-export const gestionnaireFeatureFlag = new GestionnaireFeatureFlag();
+  return (
+    <UtilisateurConnecteContext.Provider value={valeurContexte}>
+      {utilisateurConnecte ? children : <ErreurRouter message={messageErreur} />}
+    </UtilisateurConnecteContext.Provider>
+  );
+};
+
+export { UtilisateurConnecteContext, UtilisateurConnecteContextProvider };
