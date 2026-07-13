@@ -1,141 +1,52 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.21.5-74d586df47b25dbd05bd0957999819196e59934a  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Acte_Image" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="37" uuid="a7c16bee-a7d3-4fc0-855c-8bf5f355670a">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="extrait_copie/EXTRAIT_COPIE_ACTE_TEXTE/DataAdapter.xml"/>
-	<parameter name="JSON_INPUT_STREAM" class="java.io.InputStream" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.source" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.sources" class="java.util.List" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.date.pattern" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.number.pattern" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="JSON_LOCALE" class="java.util.Locale" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.locale.code" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="JSON_TIME_ZONE" class="java.util.TimeZone" isForPrompting="false"/>
-	<parameter name="net.sf.jasperreports.json.timezone.id" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="SR_Acte_Image_Portrait_Double_Numerique" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[images du rapport]]></parameterDescription>
-	</parameter>
-	<parameter name="headerSubReport" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[header du rapport]]></parameterDescription>
-	</parameter>
-	<parameter name="footerSubReport" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[footer du rapport]]></parameterDescription>
-	</parameter>
-	<parameter name="signatureSubReport" class="net.sf.jasperreports.engine.JasperReport">
-		<parameterDescription><![CDATA[signature du rapport]]></parameterDescription>
-	</parameter>
-	<field name="pas_de_bloc_signature" class="java.lang.Boolean"/>
-	<field name="filigrane_archive" class="java.lang.Boolean"/>
-	<field name="erreur" class="java.lang.String"/>
-	<field name="code_CTV" class="java.lang.String"/>
-	<field name="reference_acte" class="java.lang.String">
-		<fieldDescription><![CDATA[reference_acte]]></fieldDescription>
-	</field>
-	<field name="reference_registre" class="java.lang.String"/>
-	<field name="mentions" class="java.lang.String"/>
-	<field name="reference_rece" class="java.lang.String"/>
-	<pageHeader>
-		<band height="20">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<textField>
-				<reportElement x="0" y="0" width="149" height="20" uuid="49d55118-3e7a-444d-b155-7abd4c91209b">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<printWhenExpression><![CDATA[$F{reference_rece} != null]]></printWhenExpression>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{reference_rece}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="406" y="0" width="149" height="20" uuid="89331d81-deda-4495-bd9b-f03c8841af7a">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<printWhenExpression><![CDATA[$F{reference_registre} != null]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{reference_registre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="245" y="0" width="33" height="20" uuid="a1b7c2e4-1001-4a01-9a01-000000000001"/>
-				<textElement textAlignment="Right">
-					<font fontName="Liberation Mono" size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + "/"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="278" y="0" width="32" height="20" uuid="a1b7c2e4-1001-4a01-9a01-000000000003"/>
-				<textElement textAlignment="Left">
-					<font fontName="Liberation Mono" size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageHeader>
-	<detail>
-		<band height="700" splitType="Stretch">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<subreport>
-				<reportElement stretchType="ContainerHeight" x="30" y="0" width="496" height="700" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="1c3e941b-e628-4fa7-bf23-50c85cc4e0db">
-					<printWhenExpression><![CDATA[$F{erreur} == null]]></printWhenExpression>
-				</reportElement>
-				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("corps_image")]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{SR_Acte_Image_Portrait_Double_Numerique}]]></subreportExpression>
-			</subreport>
-			<image>
-				<reportElement x="30" y="0" width="496" height="700" isPrintWhenDetailOverflows="true" uuid="d5d7a19d-060a-4875-954b-e176ab96898a">
-					<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(true) && $F{erreur} == null]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA[net.sf.jasperreports.renderers.BatikRenderer.getInstanceFromText("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"765\" height=\"990\"><text x=\"-575\" y=\"550\" transform=\"rotate(-50)\" style=\"font-size:46px;fill:#808080;fill-opacity:0.7\">Cette copie n'a pas valeur d'acte authentique</text></svg>")]]></imageExpression>
-			</image>
-			<image scaleImage="RetainShape">
-				<reportElement x="30" y="0" width="496" height="700" isPrintWhenDetailOverflows="true" uuid="d5d7a19d-060a-4875-954b-e176ab96898a">
-					<property name="com.jaspersoft.studio.unit.width" value="mm"/>
-					<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(true) && $F{erreur} == null]]></printWhenExpression>
-				</reportElement>
-				<graphicElement fill="Solid"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.renderers.BatikRenderer.getInstanceFromText("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"765\" height=\"990\"><text x=\"-275\" y=\"460\" transform=\"rotate(-50)\" style=\"font-size:80px;fill:#808080;fill-opacity:0.7\">ARCHIVE</text></svg>")]]></imageExpression>
-			</image>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement stretchType="ContainerHeight" x="0" y="0" width="555" height="15" isRemoveLineWhenBlank="true" forecolor="#FA0C07" uuid="194d7119-0580-4f35-b647-5f6978dfe64f">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="mm"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font fontName="Liberation Mono" size="20" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{erreur}]]></textFieldExpression>
-			</textField>
-		</band>
-		<band height="120" splitType="Stretch">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<printWhenExpression><![CDATA[!$F{mentions}.isBlank() && !$F{mentions}.isEmpty()]]></printWhenExpression>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement stretchType="ContainerHeight" x="0" y="0" width="555" height="120" isPrintWhenDetailOverflows="true" uuid="4f6dadec-a202-4455-9083-5d664bbc3a42">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{mentions}]]></textFieldExpression>
-			</textField>
-		</band>
-	</detail>
-	<pageFooter>
-		<band height="44" splitType="Stretch">
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<printWhenExpression><![CDATA[$F{filigrane_archive}.equals(false) &&  !$F{code_CTV}.equals("")]]></printWhenExpression>
-			<subreport>
-				<reportElement x="0" y="0" width="555" height="44" uuid="de999025-fb86-4a09-a556-9add07a1a340">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<printWhenExpression><![CDATA[$F{erreur} == null && $F{filigrane_archive}.equals(false) &&  !$F{code_CTV}.equals("") && $F{pas_de_bloc_signature}.equals(false)]]></printWhenExpression>
-				</reportElement>
-				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("")]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{footerSubReport}]]></subreportExpression>
-			</subreport>
-		</band>
-	</pageFooter>
-</jasperReport>
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+
+const ID_CONTENEUR_MODALE = "conteneur-modale-rece";
+
+export const ConteneurParentModales: React.FC = () => <div id={ID_CONTENEUR_MODALE}></div>;
+const recupererParent = (): HTMLElement | null => document.getElementById(ID_CONTENEUR_MODALE);
+
+interface IConteneurModaleProps {
+  fermerModale?: () => void;
+  className?: string;
+}
+
+const ConteneurModale: React.FC<React.PropsWithChildren<IConteneurModaleProps>> = ({ fermerModale, className, children }) => {
+  const [conteneurParentModales, setConteneurParentModales] = useState<HTMLElement | null>(recupererParent());
+
+  useEffect(() => {
+    !conteneurParentModales && setConteneurParentModales(recupererParent());
+  }, []);
+
+  useEffect(() => {
+    if (!fermerModale) return;
+
+    const fermerModaleSiBoutonEchap = (evenement: KeyboardEvent) => evenement.key === "Escape" && fermerModale();
+    document.addEventListener("keydown", fermerModaleSiBoutonEchap);
+
+    return () => {
+      document.removeEventListener("keydown", fermerModaleSiBoutonEchap);
+    };
+  }, [fermerModale]);
+
+  if (!conteneurParentModales) return <></>;
+
+  return createPortal(
+    <div
+      className="fixed left-0 top-0 z-1000 flex h-screen w-screen animate-apparition items-center justify-center bg-black/40 backdrop-blur-xs"
+      {...(fermerModale ? { onClick: fermerModale } : {})}
+    >
+      <div
+        className={`m-4 flex ${className ?? ""}`}
+        onClick={event => event.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+      >
+        {children}
+      </div>
+    </div>,
+    conteneurParentModales
+  );
+};
+
+export default ConteneurModale;
