@@ -1,52 +1,96 @@
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { FeatureFlag } from "./FeatureFlag";
 
-const ID_CONTENEUR_MODALE = "conteneur-modale-rece";
+const CANARY_TESTING = "CANARY_TESTING";
 
-export const ConteneurParentModales: React.FC = () => <div id={ID_CONTENEUR_MODALE}></div>;
-const recupererParent = (): HTMLElement | null => document.getElementById(ID_CONTENEUR_MODALE);
-
-interface IConteneurModaleProps {
-  fermerModale?: () => void;
-  className?: string;
+interface idArobasEtFeaturesFlags {
+  [key: string]: string[];
 }
 
-const ConteneurModale: React.FC<React.PropsWithChildren<IConteneurModaleProps>> = ({ fermerModale, className, children }) => {
-  const [conteneurParentModales, setConteneurParentModales] = useState<HTMLElement | null>(recupererParent());
+class GestionnaireFeatureFlag {
+  estActif(featureFlag: FeatureFlag): boolean {
+    const valeurFlag = window.localStorage.getItem(featureFlag);
+    return this.estValeurFlagValide(valeurFlag);
+  }
 
-  useEffect(() => {
-    !conteneurParentModales && setConteneurParentModales(recupererParent());
-  }, []);
+  auMoinUnEstActif(...featureFlags: FeatureFlag[]): boolean {
+    return featureFlags.some(ff => this.estActif(ff));
+  }
 
-  useEffect(() => {
-    if (!fermerModale) return;
+  positionneFlagsAPartirDuHeader(header: any, idArobasUtilisateur: string) {
+    const idArobassEtFeaturesFlags: idArobasEtFeaturesFlags[] | undefined = this.getIdArobasEtFeaturesFlags(header);
 
-    const fermerModaleSiBoutonEchap = (evenement: KeyboardEvent) => evenement.key === "Escape" && fermerModale();
-    document.addEventListener("keydown", fermerModaleSiBoutonEchap);
+    this.supprimeTousLesFlags(Object.keys(FeatureFlag));
 
-    return () => {
-      document.removeEventListener("keydown", fermerModaleSiBoutonEchap);
-    };
-  }, [fermerModale]);
+    const props = Object.keys(FeatureFlag);
+    props.forEach((prop: string) => {
+      const valeurFlag = this.getValeurFlagHeader(header, prop);
+      if (this.estValeurFlagValide(valeurFlag)) {
+        window.localStorage.setItem(prop, valeurFlag);
+      }
+    });
 
-  if (!conteneurParentModales) return <></>;
+    const featuresFlagsUtilisateurConnecte = this.getFeatureFlagsAPartirIdArobas(idArobassEtFeaturesFlags, idArobasUtilisateur);
 
-  return createPortal(
-    <div
-      className="fixed left-0 top-0 z-1000 flex h-screen w-screen animate-apparition items-center justify-center bg-black/40 backdrop-blur-xs"
-      {...(fermerModale ? { onClick: fermerModale } : {})}
-    >
-      <div
-        className={`m-4 flex ${className ?? ""}`}
-        onClick={event => event.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-      >
-        {children}
-      </div>
-    </div>,
-    conteneurParentModales
-  );
-};
+    if (featuresFlagsUtilisateurConnecte) {
+      featuresFlagsUtilisateurConnecte.forEach((featureFlag: string) => {
+        window.localStorage.setItem(featureFlag, "true");
+      });
+    }
+  }
 
-export default ConteneurModale;
+  private getFeatureFlagsAPartirIdArobas(idArobasEtFeaturesFlags: idArobasEtFeaturesFlags[] | undefined, idArobas: string): string[] {
+    const idArobasEtFeaturesFlagsTrouve = idArobasEtFeaturesFlags?.find(idOuFeatureFlag => idOuFeatureFlag.hasOwnProperty(idArobas));
+
+    return idArobasEtFeaturesFlagsTrouve ? idArobasEtFeaturesFlagsTrouve[idArobas] : [];
+  }
+
+  private getIdArobasEtFeaturesFlags(header: any): idArobasEtFeaturesFlags[] | undefined {
+    const canaryTestingHeader = this.getValeurFlagHeader(header, CANARY_TESTING);
+    return (canaryTestingHeader && canaryTestingHeader.trim() !== "") ? this.parseJson(canaryTestingHeader) : undefined;
+  }
+
+  private parseJson(json: string): idArobasEtFeaturesFlags[] | undefined {
+    let idArobasEtFeaturesFlags: idArobasEtFeaturesFlags[] | undefined;
+
+    try {
+      idArobasEtFeaturesFlags = JSON.parse(json);
+    } catch (error) {
+      window.alert(`Erreur lors du parsing du json du Header CANARY_TESTING: ${error}`);
+    }
+    return idArobasEtFeaturesFlags;
+  }
+
+  private getValeurFlagHeader(header: any, prop: string) {
+    let valeurFlag = "";
+    if (!header) return valeurFlag;
+
+    // Support both Fetch Headers object and plain record object
+    if (typeof header.get === "function") {
+      const val = header.get(prop) || header.get(prop.toLocaleLowerCase());
+      if (val) return val;
+    }
+
+    const headerProps = Object.getOwnPropertyNames(header);
+    headerProps.forEach((headerProp: string) => {
+      if (headerProp.toLocaleLowerCase() === prop.toLocaleLowerCase()) {
+        valeurFlag = header[headerProp];
+      }
+    });
+    return valeurFlag;
+  }
+
+  private supprimeTousLesFlags(nomFlags: string[]): void {
+    const props = Object.keys(FeatureFlag);
+    props.forEach((prop: string) => {
+      if (nomFlags.includes(prop)) {
+        window.localStorage.removeItem(prop);
+      }
+    });
+  }
+
+  private estValeurFlagValide(valeurFlag: string | null): boolean {
+    return valeurFlag != null && valeurFlag.toLocaleLowerCase() === "true";
+  }
+}
+
+export const gestionnaireFeatureFlag = new GestionnaireFeatureFlag();
